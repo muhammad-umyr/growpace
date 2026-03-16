@@ -1,84 +1,124 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useState, useEffect } from "react";
 import Image from "next/image";
+import {
+  getProfile,
+  saveProfile,
+  getMilestonesForAge,
+  getActivitiesForAge,
+  calcAge,
+  calcAgeMonths,
+  calcProgressPercent,
+  Profile,
+  JournalEntry,
+} from "@/lib/store";
 
-function calcAge(dob: string) {
-  const birth = new Date(dob);
-  const now = new Date();
-  const totalMonths =
-    (now.getFullYear() - birth.getFullYear()) * 12 +
-    (now.getMonth() - birth.getMonth());
-  const years = Math.floor(totalMonths / 12);
-  const months = totalMonths % 12;
-  const days = Math.floor((now.getTime() - birth.getTime()) / (1000 * 60 * 60 * 24));
+const TAG_COLORS: Record<string, string> = {
+  Physical:  "bg-[#f0fbf4] text-green-600",
+  Language:  "bg-[#f0f8ff] text-[#6baed6]",
+  Cognitive: "bg-[#fdf4ff] text-purple-500",
+  Creative:  "bg-[#fff8f0] text-[#e8834a]",
+  Social:    "bg-[#fff0f5] text-pink-500",
+  Sensory:   "bg-[#f5fff0] text-lime-600",
+  Motor:     "bg-[#eff6ff] text-blue-500",
+};
 
-  if (days < 30) return `${days} day${days !== 1 ? "s" : ""} old`;
-  if (totalMonths < 12) return `${totalMonths} month${totalMonths !== 1 ? "s" : ""} old`;
-  if (months === 0) return `${years} year${years !== 1 ? "s" : ""} old`;
-  return `${years}y ${months}m old`;
-}
-
-function calcProgressPercent(dob: string) {
-  const birth = new Date(dob);
-  const now = new Date();
-  const ageMs = now.getTime() - birth.getTime();
-  const maxMs = 7 * 365.25 * 24 * 60 * 60 * 1000;
-  return Math.min(Math.round((ageMs / maxMs) * 100), 100);
-}
-
-const weeklyActivities = [
-  { emoji: "🎨", title: "Finger painting", desc: "Great for fine motor skills", tag: "Creative" },
-  { emoji: "📚", title: "Story time", desc: "Read 2 short books today", tag: "Language" },
-  { emoji: "🏃", title: "Outdoor play", desc: "30 min of active movement", tag: "Physical" },
-];
-
-const milestones = [
-  { emoji: "🗣️", label: "First words", done: true },
-  { emoji: "🚶", label: "Walking", done: true },
-  { emoji: "✂️", label: "Using scissors", done: false },
-  { emoji: "🔡", label: "Recognises letters", done: false },
-  { emoji: "🤝", label: "Sharing with peers", done: false },
-  { emoji: "🎵", label: "Sings simple songs", done: true },
-];
-
-const timelineEvents = [
-  { month: "Birth", emoji: "👶", note: "Welcome to the world!" },
-  { month: "3 mo", emoji: "😊", note: "First social smile" },
-  { month: "6 mo", emoji: "🍽️", note: "Started solid foods" },
-  { month: "12 mo", emoji: "🚶", note: "First steps" },
-  { month: "Now", emoji: "⭐", note: "Current stage", current: true },
-];
+const JOURNAL_EMOJIS = ["🌟", "💪", "😊", "🎉", "❤️", "📝", "🏆", "🌈"];
 
 function Dashboard() {
   const params = useSearchParams();
   const router = useRouter();
-  const name = params.get("name") || "Your Child";
-  const dob = params.get("dob") || "";
-  const gender = params.get("gender") || "";
-  const photo = params.get("photo") || null;
+  const id = params.get("id");
 
-  const age = dob ? calcAge(dob) : "Age unknown";
-  const progress = dob ? calcProgressPercent(dob) : 0;
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const [journalText, setJournalText] = useState("");
+  const [journalEmoji, setJournalEmoji] = useState("🌟");
+  const [showJournalForm, setShowJournalForm] = useState(false);
 
-  const genderEmoji = gender === "boy" ? "👦" : gender === "girl" ? "👧" : "🌈";
+  useEffect(() => {
+    if (id) setProfile(getProfile(id));
+    setMounted(true);
+  }, [id]);
+
+  if (!mounted) return null;
+
+  if (!profile) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#fff8f0] gap-4">
+        <span className="text-5xl">🌱</span>
+        <p className="text-[#a07060] font-semibold">Profile not found.</p>
+        <button onClick={() => router.push("/")} className="text-[#e8834a] font-bold hover:underline">
+          Go back home
+        </button>
+      </div>
+    );
+  }
+
+  const age = calcAge(profile.dob);
+  const ageMonths = calcAgeMonths(profile.dob);
+  const progress = calcProgressPercent(profile.dob);
+  const genderEmoji = profile.gender === "boy" ? "👦" : profile.gender === "girl" ? "👧" : "🌈";
+
+  const milestones = getMilestonesForAge(ageMonths);
+  const activities = getActivitiesForAge(ageMonths);
+  const doneCount = milestones.filter(m => profile.milestones[m.id]).length;
+
+  function update(updated: Profile) {
+    setProfile(updated);
+    saveProfile(updated);
+  }
+
+  function toggleMilestone(milestoneId: string) {
+    update({
+      ...profile!,
+      milestones: { ...profile!.milestones, [milestoneId]: !profile!.milestones[milestoneId] },
+    });
+  }
+
+  function addJournalEntry() {
+    if (!journalText.trim()) return;
+    const entry: JournalEntry = {
+      id: crypto.randomUUID(),
+      text: journalText.trim(),
+      date: new Date().toISOString(),
+      emoji: journalEmoji,
+    };
+    update({ ...profile!, journal: [entry, ...profile!.journal] });
+    setJournalText("");
+    setShowJournalForm(false);
+  }
+
+  function deleteJournalEntry(entryId: string) {
+    update({ ...profile!, journal: profile!.journal.filter(e => e.id !== entryId) });
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#fff8f0] via-[#fef3f8] to-[#f0f8ff]">
-      {/* Top nav */}
+
+      {/* Nav */}
       <header className="bg-white/80 backdrop-blur-sm border-b border-orange-100 sticky top-0 z-10">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <button onClick={() => router.push("/")} className="flex items-center gap-2">
             <span className="text-2xl">🌱</span>
             <span className="text-xl font-extrabold text-[#e8834a]">Growpace</span>
-          </div>
-          <button
-            onClick={() => router.push("/")}
-            className="text-sm text-[#a07060] hover:text-[#e8834a] font-semibold transition-colors"
-          >
-            + Add Child
           </button>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => router.push(`/report?id=${profile.id}`)}
+              className="text-sm text-[#a07060] hover:text-[#e8834a] font-semibold transition-colors"
+            >
+              📄 Report
+            </button>
+            <button
+              onClick={() => router.push("/")}
+              className="text-sm text-[#a07060] hover:text-[#e8834a] font-semibold transition-colors"
+            >
+              + Add Child
+            </button>
+          </div>
         </div>
       </header>
 
@@ -87,51 +127,46 @@ function Dashboard() {
         {/* Profile card */}
         <div className="bg-white rounded-3xl shadow-lg shadow-orange-100/50 p-6">
           <div className="flex items-center gap-5">
-            {/* Avatar */}
             <div className="relative w-20 h-20 rounded-full bg-[#fff0e6] border-4 border-[#f4b98a] overflow-hidden flex-shrink-0 flex items-center justify-center">
-              {photo ? (
-                <Image src={photo} alt={name} fill className="object-cover" unoptimized />
+              {profile.photo ? (
+                <Image src={profile.photo} alt={profile.name} fill className="object-cover" unoptimized />
               ) : (
                 <span className="text-4xl">{genderEmoji}</span>
               )}
             </div>
             <div className="flex-1 min-w-0">
-              <h1 className="text-2xl font-extrabold text-[#3d2c1e] truncate">{name}</h1>
+              <h1 className="text-2xl font-extrabold text-[#3d2c1e] truncate">{profile.name}</h1>
               <p className="text-[#e8834a] font-semibold text-sm mt-0.5">{age}</p>
-              {dob && (
-                <p className="text-[#c4a898] text-xs mt-0.5">
-                  Born {new Date(dob).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
-                </p>
-              )}
+              <p className="text-[#c4a898] text-xs mt-0.5">
+                Born {new Date(profile.dob).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+              </p>
             </div>
           </div>
 
           {/* Journey progress bar */}
-          {dob && (
-            <div className="mt-5">
-              <div className="flex justify-between text-xs text-[#a07060] mb-1.5 font-semibold">
-                <span>Birth</span>
-                <span className="text-[#e8834a]">{progress}% of journey</span>
-                <span>Age 7</span>
-              </div>
-              <div className="h-3 bg-[#f5ebe0] rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-[#f4b98a] to-[#e8834a] rounded-full transition-all duration-1000"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
+          <div className="mt-5">
+            <div className="flex justify-between text-xs text-[#a07060] mb-1.5 font-semibold">
+              <span>Birth</span>
+              <span className="text-[#e8834a]">{progress}% of journey</span>
+              <span>Age 7</span>
             </div>
-          )}
+            <div className="h-3 bg-[#f5ebe0] rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-[#f4b98a] to-[#e8834a] rounded-full transition-all duration-1000"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
         </div>
 
         {/* Weekly Activities */}
         <section>
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-extrabold text-[#3d2c1e]">🎯 This Week&apos;s Activities</h2>
-            <span className="text-xs bg-[#fff0e6] text-[#e8834a] font-bold px-3 py-1 rounded-full">AI suggested</span>
+            <span className="text-xs bg-[#fff0e6] text-[#e8834a] font-bold px-3 py-1 rounded-full">Age-matched</span>
           </div>
           <div className="space-y-3">
-            {weeklyActivities.map((a, i) => (
+            {activities.map((a, i) => (
               <div key={i} className="bg-white rounded-2xl p-4 shadow-sm shadow-orange-50 flex items-start gap-4 border border-orange-50">
                 <div className="w-12 h-12 rounded-2xl bg-[#fff8f0] flex items-center justify-center text-2xl flex-shrink-0">
                   {a.emoji}
@@ -139,13 +174,12 @@ function Dashboard() {
                 <div className="flex-1">
                   <div className="flex items-center gap-2 flex-wrap">
                     <p className="font-bold text-[#3d2c1e] text-sm">{a.title}</p>
-                    <span className="text-[10px] bg-[#f0f8ff] text-[#6baed6] font-bold px-2 py-0.5 rounded-full">{a.tag}</span>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[a.tag] || "bg-gray-100 text-gray-500"}`}>
+                      {a.tag}
+                    </span>
                   </div>
                   <p className="text-[#a07060] text-xs mt-0.5">{a.desc}</p>
                 </div>
-                <button className="w-7 h-7 rounded-full border-2 border-[#f0ddd0] hover:border-[#e8834a] hover:bg-[#fff3eb] transition-colors flex items-center justify-center text-sm flex-shrink-0">
-                  ✓
-                </button>
               </div>
             ))}
           </div>
@@ -155,47 +189,101 @@ function Dashboard() {
         <section>
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-extrabold text-[#3d2c1e]">🏆 Milestones</h2>
-            <span className="text-xs text-[#a07060] font-semibold">
-              {milestones.filter(m => m.done).length}/{milestones.length} reached
-            </span>
+            <span className="text-xs text-[#a07060] font-semibold">{doneCount}/{milestones.length} reached</span>
           </div>
           <div className="bg-white rounded-2xl shadow-sm shadow-orange-50 border border-orange-50 overflow-hidden">
             {milestones.map((m, i) => (
-              <div key={i} className={`flex items-center gap-4 px-5 py-3.5 ${i < milestones.length - 1 ? "border-b border-orange-50" : ""}`}>
+              <button
+                key={m.id}
+                onClick={() => toggleMilestone(m.id)}
+                className={`w-full flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-[#fffaf7] text-left
+                  ${i < milestones.length - 1 ? "border-b border-orange-50" : ""}`}
+              >
                 <span className="text-xl w-7 text-center">{m.emoji}</span>
-                <span className={`flex-1 text-sm font-semibold ${m.done ? "text-[#3d2c1e]" : "text-[#c4a898]"}`}>{m.label}</span>
-                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold
-                  ${m.done ? "bg-[#e8834a] text-white" : "bg-[#f5ebe0] text-[#c4a898]"}`}>
-                  {m.done ? "✓" : "·"}
+                <span className={`flex-1 text-sm font-semibold ${profile.milestones[m.id] ? "text-[#3d2c1e]" : "text-[#c4a898]"}`}>
+                  {m.label}
+                </span>
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors
+                  ${profile.milestones[m.id] ? "bg-[#e8834a] text-white" : "bg-[#f5ebe0] text-[#c4a898]"}`}>
+                  {profile.milestones[m.id] ? "✓" : "·"}
                 </div>
-              </div>
+              </button>
             ))}
           </div>
+          <p className="text-xs text-[#c4a898] mt-2 text-center">Tap a milestone to mark it as reached</p>
         </section>
 
-        {/* Progress Timeline */}
+        {/* Growth Journal */}
         <section>
-          <h2 className="text-lg font-extrabold text-[#3d2c1e] mb-3">📅 Progress Timeline</h2>
-          <div className="bg-white rounded-2xl shadow-sm shadow-orange-50 border border-orange-50 p-5">
-            <div className="relative">
-              {/* Line */}
-              <div className="absolute left-5 top-3 bottom-3 w-0.5 bg-[#f5ebe0]" />
-              <div className="space-y-5">
-                {timelineEvents.map((ev, i) => (
-                  <div key={i} className="flex items-start gap-4 relative">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xl flex-shrink-0 z-10
-                      ${ev.current ? "bg-[#e8834a] shadow-md shadow-orange-200" : "bg-[#fff8f0] border-2 border-[#f5ebe0]"}`}>
-                      {ev.emoji}
-                    </div>
-                    <div className="pt-1.5">
-                      <p className={`text-xs font-bold ${ev.current ? "text-[#e8834a]" : "text-[#c4a898]"}`}>{ev.month}</p>
-                      <p className="text-sm text-[#3d2c1e] font-semibold">{ev.note}</p>
-                    </div>
-                  </div>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-extrabold text-[#3d2c1e]">📔 Growth Journal</h2>
+            <button
+              onClick={() => setShowJournalForm(v => !v)}
+              className="text-xs bg-[#e8834a] text-white font-bold px-3 py-1.5 rounded-full hover:bg-[#d6723b] transition-colors"
+            >
+              {showJournalForm ? "Cancel" : "+ Add moment"}
+            </button>
+          </div>
+
+          {showJournalForm && (
+            <div className="bg-white rounded-2xl shadow-sm border border-orange-50 p-4 mb-3 space-y-3">
+              {/* Emoji picker */}
+              <div className="flex gap-2 flex-wrap">
+                {JOURNAL_EMOJIS.map(e => (
+                  <button
+                    key={e}
+                    onClick={() => setJournalEmoji(e)}
+                    className={`w-9 h-9 rounded-full text-xl flex items-center justify-center transition-all
+                      ${journalEmoji === e ? "bg-[#fff3eb] scale-110 shadow-sm" : "hover:bg-[#fff8f0]"}`}
+                  >
+                    {e}
+                  </button>
                 ))}
               </div>
+              <textarea
+                value={journalText}
+                onChange={e => setJournalText(e.target.value)}
+                placeholder={`What did ${profile.name} do today? A first word, a big step, a funny moment…`}
+                className="w-full px-4 py-3 rounded-2xl border-2 border-[#f0ddd0] bg-[#fffaf7] focus:outline-none focus:border-[#e8834a] text-[#3d2c1e] placeholder-[#c4a898] text-sm resize-none h-24 transition-colors"
+              />
+              <button
+                onClick={addJournalEntry}
+                disabled={!journalText.trim()}
+                className="w-full py-2.5 rounded-2xl bg-[#e8834a] hover:bg-[#d6723b] disabled:opacity-40 text-white font-bold text-sm transition-colors"
+              >
+                Save moment
+              </button>
             </div>
-          </div>
+          )}
+
+          {profile.journal.length === 0 && !showJournalForm ? (
+            <div className="bg-white rounded-2xl border border-orange-50 p-6 text-center">
+              <p className="text-4xl mb-2">📝</p>
+              <p className="text-[#a07060] text-sm font-semibold">No moments logged yet.</p>
+              <p className="text-[#c4a898] text-xs mt-1">Start capturing {profile.name}&apos;s journey!</p>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {profile.journal.map(entry => (
+                <div key={entry.id} className="bg-white rounded-2xl shadow-sm border border-orange-50 p-4 flex items-start gap-3">
+                  <span className="text-2xl mt-0.5 flex-shrink-0">{entry.emoji}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[#3d2c1e] text-sm font-medium leading-relaxed">{entry.text}</p>
+                    <p className="text-[#c4a898] text-xs mt-1">
+                      {new Date(entry.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => deleteJournalEntry(entry.id)}
+                    className="text-[#c4a898] hover:text-red-400 transition-colors text-xl flex-shrink-0 leading-none"
+                    title="Delete entry"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
 
         {/* Quick insights */}
@@ -221,6 +309,7 @@ function Dashboard() {
             <p className="text-xs text-[#a07060] mt-0.5">Growing fast</p>
           </div>
         </section>
+
       </main>
     </div>
   );
