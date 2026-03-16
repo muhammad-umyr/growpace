@@ -40,39 +40,85 @@ const ALL_TAGS = ["All", "Physical", "Language", "Cognitive", "Creative", "Socia
 // ── Sub-components ────────────────────────────────────────────────────────────
 
 function ActivityCard({
-  emoji, title, desc, tag, reason, isAdded, onAdd,
+  emoji, title, desc, tag, reason, isAdded, onAdd, howTo, videoQuery,
 }: {
   emoji: string; title: string; desc: string; tag: string;
   reason?: string; isAdded: boolean; onAdd: () => void;
+  howTo?: string[]; videoQuery?: string;
 }) {
+  const [showTips, setShowTips] = useState(false);
+  const watchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(
+    videoQuery ?? `${title} for babies and toddlers`
+  )}`;
+
   return (
-    <div className="bg-white rounded-2xl p-4 shadow-sm border border-orange-50 flex items-start gap-4">
-      <div className="w-12 h-12 rounded-2xl bg-[#fff8f0] flex items-center justify-center text-2xl flex-shrink-0">
-        {emoji}
-      </div>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 flex-wrap">
-          <p className="font-bold text-[#3d2c1e] text-sm">{title}</p>
-          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[tag] ?? "bg-gray-100 text-gray-500"}`}>
-            {tag}
-          </span>
+    <div className="bg-white rounded-2xl shadow-sm border border-orange-50 overflow-hidden">
+      {/* Main row */}
+      <div className="p-4 flex items-start gap-4">
+        <div className="w-12 h-12 rounded-2xl bg-[#fff8f0] flex items-center justify-center text-2xl flex-shrink-0">
+          {emoji}
         </div>
-        <p className="text-[#a07060] text-xs mt-0.5">{desc}</p>
-        {reason && (
-          <p className="text-[#c4a898] text-[10px] mt-1 italic">💡 {reason}</p>
-        )}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <p className="font-bold text-[#3d2c1e] text-sm">{title}</p>
+            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[tag] ?? "bg-gray-100 text-gray-500"}`}>
+              {tag}
+            </span>
+          </div>
+          <p className="text-[#a07060] text-xs mt-0.5">{desc}</p>
+          {reason && (
+            <p className="text-[#c4a898] text-[10px] mt-1 italic">💡 {reason}</p>
+          )}
+        </div>
+        <button
+          onClick={onAdd}
+          disabled={isAdded}
+          className={`flex-shrink-0 text-xs font-bold px-3 py-1.5 rounded-full transition-all
+            ${isAdded
+              ? "bg-[#f5ebe0] text-[#c4a898] cursor-default"
+              : "bg-[#e8834a] text-white hover:bg-[#d6723b] shadow-sm"
+            }`}
+        >
+          {isAdded ? "Added ✓" : "+ Board"}
+        </button>
       </div>
-      <button
-        onClick={onAdd}
-        disabled={isAdded}
-        className={`flex-shrink-0 text-xs font-bold px-3 py-1.5 rounded-full transition-all
-          ${isAdded
-            ? "bg-[#f5ebe0] text-[#c4a898] cursor-default"
-            : "bg-[#e8834a] text-white hover:bg-[#d6723b] shadow-sm"
-          }`}
-      >
-        {isAdded ? "Added ✓" : "+ Board"}
-      </button>
+
+      {/* Footer: how-to + watch */}
+      <div className="px-4 pb-3 flex items-center gap-2 border-t border-[#f5ebe0] pt-2.5">
+        {howTo?.length ? (
+          <button
+            onClick={() => setShowTips(v => !v)}
+            className={`text-xs font-bold px-3 py-1 rounded-full transition-colors
+              ${showTips ? "bg-[#fff0e6] text-[#e8834a]" : "bg-[#f5ebe0] text-[#a07060] hover:text-[#e8834a]"}`}
+          >
+            📋 How to {showTips ? "▲" : "▾"}
+          </button>
+        ) : null}
+        <a
+          href={watchUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs bg-red-50 text-red-500 font-bold px-3 py-1 rounded-full hover:bg-red-100 transition-colors flex items-center gap-1"
+        >
+          ▶ Watch video
+        </a>
+      </div>
+
+      {/* Expandable tips */}
+      {showTips && howTo && (
+        <div className="px-4 pb-4">
+          <ol className="space-y-2">
+            {howTo.map((tip, i) => (
+              <li key={i} className="flex items-start gap-2.5 text-xs text-[#a07060] leading-relaxed">
+                <span className="w-5 h-5 rounded-full bg-[#fff0e6] text-[#e8834a] font-extrabold text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">
+                  {i + 1}
+                </span>
+                {tip}
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
     </div>
   );
 }
@@ -455,6 +501,8 @@ function Activities() {
                   title={a.title}
                   desc={a.desc}
                   tag={a.tag}
+                  howTo={a.howTo}
+                  videoQuery={a.videoQuery}
                   isAdded={addedTitles.has(a.title)}
                   onAdd={() => addToBoard(a.title, a.emoji, a.desc, a.tag, "library")}
                 />
