@@ -91,7 +91,7 @@ function Onboarding() {
 
         {/* Child avatar + name */}
         <div className="flex flex-col items-center gap-2 mb-5">
-          <div className="w-16 h-16 rounded-full bg-[#EDF3F0] border-4 border-[#A6BFB6] flex items-center justify-center text-4xl shadow-sm">
+          <div className="w-16 h-16 rounded-full bg-[#EDF3F0] border-4 border-[#B2ADEB] flex items-center justify-center text-4xl shadow-sm">
             {genderEmoji}
           </div>
           <h1 className="text-2xl font-extrabold text-[#0A1338]">
@@ -105,7 +105,7 @@ function Onboarding() {
 
         {/* Progress summary */}
         {checkedCount > 0 && (
-          <div className="inline-flex items-center gap-2 bg-[#EDF3F0] border border-[#A6BFB6] text-[#5E7678] font-bold text-base px-4 py-2 rounded-full">
+          <div className="inline-flex items-center gap-2 bg-[#F0EEFA] border border-[#B2ADEB] text-[#7A74C0] font-bold text-base px-4 py-2 rounded-full">
             🎉 {checkedCount} milestone{checkedCount !== 1 ? "s" : ""} reached so far!
           </div>
         )}
@@ -134,13 +134,13 @@ function Onboarding() {
                     onClick={() => toggle(m)}
                     className={`relative flex flex-col items-center gap-2 p-4 rounded-2xl border-2 transition-all duration-150 text-center
                       ${isChecked
-                        ? "bg-gradient-to-br from-[#F4F3FC] to-[#D4DFDD] border-[#5E7678] scale-[1.02]"
+                        ? "bg-gradient-to-br from-[#F4F3FC] to-[#D4DFDD] border-[#B2ADEB] scale-[1.02]"
                         : "bg-white border-[#D4DFDD] hover:border-[#A6BFB6]"
                       }`}
                   >
                     {/* Checkmark badge */}
                     {isChecked && (
-                      <div className="absolute top-2.5 right-2.5 w-5 h-5 rounded-full bg-[#5E7678] flex items-center justify-center">
+                      <div className="absolute top-2.5 right-2.5 w-5 h-5 rounded-full bg-[#B2ADEB] flex items-center justify-center">
                         <span className="text-white text-[10px] font-extrabold">✓</span>
                       </div>
                     )}

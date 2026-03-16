@@ -78,7 +78,7 @@ function Report() {
           </div>
           <p className="text-[#5E7678] text-base mb-6">Development Progress Report</p>
 
-          <div className="relative w-24 h-24 rounded-full bg-[#EDF3F0] border-4 border-[#A6BFB6] overflow-hidden mx-auto mb-4 flex items-center justify-center">
+          <div className="relative w-24 h-24 rounded-full bg-[#EDF3F0] border-4 border-[#B2ADEB] overflow-hidden mx-auto mb-4 flex items-center justify-center">
             {profile.photo ? (
               <Image src={profile.photo} alt={profile.name} fill className="object-cover" unoptimized />
             ) : (
@@ -106,7 +106,7 @@ function Report() {
           </div>
           <div className="h-4 bg-[#E4E2F2] rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-[#A6BFB6] to-[#5E7678] rounded-full"
+              className="h-full bg-gradient-to-r from-[#B2ADEB] to-[#5E7678] rounded-full"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -122,7 +122,7 @@ function Report() {
           {/* Milestone progress bar */}
           <div className="h-2 bg-[#E4E2F2] rounded-full overflow-hidden mb-4">
             <div
-              className="h-full bg-gradient-to-r from-[#A6BFB6] to-[#5E7678] rounded-full"
+              className="h-full bg-gradient-to-r from-[#B2ADEB] to-[#5E7678] rounded-full"
               style={{ width: `${milestonePercent}%` }}
             />
           </div>
@@ -140,7 +140,7 @@ function Report() {
                   {m.label}
                 </span>
                 {profile.milestones[m.id] && (
-                  <span className="text-[#5E7678] text-xs font-bold flex-shrink-0">✓</span>
+                  <span className="text-[#AA6646] text-xs font-bold flex-shrink-0">✓</span>
                 )}
               </div>
             ))}

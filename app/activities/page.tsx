@@ -170,7 +170,7 @@ function ActiveCard({
               key={step}
               onClick={() => onProgress(activity.progress === step ? Math.max(0, step - 25) : step)}
               className={`flex-1 h-3 rounded-full transition-colors
-                ${activity.progress >= step ? "bg-[#5E7678]" : "bg-[#E4E2F2] hover:bg-[#D4DFDD]"}`}
+                ${activity.progress >= step ? "bg-[#B2ADEB]" : "bg-[#E4E2F2] hover:bg-[#D4DFDD]"}`}
               title={`${step}%`}
             />
           ))}
@@ -422,7 +422,7 @@ function Activities() {
             {/* Personalisation banner */}
             <div className="rounded-2xl bg-gradient-to-r from-[#F4F3FC] to-[#EEEDF8] border border-[#D4DFDD] p-4 flex items-center gap-4">
               {/* Avatar */}
-              <div className="w-12 h-12 rounded-full bg-[#EDF3F0] border-2 border-[#A6BFB6] flex items-center justify-center flex-shrink-0 text-2xl">
+              <div className="w-12 h-12 rounded-full bg-[#EDF3F0] border-2 border-[#B2ADEB] flex items-center justify-center flex-shrink-0 text-2xl">
                 {profile.gender === "boy" ? "👦" : profile.gender === "girl" ? "👧" : "🌈"}
               </div>
               <div className="flex-1 min-w-0">
@@ -594,7 +594,7 @@ function Activities() {
                   <div>
                     <h3 className="text-sm font-extrabold text-[#5E7678] mb-2 flex items-center gap-2">
                       ✅ Completed
-                      <span className="bg-[#EDF3F0] text-[#5E7678] text-xs px-2 py-0.5 rounded-full">
+                      <span className="bg-[#FDF3EE] text-[#AA6646] text-xs px-2 py-0.5 rounded-full">
                         {doneActivities.length}
                       </span>
                     </h3>
@@ -607,7 +607,7 @@ function Activities() {
                           <span className="text-2xl">{a.emoji}</span>
                           <div className="flex-1 min-w-0">
                             <p className="text-base font-bold text-[#0A1338] line-through">{a.title}</p>
-                            <p className="text-xs text-[#5E7678] font-semibold mt-0.5">✅ Completed</p>
+                            <p className="text-xs text-[#AA6646] font-semibold mt-0.5">✅ Completed</p>
                           </div>
                           <button
                             onClick={() => removeFromBoard(a.id)}

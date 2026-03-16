@@ -124,7 +124,7 @@ export default function Home() {
                     onClick={() => router.push(`/dashboard?id=${p.id}`)}
                     className="w-full bg-white rounded-2xl p-4 flex flex-col items-center gap-2 hover:scale-[1.02] transition-all border border-[#E4E2F2]"
                   >
-                    <div className="relative w-16 h-16 rounded-full bg-[#EDF3F0] border-4 border-[#A6BFB6] overflow-hidden flex items-center justify-center">
+                    <div className="relative w-16 h-16 rounded-full bg-[#EDF3F0] border-4 border-[#B2ADEB] overflow-hidden flex items-center justify-center">
                       {p.photo ? (
                         <Image src={p.photo} alt={p.name} fill className="object-cover" unoptimized />
                       ) : (
@@ -170,7 +170,7 @@ export default function Home() {
 
           <button
             onClick={() => setShowForm(true)}
-            className="w-full py-3.5 rounded-2xl border-2 border-dashed border-[#A6BFB6] text-[#5E7678] font-bold text-sm hover:bg-[#EEEDF8] transition-colors"
+            className="w-full py-3.5 rounded-2xl border-2 border-dashed border-[#B2ADEB] text-[#5E7678] font-bold text-sm hover:bg-[#EEEDF8] transition-colors"
           >
             + Add another child
           </button>
@@ -198,7 +198,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => fileRef.current?.click()}
-                className="relative w-24 h-24 rounded-full bg-[#EDF3F0] border-4 border-dashed border-[#A6BFB6] hover:border-[#5E7678] transition-colors overflow-hidden"
+                className="relative w-24 h-24 rounded-full bg-[#EDF3F0] border-4 border-dashed border-[#B2ADEB] hover:border-[#5E7678] transition-colors overflow-hidden"
               >
                 {photoUrl ? (
                   <Image src={photoUrl} alt="Child photo" fill className="object-cover" unoptimized />
@@ -264,7 +264,7 @@ export default function Home() {
                     onClick={() => { setGender(g.value); setErrors(p => ({ ...p, gender: "" })); }}
                     className={`flex flex-col items-center gap-1 py-3 rounded-2xl border-2 transition-all font-semibold text-sm
                       ${gender === g.value
-                        ? "border-[#5E7678] bg-[#EEEDF8] text-[#5E7678] scale-105 shadow-sm"
+                        ? "border-[#B2ADEB] bg-[#F0EEFA] text-[#7A74C0] scale-105 shadow-sm"
                         : "border-[#D4DFDD] bg-[#F7F7FB] text-[#5E7678] hover:border-[#5E7678]"
                       }`}
                   >

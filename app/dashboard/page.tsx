@@ -156,7 +156,7 @@ function Dashboard() {
         {/* Profile card */}
         <div className="bg-white rounded-3xl p-6">
           <div className="flex items-center gap-5">
-            <div className="relative w-20 h-20 rounded-full bg-[#EDF3F0] border-4 border-[#A6BFB6] overflow-hidden flex-shrink-0 flex items-center justify-center">
+            <div className="relative w-20 h-20 rounded-full bg-[#EDF3F0] border-4 border-[#B2ADEB] overflow-hidden flex-shrink-0 flex items-center justify-center">
               {profile.photo ? (
                 <Image src={profile.photo} alt={profile.name} fill className="object-cover" unoptimized />
               ) : (
@@ -181,7 +181,7 @@ function Dashboard() {
             </div>
             <div className="h-3 bg-[#E4E2F2] rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-[#A6BFB6] to-[#5E7678] rounded-full transition-all duration-1000"
+                className="h-full bg-gradient-to-r from-[#B2ADEB] to-[#5E7678] rounded-full transition-all duration-1000"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -235,7 +235,7 @@ function Dashboard() {
                         {[25, 50, 75, 100].map(step => (
                           <div
                             key={step}
-                            className={`flex-1 h-1.5 rounded-full ${a.progress >= step ? "bg-[#5E7678]" : "bg-[#E4E2F2]"}`}
+                            className={`flex-1 h-1.5 rounded-full ${a.progress >= step ? "bg-[#B2ADEB]" : "bg-[#E4E2F2]"}`}
                           />
                         ))}
                       </div>
@@ -294,7 +294,7 @@ function Dashboard() {
                         <div className="flex items-center gap-2 flex-wrap">
                           <h3 className="font-extrabold text-[#0A1338] text-base leading-tight">{m.label}</h3>
                           {isOverdue ? (
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EEEDF8] text-[#5E7678]">Around their age</span>
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FDF3EE] text-[#AA6646]">Around their age</span>
                           ) : (
                             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EEEDF8] text-[#5E7678]">Coming up</span>
                           )}
@@ -305,8 +305,8 @@ function Dashboard() {
                           const stage = m.stages.find(s => s.id === savedStage);
                           return stage ? (
                             <div className="mt-2 bg-[#EEEDF8] rounded-xl p-2.5">
-                              <p className="text-[10px] font-bold text-[#4A5F61] mb-1">📍 {stage.label}</p>
-                              <p className="text-[10px] text-[#3D5557] leading-relaxed">{stage.nextTip}</p>
+                              <p className="text-[10px] font-bold text-[#7A74C0] mb-1">📍 {stage.label}</p>
+                              <p className="text-[10px] text-[#5E4FA8] leading-relaxed">{stage.nextTip}</p>
                             </div>
                           ) : null;
                         })()}
@@ -324,7 +324,7 @@ function Dashboard() {
                               onClick={() => saveMilestoneStage(m.id, stage.id)}
                               className={`w-full flex items-start gap-3 px-3 py-2.5 rounded-xl border-2 text-left transition-all
                                 ${savedStage === stage.id
-                                  ? "border-[#5E7678] bg-[#EEEDF8]"
+                                  ? "border-[#B2ADEB] bg-[#F0EEFA]"
                                   : "border-[#D4DFDD] bg-[#F7F7FB] hover:border-[#A6BFB6]"
                                 }`}
                             >
@@ -346,9 +346,9 @@ function Dashboard() {
                     <div className="border-t border-[#E4E2F2] px-3 py-2.5 grid grid-cols-3 gap-1.5">
                       <button
                         onClick={() => setExpandedMilestone(isExpanded ? null : m.id)}
-                        className="flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl bg-[#EEEDF8] hover:bg-[#E0DEFF] transition-colors text-center"
+                        className="flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl bg-[#F0EEFA] hover:bg-[#E0DEFF] transition-colors text-center"
                       >
-                        <span className="text-[10px] font-bold text-[#4A5F61] leading-tight">In progress</span>
+                        <span className="text-[10px] font-bold text-[#7A74C0] leading-tight">In progress</span>
                       </button>
                       <button
                         onClick={() => addMilestoneToBoard(m)}
@@ -361,9 +361,9 @@ function Dashboard() {
                       </button>
                       <button
                         onClick={() => markMilestoneAccomplished(m.id)}
-                        className="flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl bg-[#EDF3F0] hover:bg-[#D4DFDD] transition-colors text-center"
+                        className="flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl bg-[#FDF3EE] hover:bg-[#F5E5D5] transition-colors text-center"
                       >
-                        <span className="text-[10px] font-bold text-[#5E7678] leading-tight">Accomplished!</span>
+                        <span className="text-[10px] font-bold text-[#AA6646] leading-tight">Accomplished!</span>
                       </button>
                     </div>
                   </div>
