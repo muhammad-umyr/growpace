@@ -271,7 +271,7 @@ function Dashboard() {
                       onClick={() => router.push(`/activity?profileId=${profile.id}&activityId=${a.id}`)}
                       className="mt-3 w-full py-2 rounded-xl bg-[#EEEDF8] text-[#202837] font-bold text-xs hover:bg-[#E4E2F2] transition-colors border border-[#D4DFDD]"
                     >
-                      View Timeline →
+                      Log a progress update
                     </button>
                   </div>
                 );

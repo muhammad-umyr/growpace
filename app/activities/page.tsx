@@ -183,7 +183,7 @@ function ActiveCard({
           onClick={() => router.push(`/activity?profileId=${profileId}&activityId=${activity.id}`)}
           className="flex-1 py-2 rounded-xl bg-[#EEEDF8] text-[#202837] font-bold text-xs hover:bg-[#E4E2F2] transition-colors border border-[#D4DFDD]"
         >
-          View Timeline →
+          Log a progress update
         </button>
         <button
           onClick={onDone}
