@@ -67,7 +67,9 @@ function ActivityCard({
           </div>
           <p className="text-[#a07060] text-xs mt-0.5">{desc}</p>
           {reason && (
-            <p className="text-[#c4a898] text-[10px] mt-1 italic">💡 {reason}</p>
+            <span className="inline-flex items-center gap-1 mt-1.5 bg-gradient-to-r from-[#fff3e8] to-[#fef0f8] border border-orange-100 text-[#e8834a] text-[10px] font-bold px-2 py-0.5 rounded-full">
+              ✨ {reason}
+            </span>
           )}
         </div>
         <button
@@ -282,7 +284,7 @@ function Activities() {
             return Math.abs(am - ageMonths) - Math.abs(bm - ageMonths);
           })
           .slice(0, 6)
-          .map(a => ({ ...a, reason: "Curated for this age group" }));
+          .map(a => ({ ...a, reason: `Curated for ${profile.name} · ${calcAge(profile.dob)}` }));
         setSuggestions(fallback);
       } else if (data.activities?.length > 0) {
         setSuggestions(data.activities);
