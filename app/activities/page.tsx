@@ -384,7 +384,6 @@ function Activities() {
             ← {profile.name}&apos;s Dashboard
           </button>
           <div className="flex items-center gap-1.5">
-            <span className="text-xl">🌱</span>
             <span className="text-lg font-extrabold text-[#2D8C7A]">Growpace</span>
           </div>
         </div>

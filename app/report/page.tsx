@@ -74,7 +74,6 @@ function Report() {
         {/* Header card */}
         <div className="bg-white rounded-3xl p-8 text-center">
           <div className="flex items-center justify-center gap-2 mb-1">
-            <span className="text-3xl">🌱</span>
             <span className="text-2xl font-extrabold text-[#2D8C7A]">Growpace</span>
           </div>
           <p className="text-[#7A6E8A] text-base mb-6">Development Progress Report</p>

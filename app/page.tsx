@@ -105,7 +105,6 @@ export default function Home() {
       {/* Logo */}
       <div className="mb-8 text-center">
         <div className="inline-flex items-center gap-2 mb-2">
-          <span className="text-4xl">🌱</span>
           <span className="text-3xl font-extrabold text-[#2D8C7A]">Growpace</span>
         </div>
         <p className="text-[#7A6E8A] text-base font-medium">Every child grows at their own pace.</p>

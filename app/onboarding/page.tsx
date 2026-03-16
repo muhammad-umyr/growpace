@@ -86,7 +86,6 @@ function Onboarding() {
       {/* Header */}
       <div className="max-w-lg mx-auto px-4 pt-10 pb-6 text-center">
         <div className="inline-flex items-center gap-2 mb-6">
-          <span className="text-3xl">🌱</span>
           <span className="text-2xl font-extrabold text-[#2D8C7A]">Growpace</span>
         </div>
 
