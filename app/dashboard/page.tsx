@@ -188,123 +188,6 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* What's next — horizontal scroll thumbnails */}
-        <section>
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-extrabold text-[#0A1338]">What&apos;s next for {profile.name}</h2>
-            <button
-              onClick={() => router.push(`/onboarding?id=${profile.id}`)}
-              className="text-sm text-[#202837] hover:text-[#202837] font-semibold transition-colors"
-            >
-              Edit ✏️
-            </button>
-          </div>
-
-          {nextMilestones.length === 0 ? (
-            <div className="bg-white rounded-2xl border border-[#E4E2F2] p-6 text-center">
-              <p className="text-4xl mb-2">🏆</p>
-              <p className="text-[#0A1338] font-extrabold">All milestones reached!</p>
-              <p className="text-[#202837] text-sm mt-1">
-                {profile.name} is absolutely thriving. Keep it up!
-              </p>
-            </div>
-          ) : (
-            <div className="-mx-4 overflow-x-auto">
-              <div className="flex gap-3 px-4 pb-3" style={{ width: "max-content" }}>
-                {nextMilestones.map((m, i) => {
-                  const isOverdue = m.minMonths <= ageMonths;
-                  const isExpanded = expandedMilestone === m.id;
-                  const savedStage = (profile!.milestoneProgress ?? {})[m.id];
-                  const onBoard = (profile!.board ?? []).some(a => a.id === `milestone-${m.id}`);
-                  return (
-                    <div
-                      key={m.id}
-                      className="w-[42vw] max-w-[200px] flex-shrink-0 bg-white rounded-2xl border border-[#E4E2F2] overflow-hidden flex flex-col"
-                    >
-                      {/* Emoji thumbnail */}
-                      <div className="bg-gradient-to-br from-[#F4F3FC] to-[#D4DFDD] flex items-center justify-center py-5">
-                        <span className="text-4xl">{m.emoji}</span>
-                      </div>
-
-                      {/* Content */}
-                      <div className="px-3 pt-2.5 pb-2 flex flex-col gap-1.5 flex-1">
-                        {isOverdue ? (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FDF3EE] text-[#AA6646] self-start">Around their age</span>
-                        ) : (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EEEDF8] text-[#202837] self-start">Coming up</span>
-                        )}
-                        <h3 className="font-extrabold text-[#0A1338] text-sm leading-tight">{m.label}</h3>
-                        <p className="text-[#8FA4A6] text-[10px]">Expected {milestoneExpectedAge(m.minMonths)}</p>
-                        {savedStage && !isExpanded && (() => {
-                          const stage = m.stages.find(s => s.id === savedStage);
-                          return stage ? (
-                            <div className="mt-1 bg-[#EEEDF8] rounded-lg p-2">
-                              <p className="text-[10px] font-bold text-[#7A74C0] leading-snug">📍 {stage.label}</p>
-                            </div>
-                          ) : null;
-                        })()}
-                      </div>
-
-                      {/* Stage picker — shown when expanded */}
-                      {isExpanded && (
-                        <div className="px-3 pb-2">
-                          <p className="text-[10px] font-bold text-[#0A1338] mb-1.5">Where are they?</p>
-                          <div className="space-y-1.5">
-                            {m.stages.map((stage, si) => (
-                              <button
-                                key={stage.id}
-                                onClick={() => saveMilestoneStage(m.id, stage.id)}
-                                className={`w-full flex items-start gap-2 px-2 py-2 rounded-lg border text-left transition-all
-                                  ${savedStage === stage.id
-                                    ? "border-[#B2ADEB] bg-[#F0EEFA]"
-                                    : "border-[#D4DFDD] bg-[#F7F7FB] hover:border-[#A6BFB6]"
-                                  }`}
-                              >
-                                <span className="text-[10px] font-extrabold text-[#202837] flex-shrink-0 mt-0.5">{si + 1}</span>
-                                <span className="text-[10px] font-semibold leading-tight text-[#0A1338]">{stage.label}</span>
-                              </button>
-                            ))}
-                          </div>
-                          <button
-                            onClick={() => setExpandedMilestone(null)}
-                            className="mt-1.5 text-[10px] text-[#8FA4A6] font-semibold w-full text-center"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      )}
-
-                      {/* 3 CTAs */}
-                      <div className="border-t border-[#E4E2F2] grid grid-cols-3 divide-x divide-[#E4E2F2]">
-                        <button
-                          onClick={() => setExpandedMilestone(isExpanded ? null : m.id)}
-                          className="py-2 bg-[#F0EEFA] hover:bg-[#E0DEFF] transition-colors text-center"
-                        >
-                          <span className="text-[9px] font-bold text-[#7A74C0] leading-tight block">In progress</span>
-                        </button>
-                        <button
-                          onClick={() => addMilestoneToBoard(m)}
-                          className={`py-2 transition-colors text-center ${onBoard ? "bg-[#EEEDF8] opacity-60 cursor-default" : "bg-[#EEEDF8] hover:bg-[#E0DEFF]"}`}
-                        >
-                          <span className="text-[9px] font-bold text-[#202837] leading-tight block">
-                            {onBoard ? "On board" : "+ Board"}
-                          </span>
-                        </button>
-                        <button
-                          onClick={() => markMilestoneAccomplished(m.id)}
-                          className="py-2 bg-[#FDF3EE] hover:bg-[#F5E5D5] transition-colors text-center"
-                        >
-                          <span className="text-[9px] font-bold text-[#AA6646] leading-tight block">Done! ✓</span>
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </section>
-
         {/* Weekly Activities */}
         <section>
           <div className="flex items-center justify-between mb-3">
@@ -347,6 +230,7 @@ function Dashboard() {
                         </span>
                       </div>
                       <p className="text-[#202837] text-sm mt-0.5">{a.desc}</p>
+                      {/* Mini progress bar */}
                       <div className="flex gap-1 mt-2">
                         {[25, 50, 75, 100].map(step => (
                           <div
@@ -366,6 +250,125 @@ function Dashboard() {
               >
                 + Add more activities
               </button>
+            </div>
+          )}
+        </section>
+
+        {/* What's next */}
+        <section>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-extrabold text-[#0A1338]">🎯 What&apos;s next for {profile.name}</h2>
+            <button
+              onClick={() => router.push(`/onboarding?id=${profile.id}`)}
+              className="text-sm text-[#202837] hover:text-[#202837] font-semibold transition-colors"
+            >
+              Edit ✏️
+            </button>
+          </div>
+
+          {nextMilestones.length === 0 ? (
+            <div className="bg-white rounded-2xl border border-[#E4E2F2] p-6 text-center">
+              <p className="text-4xl mb-2">🏆</p>
+              <p className="text-[#0A1338] font-extrabold">All milestones reached!</p>
+              <p className="text-[#202837] text-sm mt-1">
+                {profile.name} is absolutely thriving. Keep it up!
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {nextMilestones.map((m, i) => {
+                const isOverdue = m.minMonths <= ageMonths;
+                const isExpanded = expandedMilestone === m.id;
+                const savedStage = (profile!.milestoneProgress ?? {})[m.id];
+                const onBoard = (profile!.board ?? []).some(a => a.id === `milestone-${m.id}`);
+                return (
+                  <div
+                    key={m.id}
+                    className="bg-white rounded-2xl border border-[#E4E2F2] overflow-hidden"
+                  >
+                    <div className="p-4 flex items-start gap-4">
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#F4F3FC] to-[#D4DFDD] flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">
+                        {m.emoji}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="font-extrabold text-[#0A1338] text-base leading-tight">{m.label}</h3>
+                          {isOverdue ? (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FDF3EE] text-[#AA6646]">Around their age</span>
+                          ) : (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EEEDF8] text-[#202837]">Coming up</span>
+                          )}
+                        </div>
+                        <p className="text-[#8FA4A6] text-sm mt-0.5">Expected {milestoneExpectedAge(m.minMonths)}</p>
+                        <p className="text-[#202837] text-sm mt-2 leading-relaxed">{m.tip}</p>
+                        {savedStage && !isExpanded && (() => {
+                          const stage = m.stages.find(s => s.id === savedStage);
+                          return stage ? (
+                            <div className="mt-2 bg-[#EEEDF8] rounded-xl p-2.5">
+                              <p className="text-[10px] font-bold text-[#7A74C0] mb-1">📍 {stage.label}</p>
+                              <p className="text-[10px] text-[#5E4FA8] leading-relaxed">{stage.nextTip}</p>
+                            </div>
+                          ) : null;
+                        })()}
+                      </div>
+                    </div>
+
+                    {/* Stage picker — shown when expanded */}
+                    {isExpanded && (
+                      <div className="px-4 pb-3">
+                        <p className="text-sm font-bold text-[#0A1338] mb-2">Where is {profile!.name} right now?</p>
+                        <div className="space-y-2">
+                          {m.stages.map((stage, si) => (
+                            <button
+                              key={stage.id}
+                              onClick={() => saveMilestoneStage(m.id, stage.id)}
+                              className={`w-full flex items-start gap-3 px-3 py-2.5 rounded-xl border-2 text-left transition-all
+                                ${savedStage === stage.id
+                                  ? "border-[#B2ADEB] bg-[#F0EEFA]"
+                                  : "border-[#D4DFDD] bg-[#F7F7FB] hover:border-[#A6BFB6]"
+                                }`}
+                            >
+                              <span className="text-sm font-extrabold text-[#202837] mt-0.5 flex-shrink-0">{si + 1}</span>
+                              <span className="text-sm font-semibold leading-tight text-[#0A1338]">{stage.label}</span>
+                            </button>
+                          ))}
+                        </div>
+                        <button
+                          onClick={() => setExpandedMilestone(null)}
+                          className="mt-2 text-sm text-[#8FA4A6] hover:text-[#202837] font-semibold w-full text-center"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    )}
+
+                    {/* 3 CTAs */}
+                    <div className="border-t border-[#E4E2F2] px-3 py-2.5 grid grid-cols-3 gap-1.5">
+                      <button
+                        onClick={() => setExpandedMilestone(isExpanded ? null : m.id)}
+                        className="flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl bg-[#F0EEFA] hover:bg-[#E0DEFF] transition-colors text-center"
+                      >
+                        <span className="text-[10px] font-bold text-[#7A74C0] leading-tight">In progress</span>
+                      </button>
+                      <button
+                        onClick={() => addMilestoneToBoard(m)}
+                        className={`flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl transition-colors text-center
+                          ${onBoard ? "bg-[#EEEDF8] opacity-60 cursor-default" : "bg-[#EEEDF8] hover:bg-[#E0DEFF]"}`}
+                      >
+                        <span className="text-[10px] font-bold text-[#202837] leading-tight">
+                          {onBoard ? "On board" : "Add to board"}
+                        </span>
+                      </button>
+                      <button
+                        onClick={() => markMilestoneAccomplished(m.id)}
+                        className="flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl bg-[#FDF3EE] hover:bg-[#F5E5D5] transition-colors text-center"
+                      >
+                        <span className="text-[10px] font-bold text-[#AA6646] leading-tight">Accomplished!</span>
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           )}
         </section>
