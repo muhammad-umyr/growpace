@@ -76,7 +76,7 @@ export function getMilestonesForOnboarding(ageMonths: number): MilestoneDef[] {
 export function getNextMilestones(profile: Profile, count = 3): MilestoneDef[] {
   const ageMonths = calcAgeMonths(profile.dob);
   return ALL_MILESTONES
-    .filter(m => !profile.milestones[m.id] && m.minMonths <= ageMonths + 6)
+    .filter(m => !profile.milestones[m.id] && m.minMonths >= ageMonths - 3 && m.minMonths <= ageMonths + 6)
     .sort((a, b) => a.minMonths - b.minMonths)
     .slice(0, count);
 }
