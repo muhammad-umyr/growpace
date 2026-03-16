@@ -21,9 +21,8 @@ async function fileToBase64(file: File): Promise<string> {
 }
 
 const GENDERS = [
-  { value: "boy",   label: "Boy",   emoji: "👦" },
-  { value: "girl",  label: "Girl",  emoji: "👧" },
-  { value: "other", label: "Other", emoji: "🌈" },
+  { value: "boy",  label: "Boy",  emoji: "👦" },
+  { value: "girl", label: "Girl", emoji: "👧" },
 ];
 
 export default function Home() {
@@ -257,7 +256,7 @@ export default function Home() {
               <label className="block text-sm font-bold text-[#3d2c1e] mb-2">
                 Gender <span className="text-[#e8834a]">*</span>
               </label>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 gap-3">
                 {GENDERS.map(g => (
                   <button
                     key={g.value}
