@@ -100,13 +100,13 @@ export default function Home() {
   const showCreateForm = !hasProfiles || showForm;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FCF0F4] via-[#F7F4FC] to-[#EEF2F9] flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-[#F0FAF8] via-[#F7F4FC] to-[#EEF2F9] flex flex-col items-center justify-center px-4 py-12">
 
       {/* Logo */}
       <div className="mb-8 text-center">
         <div className="inline-flex items-center gap-2 mb-2">
           <span className="text-4xl">🌱</span>
-          <span className="text-3xl font-extrabold text-[#ED6481]">Growpace</span>
+          <span className="text-3xl font-extrabold text-[#2D8C7A]">Growpace</span>
         </div>
         <p className="text-[#7A6E8A] text-base font-medium">Every child grows at their own pace.</p>
       </div>
@@ -125,7 +125,7 @@ export default function Home() {
                     onClick={() => router.push(`/dashboard?id=${p.id}`)}
                     className="w-full bg-white rounded-2xl p-4 flex flex-col items-center gap-2 hover:scale-[1.02] transition-all border border-[#EDE9F5]"
                   >
-                    <div className="relative w-16 h-16 rounded-full bg-[#F5F0FC] border-4 border-[#F0A0B5] overflow-hidden flex items-center justify-center">
+                    <div className="relative w-16 h-16 rounded-full bg-[#EDF7F5] border-4 border-[#A8D5CC] overflow-hidden flex items-center justify-center">
                       {p.photo ? (
                         <Image src={p.photo} alt={p.name} fill className="object-cover" unoptimized />
                       ) : (
@@ -133,7 +133,7 @@ export default function Home() {
                       )}
                     </div>
                     <p className="font-extrabold text-[#0F1E29] text-base">{p.name}</p>
-                    <p className="text-[#ED6481] text-sm font-semibold">{calcAge(p.dob)}</p>
+                    <p className="text-[#2D8C7A] text-sm font-semibold">{calcAge(p.dob)}</p>
                   </button>
 
                   {/* Delete button */}
@@ -171,7 +171,7 @@ export default function Home() {
 
           <button
             onClick={() => setShowForm(true)}
-            className="w-full py-3.5 rounded-2xl border-2 border-dashed border-[#F0A0B5] text-[#ED6481] font-bold text-sm hover:bg-[#FCF0F4] transition-colors"
+            className="w-full py-3.5 rounded-2xl border-2 border-dashed border-[#A8D5CC] text-[#2D8C7A] font-bold text-sm hover:bg-[#F0FAF8] transition-colors"
           >
             + Add another child
           </button>
@@ -184,7 +184,7 @@ export default function Home() {
           {showForm && hasProfiles && (
             <button
               onClick={() => setShowForm(false)}
-              className="text-sm text-[#7A6E8A] hover:text-[#ED6481] font-semibold mb-4 flex items-center gap-1 transition-colors"
+              className="text-sm text-[#7A6E8A] hover:text-[#2D8C7A] font-semibold mb-4 flex items-center gap-1 transition-colors"
             >
               ← Back
             </button>
@@ -199,12 +199,12 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => fileRef.current?.click()}
-                className="relative w-24 h-24 rounded-full bg-[#F5F0FC] border-4 border-dashed border-[#F0A0B5] hover:border-[#ED6481] transition-colors overflow-hidden"
+                className="relative w-24 h-24 rounded-full bg-[#EDF7F5] border-4 border-dashed border-[#A8D5CC] hover:border-[#2D8C7A] transition-colors overflow-hidden"
               >
                 {photoUrl ? (
                   <Image src={photoUrl} alt="Child photo" fill className="object-cover" unoptimized />
                 ) : (
-                  <div className="flex flex-col items-center justify-center h-full text-[#ED6481] gap-1">
+                  <div className="flex flex-col items-center justify-center h-full text-[#2D8C7A] gap-1">
                     <span className="text-2xl">📷</span>
                     <span className="text-[10px] font-semibold">Add photo</span>
                   </div>
@@ -225,14 +225,14 @@ export default function Home() {
             {/* Name */}
             <div>
               <label className="block text-sm font-bold text-[#0F1E29] mb-1.5">
-                Child&apos;s name <span className="text-[#ED6481]">*</span>
+                Child&apos;s name <span className="text-[#2D8C7A]">*</span>
               </label>
               <input
                 type="text"
                 value={name}
                 onChange={e => { setName(e.target.value); setErrors(p => ({ ...p, name: "" })); }}
                 placeholder="e.g. Aisha, Liam, Noah…"
-                className="w-full px-4 py-3 rounded-2xl border-2 border-[#E2DCF0] bg-[#FAF8FD] focus:outline-none focus:border-[#ED6481] text-[#0F1E29] placeholder-[#A89EC0] transition-colors"
+                className="w-full px-4 py-3 rounded-2xl border-2 border-[#E2DCF0] bg-[#FAF8FD] focus:outline-none focus:border-[#2D8C7A] text-[#0F1E29] placeholder-[#A89EC0] transition-colors"
               />
               {errors.name && <p className="mt-1 text-sm text-red-400">{errors.name}</p>}
             </div>
@@ -240,14 +240,14 @@ export default function Home() {
             {/* Date of birth */}
             <div>
               <label className="block text-sm font-bold text-[#0F1E29] mb-1.5">
-                Date of birth <span className="text-[#ED6481]">*</span>
+                Date of birth <span className="text-[#2D8C7A]">*</span>
               </label>
               <input
                 type="date"
                 value={dob}
                 max={new Date().toISOString().split("T")[0]}
                 onChange={e => { setDob(e.target.value); setErrors(p => ({ ...p, dob: "" })); }}
-                className="w-full px-4 py-3 rounded-2xl border-2 border-[#E2DCF0] bg-[#FAF8FD] focus:outline-none focus:border-[#ED6481] text-[#0F1E29] transition-colors"
+                className="w-full px-4 py-3 rounded-2xl border-2 border-[#E2DCF0] bg-[#FAF8FD] focus:outline-none focus:border-[#2D8C7A] text-[#0F1E29] transition-colors"
               />
               {errors.dob && <p className="mt-1 text-sm text-red-400">{errors.dob}</p>}
             </div>
@@ -255,7 +255,7 @@ export default function Home() {
             {/* Gender */}
             <div>
               <label className="block text-sm font-bold text-[#0F1E29] mb-2">
-                Gender <span className="text-[#ED6481]">*</span>
+                Gender <span className="text-[#2D8C7A]">*</span>
               </label>
               <div className="grid grid-cols-2 gap-3">
                 {GENDERS.map(g => (
@@ -265,8 +265,8 @@ export default function Home() {
                     onClick={() => { setGender(g.value); setErrors(p => ({ ...p, gender: "" })); }}
                     className={`flex flex-col items-center gap-1 py-3 rounded-2xl border-2 transition-all font-semibold text-sm
                       ${gender === g.value
-                        ? "border-[#ED6481] bg-[#FAF0F8] text-[#ED6481] scale-105 shadow-sm"
-                        : "border-[#E2DCF0] bg-[#FAF8FD] text-[#7A6E8A] hover:border-[#ED6481]"
+                        ? "border-[#2D8C7A] bg-[#F0FAF8] text-[#2D8C7A] scale-105 shadow-sm"
+                        : "border-[#E2DCF0] bg-[#FAF8FD] text-[#7A6E8A] hover:border-[#2D8C7A]"
                       }`}
                   >
                     <span className="text-2xl">{g.emoji}</span>
@@ -280,7 +280,7 @@ export default function Home() {
             {/* Submit */}
             <button
               type="submit"
-              className="w-full py-3.5 rounded-2xl bg-[#ED6481] hover:bg-[#C4354F] text-white font-extrabold text-base transition-colors shadow-md shadow-pink-200 mt-2 cursor-pointer"
+              className="w-full py-3.5 rounded-2xl bg-[#2D8C7A] hover:bg-[#1E6B5A] text-white font-extrabold text-base transition-colors shadow-md shadow-teal-200 mt-2 cursor-pointer"
             >
               Create Profile 🌟
             </button>

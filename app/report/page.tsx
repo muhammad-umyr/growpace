@@ -29,10 +29,10 @@ function Report() {
 
   if (!profile) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#FCF0F4] gap-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F0FAF8] gap-4">
         <span className="text-5xl">🌱</span>
         <p className="text-[#7A6E8A] font-semibold">Profile not found.</p>
-        <button onClick={() => router.push("/")} className="text-[#ED6481] font-bold hover:underline">
+        <button onClick={() => router.push("/")} className="text-[#2D8C7A] font-bold hover:underline">
           Go back home
         </button>
       </div>
@@ -49,20 +49,20 @@ function Report() {
   const genderEmoji = profile.gender === "boy" ? "👦" : profile.gender === "girl" ? "👧" : "🌈";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FCF0F4] via-[#F7F4FC] to-[#EEF2F9]">
+    <div className="min-h-screen bg-gradient-to-br from-[#F0FAF8] via-[#F7F4FC] to-[#EEF2F9]">
 
       {/* Toolbar — hidden when printing */}
       <div className="print:hidden bg-white border-b border-[#E2DCF0] sticky top-0 z-10">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <button
             onClick={() => router.back()}
-            className="text-sm text-[#7A6E8A] hover:text-[#ED6481] font-semibold transition-colors"
+            className="text-sm text-[#7A6E8A] hover:text-[#2D8C7A] font-semibold transition-colors"
           >
             ← Back
           </button>
           <button
             onClick={() => window.print()}
-            className="text-sm bg-[#ED6481] text-white font-bold px-4 py-2 rounded-full hover:bg-[#C4354F] transition-colors"
+            className="text-sm bg-[#2D8C7A] text-white font-bold px-4 py-2 rounded-full hover:bg-[#1E6B5A] transition-colors"
           >
             🖨️ Print / Save PDF
           </button>
@@ -75,11 +75,11 @@ function Report() {
         <div className="bg-white rounded-3xl p-8 text-center">
           <div className="flex items-center justify-center gap-2 mb-1">
             <span className="text-3xl">🌱</span>
-            <span className="text-2xl font-extrabold text-[#ED6481]">Growpace</span>
+            <span className="text-2xl font-extrabold text-[#2D8C7A]">Growpace</span>
           </div>
           <p className="text-[#7A6E8A] text-base mb-6">Development Progress Report</p>
 
-          <div className="relative w-24 h-24 rounded-full bg-[#F5F0FC] border-4 border-[#F0A0B5] overflow-hidden mx-auto mb-4 flex items-center justify-center">
+          <div className="relative w-24 h-24 rounded-full bg-[#EDF7F5] border-4 border-[#A8D5CC] overflow-hidden mx-auto mb-4 flex items-center justify-center">
             {profile.photo ? (
               <Image src={profile.photo} alt={profile.name} fill className="object-cover" unoptimized />
             ) : (
@@ -88,7 +88,7 @@ function Report() {
           </div>
 
           <h1 className="text-3xl font-extrabold text-[#0F1E29]">{profile.name}</h1>
-          <p className="text-[#ED6481] font-semibold mt-1">{calcAge(profile.dob)}</p>
+          <p className="text-[#2D8C7A] font-semibold mt-1">{calcAge(profile.dob)}</p>
           <p className="text-[#A89EC0] text-base">
             Born {new Date(profile.dob).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
           </p>
@@ -102,12 +102,12 @@ function Report() {
           <h2 className="text-lg font-extrabold text-[#0F1E29] mb-4">Journey Progress</h2>
           <div className="flex justify-between text-sm text-[#7A6E8A] mb-2 font-semibold">
             <span>Birth</span>
-            <span className="text-[#ED6481]">{progress}% of journey to age 7</span>
+            <span className="text-[#2D8C7A]">{progress}% of journey to age 7</span>
             <span>Age 7</span>
           </div>
           <div className="h-4 bg-[#EDE9F5] rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-[#F0A0B5] to-[#ED6481] rounded-full"
+              className="h-full bg-gradient-to-r from-[#A8D5CC] to-[#2D8C7A] rounded-full"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -117,13 +117,13 @@ function Report() {
         <div className="bg-white rounded-3xl p-6">
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-lg font-extrabold text-[#0F1E29]">Milestones</h2>
-            <span className="text-sm font-bold text-[#ED6481]">{doneCount}/{milestones.length} reached</span>
+            <span className="text-sm font-bold text-[#2D8C7A]">{doneCount}/{milestones.length} reached</span>
           </div>
 
           {/* Milestone progress bar */}
           <div className="h-2 bg-[#EDE9F5] rounded-full overflow-hidden mb-4">
             <div
-              className="h-full bg-gradient-to-r from-[#F0A0B5] to-[#ED6481] rounded-full"
+              className="h-full bg-gradient-to-r from-[#A8D5CC] to-[#2D8C7A] rounded-full"
               style={{ width: `${milestonePercent}%` }}
             />
           </div>
@@ -133,7 +133,7 @@ function Report() {
               <div
                 key={m.id}
                 className={`flex items-center gap-2 p-2.5 rounded-xl
-                  ${profile.milestones[m.id] ? "bg-[#FCF0F4]" : "bg-[#fafafa]"}`}
+                  ${profile.milestones[m.id] ? "bg-[#F0FAF8]" : "bg-[#fafafa]"}`}
               >
                 <span className="text-lg flex-shrink-0">{m.emoji}</span>
                 <span className={`text-sm font-semibold flex-1 leading-tight
@@ -141,7 +141,7 @@ function Report() {
                   {m.label}
                 </span>
                 {profile.milestones[m.id] && (
-                  <span className="text-[#ED6481] text-xs font-bold flex-shrink-0">✓</span>
+                  <span className="text-[#2D8C7A] text-xs font-bold flex-shrink-0">✓</span>
                 )}
               </div>
             ))}
@@ -191,7 +191,7 @@ function Report() {
 export default function ReportPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-[#FCF0F4]">
+      <div className="min-h-screen flex items-center justify-center bg-[#F0FAF8]">
         <div className="text-4xl animate-bounce">🌱</div>
       </div>
     }>

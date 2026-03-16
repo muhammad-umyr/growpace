@@ -29,7 +29,7 @@ const TAG_COLORS: Record<string, string> = {
   Physical:  "bg-[#f0fbf4] text-green-600",
   Language:  "bg-[#EEF2F9] text-[#6baed6]",
   Cognitive: "bg-[#fdf4ff] text-purple-500",
-  Creative:  "bg-[#FCF0F4] text-[#ED6481]",
+  Creative:  "bg-[#F0FAF8] text-[#2D8C7A]",
   Social:    "bg-[#fff0f5] text-pink-500",
   Sensory:   "bg-[#f5fff0] text-lime-600",
   Motor:     "bg-[#eff6ff] text-blue-500",
@@ -57,7 +57,7 @@ function ActivityCard({
       {/* Body */}
       <div className="p-4 flex gap-4 items-start">
         {/* Emoji */}
-        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#FAF0F8] to-[#F5E0EE] flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">
+        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#F0FAF8] to-[#D5EDE9] flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">
           {emoji}
         </div>
 
@@ -69,7 +69,7 @@ function ActivityCard({
           <h3 className="font-extrabold text-[#0F1E29] text-base leading-tight mt-1">{title}</h3>
           <p className="text-[#7A6E8A] text-sm mt-0.5 leading-relaxed">{desc}</p>
           {reason && (
-            <span className="inline-flex items-center gap-1 mt-2 bg-gradient-to-r from-[#FAF0F8] to-[#F7F4FC] border border-[#E2DCF0] text-[#ED6481] text-[10px] font-bold px-2.5 py-1 rounded-full">
+            <span className="inline-flex items-center gap-1 mt-2 bg-gradient-to-r from-[#F0FAF8] to-[#F7F4FC] border border-[#E2DCF0] text-[#2D8C7A] text-[10px] font-bold px-2.5 py-1 rounded-full">
               ✨ {reason}
             </span>
           )}
@@ -82,7 +82,7 @@ function ActivityCard({
           <button
             onClick={() => setShowTips(v => !v)}
             className={`text-xs font-bold px-3 py-1.5 rounded-full transition-colors
-              ${showTips ? "bg-[#F5F0FC] text-[#ED6481]" : "bg-[#EDE9F5] text-[#7A6E8A] hover:text-[#ED6481]"}`}
+              ${showTips ? "bg-[#EDF7F5] text-[#2D8C7A]" : "bg-[#EDE9F5] text-[#7A6E8A] hover:text-[#2D8C7A]"}`}
           >
             📋 How to {showTips ? "▲" : "▾"}
           </button>
@@ -102,7 +102,7 @@ function ActivityCard({
           className={`text-xs font-bold px-4 py-1.5 rounded-full transition-all
             ${isAdded
               ? "bg-[#EDE9F5] text-[#A89EC0] cursor-default"
-              : "bg-[#ED6481] text-white hover:bg-[#C4354F] shadow-sm"
+              : "bg-[#2D8C7A] text-white hover:bg-[#1E6B5A] shadow-sm"
             }`}
         >
           {isAdded ? "✓ Added" : "+ Board"}
@@ -115,7 +115,7 @@ function ActivityCard({
           <ol className="space-y-3">
             {howTo.map((tip, i) => (
               <li key={i} className="flex items-start gap-3 text-sm text-[#7A6E8A] leading-relaxed">
-                <span className="w-5 h-5 rounded-full bg-[#F5F0FC] text-[#ED6481] font-extrabold text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span className="w-5 h-5 rounded-full bg-[#EDF7F5] text-[#2D8C7A] font-extrabold text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">
                   {i + 1}
                 </span>
                 {tip}
@@ -141,7 +141,7 @@ function ActiveCard({
   return (
     <div className="bg-white rounded-2xl border border-[#E2DCF0] p-4 space-y-3">
       <div className="flex items-start gap-3">
-        <div className="w-11 h-11 rounded-2xl bg-[#FCF0F4] flex items-center justify-center text-2xl flex-shrink-0">
+        <div className="w-11 h-11 rounded-2xl bg-[#F0FAF8] flex items-center justify-center text-2xl flex-shrink-0">
           {activity.emoji}
         </div>
         <div className="flex-1 min-w-0">
@@ -162,7 +162,7 @@ function ActiveCard({
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <span className="text-xs text-[#7A6E8A] font-semibold">Weekly progress</span>
-          <span className="text-xs font-bold text-[#ED6481]">{activity.progress}%</span>
+          <span className="text-xs font-bold text-[#2D8C7A]">{activity.progress}%</span>
         </div>
         <div className="flex gap-1.5">
           {[25, 50, 75, 100].map(step => (
@@ -170,7 +170,7 @@ function ActiveCard({
               key={step}
               onClick={() => onProgress(activity.progress === step ? Math.max(0, step - 25) : step)}
               className={`flex-1 h-3 rounded-full transition-colors
-                ${activity.progress >= step ? "bg-[#ED6481]" : "bg-[#EDE9F5] hover:bg-[#E2DCF0]"}`}
+                ${activity.progress >= step ? "bg-[#2D8C7A]" : "bg-[#EDE9F5] hover:bg-[#E2DCF0]"}`}
               title={`${step}%`}
             />
           ))}
@@ -217,7 +217,7 @@ function SavedCard({
         <div className="flex gap-2 mt-2">
           <button
             onClick={onActivate}
-            className="text-xs bg-[#ED6481] text-white font-bold px-3 py-1 rounded-full hover:bg-[#C4354F] transition-colors"
+            className="text-xs bg-[#2D8C7A] text-white font-bold px-3 py-1 rounded-full hover:bg-[#1E6B5A] transition-colors"
           >
             Start This Week →
           </button>
@@ -312,10 +312,10 @@ function Activities() {
 
   if (!profile) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#FCF0F4] gap-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F0FAF8] gap-4">
         <span className="text-5xl">🌱</span>
         <p className="text-[#7A6E8A] font-semibold">Profile not found.</p>
-        <button onClick={() => router.push("/")} className="text-[#ED6481] font-bold hover:underline">
+        <button onClick={() => router.push("/")} className="text-[#2D8C7A] font-bold hover:underline">
           Go back home
         </button>
       </div>
@@ -372,20 +372,20 @@ function Activities() {
   // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FCF0F4] via-[#F7F4FC] to-[#EEF2F9]">
+    <div className="min-h-screen bg-gradient-to-br from-[#F0FAF8] via-[#F7F4FC] to-[#EEF2F9]">
 
       {/* Nav */}
       <header className="bg-white/80 backdrop-blur-sm border-b border-[#E2DCF0] sticky top-0 z-10">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <button
             onClick={() => router.push(`/dashboard?id=${profile.id}`)}
-            className="text-sm text-[#7A6E8A] hover:text-[#ED6481] font-semibold transition-colors flex items-center gap-1"
+            className="text-sm text-[#7A6E8A] hover:text-[#2D8C7A] font-semibold transition-colors flex items-center gap-1"
           >
             ← {profile.name}&apos;s Dashboard
           </button>
           <div className="flex items-center gap-1.5">
             <span className="text-xl">🌱</span>
-            <span className="text-lg font-extrabold text-[#ED6481]">Growpace</span>
+            <span className="text-lg font-extrabold text-[#2D8C7A]">Growpace</span>
           </div>
         </div>
       </header>
@@ -409,7 +409,7 @@ function Activities() {
               key={t.key}
               onClick={() => setTab(t.key as typeof tab)}
               className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all
-                ${tab === t.key ? "bg-[#ED6481] text-white shadow-sm" : "text-[#7A6E8A] hover:text-[#ED6481]"}`}
+                ${tab === t.key ? "bg-[#2D8C7A] text-white shadow-sm" : "text-[#7A6E8A] hover:text-[#2D8C7A]"}`}
             >
               {t.label}
             </button>
@@ -421,9 +421,9 @@ function Activities() {
           <div className="space-y-3">
 
             {/* Personalisation banner */}
-            <div className="rounded-2xl bg-gradient-to-r from-[#FAF0F8] to-[#F7F4FC] border border-[#E2DCF0] p-4 flex items-center gap-4">
+            <div className="rounded-2xl bg-gradient-to-r from-[#F0FAF8] to-[#F7F4FC] border border-[#E2DCF0] p-4 flex items-center gap-4">
               {/* Avatar */}
-              <div className="w-12 h-12 rounded-full bg-[#F5F0FC] border-2 border-[#F0A0B5] flex items-center justify-center flex-shrink-0 text-2xl">
+              <div className="w-12 h-12 rounded-full bg-[#EDF7F5] border-2 border-[#A8D5CC] flex items-center justify-center flex-shrink-0 text-2xl">
                 {profile.gender === "boy" ? "👦" : profile.gender === "girl" ? "👧" : "🌈"}
               </div>
               <div className="flex-1 min-w-0">
@@ -437,27 +437,27 @@ function Activities() {
               <button
                 onClick={fetchSuggestions}
                 disabled={loading}
-                className="flex-shrink-0 text-xs text-[#ED6481] font-bold hover:underline disabled:opacity-40 transition-opacity"
+                className="flex-shrink-0 text-xs text-[#2D8C7A] font-bold hover:underline disabled:opacity-40 transition-opacity"
               >
                 ↻ Refresh
               </button>
             </div>
 
             {aiError === "no_key" && (
-              <div className="bg-[#FCF0F4] rounded-2xl p-3 border border-[#E2DCF0] text-center">
+              <div className="bg-[#F0FAF8] rounded-2xl p-3 border border-[#E2DCF0] text-center">
                 <p className="text-sm text-[#7A6E8A]">
                   Showing curated suggestions ·{" "}
-                  <span className="text-[#ED6481] font-bold">Add ANTHROPIC_API_KEY in Vercel</span>
+                  <span className="text-[#2D8C7A] font-bold">Add ANTHROPIC_API_KEY in Vercel</span>
                   {" "}for live AI suggestions
                 </p>
               </div>
             )}
 
             {aiError === "failed" && !loading && (
-              <div className="bg-[#FCF0F4] rounded-2xl p-4 border border-[#E2DCF0] text-center">
+              <div className="bg-[#F0FAF8] rounded-2xl p-4 border border-[#E2DCF0] text-center">
                 <p className="text-3xl mb-2">😕</p>
                 <p className="text-[#7A6E8A] text-base font-semibold">Couldn&apos;t load suggestions.</p>
-                <button onClick={fetchSuggestions} className="mt-2 text-xs text-[#ED6481] font-bold hover:underline">
+                <button onClick={fetchSuggestions} className="mt-2 text-xs text-[#2D8C7A] font-bold hover:underline">
                   Try again
                 </button>
               </div>
@@ -498,8 +498,8 @@ function Activities() {
                   onClick={() => setFilterTag(tag)}
                   className={`text-xs font-bold px-3 py-1.5 rounded-full transition-all
                     ${filterTag === tag
-                      ? "bg-[#ED6481] text-white"
-                      : "bg-white text-[#7A6E8A] border border-[#E2DCF0] hover:border-[#ED6481]"
+                      ? "bg-[#2D8C7A] text-white"
+                      : "bg-white text-[#7A6E8A] border border-[#E2DCF0] hover:border-[#2D8C7A]"
                     }`}
                 >
                   {tag}
@@ -537,7 +537,7 @@ function Activities() {
                 </p>
                 <button
                   onClick={() => setTab("suggested")}
-                  className="text-sm bg-[#ED6481] text-white font-bold px-5 py-2.5 rounded-full hover:bg-[#C4354F] transition-colors"
+                  className="text-sm bg-[#2D8C7A] text-white font-bold px-5 py-2.5 rounded-full hover:bg-[#1E6B5A] transition-colors"
                 >
                   Browse Suggestions ✨
                 </button>
@@ -547,9 +547,9 @@ function Activities() {
                 {/* Active this week */}
                 {activeActivities.length > 0 && (
                   <div>
-                    <h3 className="text-sm font-extrabold text-[#ED6481] mb-2 flex items-center gap-2">
+                    <h3 className="text-sm font-extrabold text-[#2D8C7A] mb-2 flex items-center gap-2">
                       🎯 Active This Week
-                      <span className="bg-[#F5F0FC] text-[#ED6481] text-xs px-2 py-0.5 rounded-full">
+                      <span className="bg-[#EDF7F5] text-[#2D8C7A] text-xs px-2 py-0.5 rounded-full">
                         {activeActivities.length}
                       </span>
                     </h3>
@@ -634,7 +634,7 @@ function Activities() {
 export default function ActivitiesPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-[#FCF0F4]">
+      <div className="min-h-screen flex items-center justify-center bg-[#F0FAF8]">
         <div className="text-4xl animate-bounce">🌱</div>
       </div>
     }>
