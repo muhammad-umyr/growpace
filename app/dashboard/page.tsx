@@ -155,7 +155,7 @@ function Dashboard() {
       <main className="max-w-2xl mx-auto px-4 py-8 space-y-6">
 
         {/* Profile card */}
-        <div className="bg-white rounded-3xl shadow-lg shadow-orange-100/50 p-6">
+        <div className="bg-white rounded-3xl p-6">
           <div className="flex items-center gap-5">
             <div className="relative w-20 h-20 rounded-full bg-[#fff0e6] border-4 border-[#f4b98a] overflow-hidden flex-shrink-0 flex items-center justify-center">
               {profile.photo ? (
@@ -166,8 +166,8 @@ function Dashboard() {
             </div>
             <div className="flex-1 min-w-0">
               <h1 className="text-2xl font-extrabold text-[#3d2c1e] truncate">{profile.name}</h1>
-              <p className="text-[#e8834a] font-semibold text-sm mt-0.5">{age}</p>
-              <p className="text-[#c4a898] text-xs mt-0.5">
+              <p className="text-[#e8834a] font-semibold text-base mt-0.5">{age}</p>
+              <p className="text-[#c4a898] text-sm mt-0.5">
                 Born {new Date(profile.dob).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
               </p>
             </div>
@@ -175,7 +175,7 @@ function Dashboard() {
 
           {/* Journey progress bar */}
           <div className="mt-5">
-            <div className="flex justify-between text-xs text-[#a07060] mb-1.5 font-semibold">
+            <div className="flex justify-between text-sm text-[#a07060] mb-1.5 font-semibold">
               <span>Birth</span>
               <span className="text-[#e8834a]">{progress}% of journey</span>
               <span>Age 7</span>
@@ -195,7 +195,7 @@ function Dashboard() {
             <h2 className="text-lg font-extrabold text-[#3d2c1e]">🎯 This Week&apos;s Activities</h2>
             <button
               onClick={() => router.push(`/activities?id=${profile.id}`)}
-              className="text-xs text-[#e8834a] font-bold hover:underline transition-colors"
+              className="text-sm text-[#e8834a] font-bold hover:underline transition-colors"
             >
               View all →
             </button>
@@ -204,8 +204,8 @@ function Dashboard() {
           {activeActivities.length === 0 ? (
             <div className="bg-white rounded-2xl border border-orange-50 p-6 text-center">
               <p className="text-3xl mb-2">🎯</p>
-              <p className="text-[#3d2c1e] font-bold text-sm">No active activities this week</p>
-              <p className="text-[#a07060] text-xs mt-1 mb-3">
+              <p className="text-[#3d2c1e] font-bold text-base">No active activities this week</p>
+              <p className="text-[#a07060] text-sm mt-1 mb-3">
                 Browse the library to find activities for {profile.name}
               </p>
               <button
@@ -218,19 +218,19 @@ function Dashboard() {
           ) : (
             <div className="space-y-3">
               {activeActivities.map(a => (
-                <div key={a.id} className="bg-white rounded-2xl p-4 shadow-sm border border-orange-50">
+                <div key={a.id} className="bg-white rounded-2xl p-4 border border-orange-50">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-2xl bg-[#fff8f0] flex items-center justify-center text-2xl flex-shrink-0">
                       {a.emoji}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <p className="font-bold text-[#3d2c1e] text-sm">{a.title}</p>
+                        <p className="font-bold text-[#3d2c1e] text-base">{a.title}</p>
                         <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[a.tag] ?? "bg-gray-100 text-gray-500"}`}>
                           {a.tag}
                         </span>
                       </div>
-                      <p className="text-[#a07060] text-xs mt-0.5">{a.desc}</p>
+                      <p className="text-[#a07060] text-sm mt-0.5">{a.desc}</p>
                       {/* Mini progress bar */}
                       <div className="flex gap-1 mt-2">
                         {[25, 50, 75, 100].map(step => (
@@ -261,7 +261,7 @@ function Dashboard() {
             <h2 className="text-lg font-extrabold text-[#3d2c1e]">🎯 What&apos;s next for {profile.name}</h2>
             <button
               onClick={() => router.push(`/onboarding?id=${profile.id}`)}
-              className="text-xs text-[#a07060] hover:text-[#e8834a] font-semibold transition-colors"
+              className="text-sm text-[#a07060] hover:text-[#e8834a] font-semibold transition-colors"
             >
               Edit ✏️
             </button>
@@ -271,7 +271,7 @@ function Dashboard() {
             <div className="bg-white rounded-2xl border border-orange-50 p-6 text-center">
               <p className="text-4xl mb-2">🏆</p>
               <p className="text-[#3d2c1e] font-extrabold">All milestones reached!</p>
-              <p className="text-[#a07060] text-xs mt-1">
+              <p className="text-[#a07060] text-sm mt-1">
                 {profile.name} is absolutely thriving. Keep it up!
               </p>
             </div>
@@ -285,7 +285,7 @@ function Dashboard() {
                 return (
                   <div
                     key={m.id}
-                    className="bg-white rounded-2xl shadow-sm border border-orange-50 overflow-hidden"
+                    className="bg-white rounded-2xl border border-orange-50 overflow-hidden"
                   >
                     <div className="p-4 flex items-start gap-4">
                       <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#fff3e8] to-[#fde8d8] flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">
@@ -300,8 +300,8 @@ function Dashboard() {
                             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#f0f8ff] text-[#6baed6]">Coming up</span>
                           )}
                         </div>
-                        <p className="text-[#c4a898] text-xs mt-0.5">Expected {milestoneExpectedAge(m.minMonths)}</p>
-                        <p className="text-[#7a5c4a] text-xs mt-2 leading-relaxed">{m.tip}</p>
+                        <p className="text-[#c4a898] text-sm mt-0.5">Expected {milestoneExpectedAge(m.minMonths)}</p>
+                        <p className="text-[#7a5c4a] text-sm mt-2 leading-relaxed">{m.tip}</p>
                         {savedStage && !isExpanded && (() => {
                           const stage = m.stages.find(s => s.id === savedStage);
                           return stage ? (
@@ -317,7 +317,7 @@ function Dashboard() {
                     {/* Stage picker — shown when expanded */}
                     {isExpanded && (
                       <div className="px-4 pb-3">
-                        <p className="text-xs font-bold text-[#3d2c1e] mb-2">Where is {profile!.name} right now?</p>
+                        <p className="text-sm font-bold text-[#3d2c1e] mb-2">Where is {profile!.name} right now?</p>
                         <div className="space-y-2">
                           {m.stages.map((stage, si) => (
                             <button
@@ -329,14 +329,14 @@ function Dashboard() {
                                   : "border-[#f0ddd0] bg-[#fffaf7] hover:border-amber-300"
                                 }`}
                             >
-                              <span className="text-xs font-extrabold text-amber-400 mt-0.5 flex-shrink-0">{si + 1}</span>
-                              <span className="text-xs font-semibold leading-tight text-[#3d2c1e]">{stage.label}</span>
+                              <span className="text-sm font-extrabold text-amber-400 mt-0.5 flex-shrink-0">{si + 1}</span>
+                              <span className="text-sm font-semibold leading-tight text-[#3d2c1e]">{stage.label}</span>
                             </button>
                           ))}
                         </div>
                         <button
                           onClick={() => setExpandedMilestone(null)}
-                          className="mt-2 text-xs text-[#c4a898] hover:text-[#a07060] font-semibold w-full text-center"
+                          className="mt-2 text-sm text-[#c4a898] hover:text-[#a07060] font-semibold w-full text-center"
                         >
                           Cancel
                         </button>
@@ -349,7 +349,6 @@ function Dashboard() {
                         onClick={() => setExpandedMilestone(isExpanded ? null : m.id)}
                         className="flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl bg-amber-50 hover:bg-amber-100 transition-colors text-center"
                       >
-                        <span className="text-sm">⏳</span>
                         <span className="text-[10px] font-bold text-amber-600 leading-tight">In progress</span>
                       </button>
                       <button
@@ -357,7 +356,6 @@ function Dashboard() {
                         className={`flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl transition-colors text-center
                           ${onBoard ? "bg-[#f0f8ff] opacity-60 cursor-default" : "bg-[#f0f8ff] hover:bg-blue-100"}`}
                       >
-                        <span className="text-sm">📋</span>
                         <span className="text-[10px] font-bold text-blue-500 leading-tight">
                           {onBoard ? "On board" : "Add to board"}
                         </span>
@@ -366,7 +364,6 @@ function Dashboard() {
                         onClick={() => markMilestoneAccomplished(m.id)}
                         className="flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl bg-[#f0fbf4] hover:bg-green-100 transition-colors text-center"
                       >
-                        <span className="text-sm">🏆</span>
                         <span className="text-[10px] font-bold text-green-600 leading-tight">Accomplished!</span>
                       </button>
                     </div>
@@ -383,14 +380,14 @@ function Dashboard() {
             <h2 className="text-lg font-extrabold text-[#3d2c1e]">📔 Growth Journal</h2>
             <button
               onClick={() => setShowJournalForm(v => !v)}
-              className="text-xs bg-[#e8834a] text-white font-bold px-3 py-1.5 rounded-full hover:bg-[#d6723b] transition-colors"
+              className="text-sm bg-[#e8834a] text-white font-bold px-3 py-1.5 rounded-full hover:bg-[#d6723b] transition-colors"
             >
               {showJournalForm ? "Cancel" : "+ Add moment"}
             </button>
           </div>
 
           {showJournalForm && (
-            <div className="bg-white rounded-2xl shadow-sm border border-orange-50 p-4 mb-3 space-y-3">
+            <div className="bg-white rounded-2xl border border-orange-50 p-4 mb-3 space-y-3">
               {/* Emoji picker */}
               <div className="flex gap-2 flex-wrap">
                 {JOURNAL_EMOJIS.map(e => (
@@ -408,12 +405,12 @@ function Dashboard() {
                 value={journalText}
                 onChange={e => setJournalText(e.target.value)}
                 placeholder={`What did ${profile.name} do today? A first word, a big step, a funny moment…`}
-                className="w-full px-4 py-3 rounded-2xl border-2 border-[#f0ddd0] bg-[#fffaf7] focus:outline-none focus:border-[#e8834a] text-[#3d2c1e] placeholder-[#c4a898] text-sm resize-none h-24 transition-colors"
+                className="w-full px-4 py-3 rounded-2xl border-2 border-[#f0ddd0] bg-[#fffaf7] focus:outline-none focus:border-[#e8834a] text-[#3d2c1e] placeholder-[#c4a898] text-base resize-none h-24 transition-colors"
               />
               <button
                 onClick={addJournalEntry}
                 disabled={!journalText.trim()}
-                className="w-full py-2.5 rounded-2xl bg-[#e8834a] hover:bg-[#d6723b] disabled:opacity-40 text-white font-bold text-sm transition-colors"
+                className="w-full py-2.5 rounded-2xl bg-[#e8834a] hover:bg-[#d6723b] disabled:opacity-40 text-white font-bold text-base transition-colors"
               >
                 Save moment
               </button>
@@ -423,17 +420,17 @@ function Dashboard() {
           {profile.journal.length === 0 && !showJournalForm ? (
             <div className="bg-white rounded-2xl border border-orange-50 p-6 text-center">
               <p className="text-4xl mb-2">📝</p>
-              <p className="text-[#a07060] text-sm font-semibold">No moments logged yet.</p>
-              <p className="text-[#c4a898] text-xs mt-1">Start capturing {profile.name}&apos;s journey!</p>
+              <p className="text-[#a07060] text-base font-semibold">No moments logged yet.</p>
+              <p className="text-[#c4a898] text-sm mt-1">Start capturing {profile.name}&apos;s journey!</p>
             </div>
           ) : (
             <div className="space-y-2">
               {profile.journal.map(entry => (
-                <div key={entry.id} className="bg-white rounded-2xl shadow-sm border border-orange-50 p-4 flex items-start gap-3">
+                <div key={entry.id} className="bg-white rounded-2xl border border-orange-50 p-4 flex items-start gap-3">
                   <span className="text-2xl mt-0.5 flex-shrink-0">{entry.emoji}</span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[#3d2c1e] text-sm font-medium leading-relaxed">{entry.text}</p>
-                    <p className="text-[#c4a898] text-xs mt-1">
+                    <p className="text-[#3d2c1e] text-base font-medium leading-relaxed">{entry.text}</p>
+                    <p className="text-[#c4a898] text-sm mt-1">
                       {new Date(entry.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
                     </p>
                   </div>
@@ -454,23 +451,23 @@ function Dashboard() {
         <section className="grid grid-cols-2 gap-3 pb-8">
           <div className="bg-[#fff8f0] rounded-2xl p-4 border border-orange-100">
             <p className="text-2xl mb-1">💬</p>
-            <p className="text-xs font-bold text-[#3d2c1e]">Language</p>
-            <p className="text-xs text-[#a07060] mt-0.5">On track for age</p>
+            <p className="text-sm font-bold text-[#3d2c1e]">Language</p>
+            <p className="text-sm text-[#a07060] mt-0.5">On track for age</p>
           </div>
           <div className="bg-[#f0fbf4] rounded-2xl p-4 border border-green-100">
             <p className="text-2xl mb-1">🏃</p>
-            <p className="text-xs font-bold text-[#3d2c1e]">Motor Skills</p>
-            <p className="text-xs text-[#a07060] mt-0.5">Developing well</p>
+            <p className="text-sm font-bold text-[#3d2c1e]">Motor Skills</p>
+            <p className="text-sm text-[#a07060] mt-0.5">Developing well</p>
           </div>
           <div className="bg-[#f0f8ff] rounded-2xl p-4 border border-blue-100">
             <p className="text-2xl mb-1">🤝</p>
-            <p className="text-xs font-bold text-[#3d2c1e]">Social</p>
-            <p className="text-xs text-[#a07060] mt-0.5">Ready to explore</p>
+            <p className="text-sm font-bold text-[#3d2c1e]">Social</p>
+            <p className="text-sm text-[#a07060] mt-0.5">Ready to explore</p>
           </div>
           <div className="bg-[#fdf4ff] rounded-2xl p-4 border border-purple-100">
             <p className="text-2xl mb-1">🧠</p>
-            <p className="text-xs font-bold text-[#3d2c1e]">Cognitive</p>
-            <p className="text-xs text-[#a07060] mt-0.5">Growing fast</p>
+            <p className="text-sm font-bold text-[#3d2c1e]">Cognitive</p>
+            <p className="text-sm text-[#a07060] mt-0.5">Growing fast</p>
           </div>
         </section>
 

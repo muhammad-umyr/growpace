@@ -72,12 +72,12 @@ function Report() {
       <div className="max-w-2xl mx-auto px-4 py-8 space-y-5 pb-12">
 
         {/* Header card */}
-        <div className="bg-white rounded-3xl shadow-lg p-8 text-center">
+        <div className="bg-white rounded-3xl p-8 text-center">
           <div className="flex items-center justify-center gap-2 mb-1">
             <span className="text-3xl">🌱</span>
             <span className="text-2xl font-extrabold text-[#e8834a]">Growpace</span>
           </div>
-          <p className="text-[#a07060] text-sm mb-6">Development Progress Report</p>
+          <p className="text-[#a07060] text-base mb-6">Development Progress Report</p>
 
           <div className="relative w-24 h-24 rounded-full bg-[#fff0e6] border-4 border-[#f4b98a] overflow-hidden mx-auto mb-4 flex items-center justify-center">
             {profile.photo ? (
@@ -89,18 +89,18 @@ function Report() {
 
           <h1 className="text-3xl font-extrabold text-[#3d2c1e]">{profile.name}</h1>
           <p className="text-[#e8834a] font-semibold mt-1">{calcAge(profile.dob)}</p>
-          <p className="text-[#c4a898] text-sm">
+          <p className="text-[#c4a898] text-base">
             Born {new Date(profile.dob).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
           </p>
-          <p className="text-xs text-[#c4a898] mt-3 border-t border-orange-50 pt-3">
+          <p className="text-sm text-[#c4a898] mt-3 border-t border-orange-50 pt-3">
             Report generated {new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
           </p>
         </div>
 
         {/* Journey progress */}
-        <div className="bg-white rounded-3xl shadow-lg p-6">
+        <div className="bg-white rounded-3xl p-6">
           <h2 className="text-lg font-extrabold text-[#3d2c1e] mb-4">Journey Progress</h2>
-          <div className="flex justify-between text-xs text-[#a07060] mb-2 font-semibold">
+          <div className="flex justify-between text-sm text-[#a07060] mb-2 font-semibold">
             <span>Birth</span>
             <span className="text-[#e8834a]">{progress}% of journey to age 7</span>
             <span>Age 7</span>
@@ -114,7 +114,7 @@ function Report() {
         </div>
 
         {/* Milestones */}
-        <div className="bg-white rounded-3xl shadow-lg p-6">
+        <div className="bg-white rounded-3xl p-6">
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-lg font-extrabold text-[#3d2c1e]">Milestones</h2>
             <span className="text-sm font-bold text-[#e8834a]">{doneCount}/{milestones.length} reached</span>
@@ -136,7 +136,7 @@ function Report() {
                   ${profile.milestones[m.id] ? "bg-[#fff8f0]" : "bg-[#fafafa]"}`}
               >
                 <span className="text-lg flex-shrink-0">{m.emoji}</span>
-                <span className={`text-xs font-semibold flex-1 leading-tight
+                <span className={`text-sm font-semibold flex-1 leading-tight
                   ${profile.milestones[m.id] ? "text-[#3d2c1e]" : "text-[#c4a898]"}`}>
                   {m.label}
                 </span>
@@ -150,10 +150,10 @@ function Report() {
 
         {/* Journal highlights */}
         {profile.journal.length > 0 && (
-          <div className="bg-white rounded-3xl shadow-lg p-6">
+          <div className="bg-white rounded-3xl p-6">
             <h2 className="text-lg font-extrabold text-[#3d2c1e] mb-4">
               Journal Highlights
-              <span className="text-sm font-semibold text-[#a07060] ml-2">
+              <span className="text-base font-semibold text-[#a07060] ml-2">
                 ({profile.journal.length} {profile.journal.length === 1 ? "entry" : "entries"})
               </span>
             </h2>
@@ -162,15 +162,15 @@ function Report() {
                 <div key={entry.id} className="flex items-start gap-3 p-3 bg-[#fffaf7] rounded-2xl">
                   <span className="text-2xl flex-shrink-0">{entry.emoji}</span>
                   <div className="min-w-0">
-                    <p className="text-[#3d2c1e] text-sm leading-relaxed">{entry.text}</p>
-                    <p className="text-[#c4a898] text-xs mt-1">
+                    <p className="text-[#3d2c1e] text-base leading-relaxed">{entry.text}</p>
+                    <p className="text-[#c4a898] text-sm mt-1">
                       {new Date(entry.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
                     </p>
                   </div>
                 </div>
               ))}
               {profile.journal.length > 5 && (
-                <p className="text-xs text-[#c4a898] text-center pt-1">
+                <p className="text-sm text-[#c4a898] text-center pt-1">
                   + {profile.journal.length - 5} more entries in the app
                 </p>
               )}
@@ -180,7 +180,7 @@ function Report() {
 
         {/* Footer */}
         <div className="text-center">
-          <p className="text-xs text-[#c4a898]">Generated by Growpace · growpace.vercel.app</p>
+          <p className="text-sm text-[#c4a898]">Generated by Growpace · growpace.vercel.app</p>
         </div>
 
       </div>

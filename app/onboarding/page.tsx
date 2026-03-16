@@ -98,7 +98,7 @@ function Onboarding() {
           <h1 className="text-2xl font-extrabold text-[#3d2c1e]">
             Let&apos;s get to know {profile.name}
           </h1>
-          <p className="text-[#a07060] text-sm leading-relaxed max-w-xs">
+          <p className="text-[#a07060] text-base leading-relaxed max-w-xs">
             Tap every milestone {profile.name} has already reached.
             This personalises their dashboard so we can focus on what&apos;s next.
           </p>
@@ -106,7 +106,7 @@ function Onboarding() {
 
         {/* Progress summary */}
         {checkedCount > 0 && (
-          <div className="inline-flex items-center gap-2 bg-[#fff0e6] border border-orange-100 text-[#e8834a] font-bold text-sm px-4 py-2 rounded-full">
+          <div className="inline-flex items-center gap-2 bg-[#fff0e6] border border-orange-100 text-[#e8834a] font-bold text-base px-4 py-2 rounded-full">
             🎉 {checkedCount} milestone{checkedCount !== 1 ? "s" : ""} reached so far!
           </div>
         )}
@@ -135,7 +135,7 @@ function Onboarding() {
                     onClick={() => toggle(m)}
                     className={`relative flex flex-col items-center gap-2 p-4 rounded-2xl border-2 transition-all duration-150 text-center
                       ${isChecked
-                        ? "bg-gradient-to-br from-[#fff3e8] to-[#fde8d8] border-[#e8834a] scale-[1.02] shadow-md shadow-orange-100"
+                        ? "bg-gradient-to-br from-[#fff3e8] to-[#fde8d8] border-[#e8834a] scale-[1.02]"
                         : "bg-white border-[#f0ddd0] hover:border-[#f4b98a]"
                       }`}
                   >
@@ -149,7 +149,7 @@ function Onboarding() {
                     <span className={`text-4xl transition-all ${isChecked ? "scale-110" : ""}`}>
                       {m.emoji}
                     </span>
-                    <span className={`text-xs font-bold leading-tight ${isChecked ? "text-[#e8834a]" : "text-[#a07060]"}`}>
+                    <span className={`text-sm font-bold leading-tight ${isChecked ? "text-[#e8834a]" : "text-[#a07060]"}`}>
                       {m.label}
                     </span>
                   </button>
@@ -160,7 +160,7 @@ function Onboarding() {
         ))}
 
         {/* Skip hint */}
-        <p className="text-center text-xs text-[#c4a898] pb-2">
+        <p className="text-center text-sm text-[#c4a898] pb-2">
           Not sure? That&apos;s okay — you can always update these from {profile.name}&apos;s dashboard.
         </p>
       </div>
@@ -170,14 +170,14 @@ function Onboarding() {
         <div className="max-w-lg mx-auto flex items-center gap-4">
           <div className="flex-1">
             {checkedCount > 0 ? (
-              <p className="text-sm font-bold text-[#3d2c1e]">
+              <p className="text-base font-bold text-[#3d2c1e]">
                 {checkedCount} reached ·{" "}
                 <span className="text-[#a07060] font-normal">
                   {allMilestones.length - checkedCount} still to come
                 </span>
               </p>
             ) : (
-              <p className="text-sm text-[#a07060]">{calcAge(profile.dob)} old</p>
+              <p className="text-base text-[#a07060]">{calcAge(profile.dob)} old</p>
             )}
           </div>
           <button

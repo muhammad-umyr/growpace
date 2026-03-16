@@ -108,7 +108,7 @@ export default function Home() {
           <span className="text-4xl">🌱</span>
           <span className="text-3xl font-extrabold text-[#e8834a]">Growpace</span>
         </div>
-        <p className="text-[#a07060] text-sm font-medium">Every child grows at their own pace.</p>
+        <p className="text-[#a07060] text-base font-medium">Every child grows at their own pace.</p>
       </div>
 
       {/* ── Profiles list ── */}
@@ -123,7 +123,7 @@ export default function Home() {
                 <div key={p.id} className="relative group">
                   <button
                     onClick={() => router.push(`/dashboard?id=${p.id}`)}
-                    className="w-full bg-white rounded-2xl shadow-sm shadow-orange-100 p-4 flex flex-col items-center gap-2 hover:shadow-md hover:scale-[1.02] transition-all border border-orange-50"
+                    className="w-full bg-white rounded-2xl p-4 flex flex-col items-center gap-2 hover:scale-[1.02] transition-all border border-orange-50"
                   >
                     <div className="relative w-16 h-16 rounded-full bg-[#fff0e6] border-4 border-[#f4b98a] overflow-hidden flex items-center justify-center">
                       {p.photo ? (
@@ -132,14 +132,14 @@ export default function Home() {
                         <span className="text-3xl">{genderEmoji}</span>
                       )}
                     </div>
-                    <p className="font-extrabold text-[#3d2c1e] text-sm">{p.name}</p>
-                    <p className="text-[#e8834a] text-xs font-semibold">{calcAge(p.dob)}</p>
+                    <p className="font-extrabold text-[#3d2c1e] text-base">{p.name}</p>
+                    <p className="text-[#e8834a] text-sm font-semibold">{calcAge(p.dob)}</p>
                   </button>
 
                   {/* Delete button */}
                   {confirmDelete === p.id ? (
                     <div className="absolute inset-0 bg-white/95 rounded-2xl flex flex-col items-center justify-center gap-2 border border-red-100">
-                      <p className="text-xs font-bold text-[#3d2c1e] text-center px-2">Remove {p.name}?</p>
+                      <p className="text-sm font-bold text-[#3d2c1e] text-center px-2">Remove {p.name}?</p>
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleDelete(p.id)}
@@ -180,7 +180,7 @@ export default function Home() {
 
       {/* ── Create form ── */}
       {showCreateForm && (
-        <div className="w-full max-w-md bg-white rounded-3xl shadow-xl shadow-orange-100/60 p-8">
+        <div className="w-full max-w-md bg-white rounded-3xl p-8">
           {showForm && hasProfiles && (
             <button
               onClick={() => setShowForm(false)}
@@ -191,7 +191,7 @@ export default function Home() {
           )}
 
           <h1 className="text-2xl font-extrabold text-[#3d2c1e] mb-1">Create a child profile</h1>
-          <p className="text-[#a07060] text-sm mb-7">Let&apos;s get to know your little one 🐣</p>
+          <p className="text-[#a07060] text-base mb-7">Let&apos;s get to know your little one 🐣</p>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Photo upload */}
@@ -234,7 +234,7 @@ export default function Home() {
                 placeholder="e.g. Aisha, Liam, Noah…"
                 className="w-full px-4 py-3 rounded-2xl border-2 border-[#f0ddd0] bg-[#fffaf7] focus:outline-none focus:border-[#e8834a] text-[#3d2c1e] placeholder-[#c4a898] transition-colors"
               />
-              {errors.name && <p className="mt-1 text-xs text-red-400">{errors.name}</p>}
+              {errors.name && <p className="mt-1 text-sm text-red-400">{errors.name}</p>}
             </div>
 
             {/* Date of birth */}
@@ -249,7 +249,7 @@ export default function Home() {
                 onChange={e => { setDob(e.target.value); setErrors(p => ({ ...p, dob: "" })); }}
                 className="w-full px-4 py-3 rounded-2xl border-2 border-[#f0ddd0] bg-[#fffaf7] focus:outline-none focus:border-[#e8834a] text-[#3d2c1e] transition-colors"
               />
-              {errors.dob && <p className="mt-1 text-xs text-red-400">{errors.dob}</p>}
+              {errors.dob && <p className="mt-1 text-sm text-red-400">{errors.dob}</p>}
             </div>
 
             {/* Gender */}
@@ -274,7 +274,7 @@ export default function Home() {
                   </button>
                 ))}
               </div>
-              {errors.gender && <p className="mt-1 text-xs text-red-400">{errors.gender}</p>}
+              {errors.gender && <p className="mt-1 text-sm text-red-400">{errors.gender}</p>}
             </div>
 
             {/* Submit */}
@@ -288,7 +288,7 @@ export default function Home() {
         </div>
       )}
 
-      <p className="mt-6 text-xs text-[#c4a898] text-center">
+      <p className="mt-6 text-sm text-[#c4a898] text-center">
         Your data stays on your device. No account needed to get started.
       </p>
     </div>

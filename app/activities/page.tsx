@@ -52,7 +52,7 @@ function ActivityCard({
   )}`;
 
   return (
-    <div className="bg-white rounded-2xl shadow-md border border-orange-50 overflow-hidden">
+    <div className="bg-white rounded-2xl border border-orange-50 overflow-hidden">
 
       {/* Body */}
       <div className="p-4 flex gap-4 items-start">
@@ -67,7 +67,7 @@ function ActivityCard({
             {tag}
           </span>
           <h3 className="font-extrabold text-[#3d2c1e] text-base leading-tight mt-1">{title}</h3>
-          <p className="text-[#a07060] text-xs mt-0.5 leading-relaxed">{desc}</p>
+          <p className="text-[#a07060] text-sm mt-0.5 leading-relaxed">{desc}</p>
           {reason && (
             <span className="inline-flex items-center gap-1 mt-2 bg-gradient-to-r from-[#fff3e8] to-[#fef0f8] border border-orange-100 text-[#e8834a] text-[10px] font-bold px-2.5 py-1 rounded-full">
               ✨ {reason}
@@ -114,7 +114,7 @@ function ActivityCard({
         <div className="bg-[#fffaf7] border-t border-[#f5ebe0] px-4 py-4">
           <ol className="space-y-3">
             {howTo.map((tip, i) => (
-              <li key={i} className="flex items-start gap-3 text-xs text-[#7a5c4a] leading-relaxed">
+              <li key={i} className="flex items-start gap-3 text-sm text-[#7a5c4a] leading-relaxed">
                 <span className="w-5 h-5 rounded-full bg-[#fff0e6] text-[#e8834a] font-extrabold text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">
                   {i + 1}
                 </span>
@@ -139,19 +139,19 @@ function ActiveCard({
   onRemove: () => void;
 }) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-orange-100 p-4 space-y-3">
+    <div className="bg-white rounded-2xl border border-orange-100 p-4 space-y-3">
       <div className="flex items-start gap-3">
         <div className="w-11 h-11 rounded-2xl bg-[#fff8f0] flex items-center justify-center text-2xl flex-shrink-0">
           {activity.emoji}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <p className="font-bold text-[#3d2c1e] text-sm">{activity.title}</p>
+            <p className="font-bold text-[#3d2c1e] text-base">{activity.title}</p>
             <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[activity.tag] ?? "bg-gray-100 text-gray-500"}`}>
               {activity.tag}
             </span>
           </div>
-          <p className="text-[#a07060] text-xs mt-0.5">{activity.desc}</p>
+          <p className="text-[#a07060] text-sm mt-0.5">{activity.desc}</p>
         </div>
         <button onClick={onRemove} className="text-[#c4a898] hover:text-red-400 transition-colors text-xl flex-shrink-0 leading-none">
           ×
@@ -202,18 +202,18 @@ function SavedCard({
   activity: BoardActivity; onActivate: () => void; onRemove: () => void;
 }) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-orange-50 p-4 flex items-start gap-3">
+    <div className="bg-white rounded-2xl border border-orange-50 p-4 flex items-start gap-3">
       <div className="w-11 h-11 rounded-2xl bg-[#f5f5f5] flex items-center justify-center text-2xl flex-shrink-0 opacity-70">
         {activity.emoji}
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <p className="font-bold text-[#a07060] text-sm">{activity.title}</p>
+          <p className="font-bold text-[#a07060] text-base">{activity.title}</p>
           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full opacity-60 ${TAG_COLORS[activity.tag] ?? "bg-gray-100 text-gray-500"}`}>
             {activity.tag}
           </span>
         </div>
-        <p className="text-[#c4a898] text-xs mt-0.5">{activity.desc}</p>
+        <p className="text-[#c4a898] text-sm mt-0.5">{activity.desc}</p>
         <div className="flex gap-2 mt-2">
           <button
             onClick={onActivate}
@@ -395,11 +395,11 @@ function Activities() {
         {/* Title */}
         <div>
           <h1 className="text-2xl font-extrabold text-[#3d2c1e]">Activities</h1>
-          <p className="text-[#a07060] text-sm mt-0.5">For {profile.name} · {calcAge(profile.dob)}</p>
+          <p className="text-[#a07060] text-base mt-0.5">For {profile.name} · {calcAge(profile.dob)}</p>
         </div>
 
         {/* Tab bar */}
-        <div className="bg-white rounded-2xl p-1 shadow-sm border border-orange-50 flex gap-1">
+        <div className="bg-white rounded-2xl p-1 border border-orange-50 flex gap-1">
           {[
             { key: "suggested", label: "✨ Suggested" },
             { key: "library",   label: "📚 Library" },
@@ -430,7 +430,7 @@ function Activities() {
                 <p className="text-sm font-extrabold text-[#3d2c1e]">
                   Just for {profile.name} ✨
                 </p>
-                <p className="text-xs text-[#a07060] mt-0.5">
+                <p className="text-sm text-[#a07060] mt-0.5">
                   Picked for a {calcAge(profile.dob)} — refreshed every week
                 </p>
               </div>
@@ -445,7 +445,7 @@ function Activities() {
 
             {aiError === "no_key" && (
               <div className="bg-[#fff8f0] rounded-2xl p-3 border border-orange-100 text-center">
-                <p className="text-xs text-[#a07060]">
+                <p className="text-sm text-[#a07060]">
                   Showing curated suggestions ·{" "}
                   <span className="text-[#e8834a] font-bold">Add ANTHROPIC_API_KEY in Vercel</span>
                   {" "}for live AI suggestions
@@ -456,7 +456,7 @@ function Activities() {
             {aiError === "failed" && !loading && (
               <div className="bg-[#fff8f0] rounded-2xl p-4 border border-orange-100 text-center">
                 <p className="text-3xl mb-2">😕</p>
-                <p className="text-[#a07060] text-sm font-semibold">Couldn&apos;t load suggestions.</p>
+                <p className="text-[#a07060] text-base font-semibold">Couldn&apos;t load suggestions.</p>
                 <button onClick={fetchSuggestions} className="mt-2 text-xs text-[#e8834a] font-bold hover:underline">
                   Try again
                 </button>
@@ -466,7 +466,7 @@ function Activities() {
             {loading && (
               <div className="text-center py-12">
                 <div className="text-4xl animate-bounce mb-3">🤔</div>
-                <p className="text-[#a07060] text-sm font-semibold">
+                <p className="text-[#a07060] text-base font-semibold">
                   Finding the best activities for {profile.name}…
                 </p>
               </div>
@@ -532,7 +532,7 @@ function Activities() {
               <div className="bg-white rounded-2xl border border-orange-50 p-8 text-center">
                 <p className="text-4xl mb-3">📋</p>
                 <p className="text-[#3d2c1e] font-bold">Your board is empty</p>
-                <p className="text-[#a07060] text-sm mt-1 mb-4">
+                <p className="text-[#a07060] text-base mt-1 mb-4">
                   Browse suggestions or the library to add activities
                 </p>
                 <button
@@ -607,7 +607,7 @@ function Activities() {
                         >
                           <span className="text-2xl">{a.emoji}</span>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-bold text-[#3d2c1e] line-through">{a.title}</p>
+                            <p className="text-base font-bold text-[#3d2c1e] line-through">{a.title}</p>
                             <p className="text-xs text-green-600 font-semibold mt-0.5">✅ Completed</p>
                           </div>
                           <button
