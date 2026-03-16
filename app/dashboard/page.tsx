@@ -18,13 +18,6 @@ import {
   BoardActivity,
 } from "@/lib/store";
 
-const MILESTONE_STAGES = [
-  { id: "exploring",   emoji: "🌱", label: "Just started exploring" },
-  { id: "early_signs", emoji: "👀", label: "Showing early signs" },
-  { id: "progressing", emoji: "📈", label: "Progressing well" },
-  { id: "almost",      emoji: "🔥", label: "Almost there!" },
-];
-
 const TAG_COLORS: Record<string, string> = {
   Physical:  "bg-[#f0fbf4] text-green-600",
   Language:  "bg-[#f0f8ff] text-[#6baed6]",
@@ -309,12 +302,15 @@ function Dashboard() {
                         </div>
                         <p className="text-[#c4a898] text-xs mt-0.5">Expected {milestoneExpectedAge(m.minMonths)}</p>
                         <p className="text-[#7a5c4a] text-xs mt-2 leading-relaxed">{m.tip}</p>
-                        {savedStage && !isExpanded && (
-                          <p className="text-[10px] font-bold text-amber-500 mt-1.5">
-                            {MILESTONE_STAGES.find(s => s.id === savedStage)?.emoji}{" "}
-                            {MILESTONE_STAGES.find(s => s.id === savedStage)?.label}
-                          </p>
-                        )}
+                        {savedStage && !isExpanded && (() => {
+                          const stage = m.stages.find(s => s.id === savedStage);
+                          return stage ? (
+                            <div className="mt-2 bg-amber-50 rounded-xl p-2.5">
+                              <p className="text-[10px] font-bold text-amber-600 mb-1">📍 {stage.label}</p>
+                              <p className="text-[10px] text-amber-700 leading-relaxed">{stage.nextTip}</p>
+                            </div>
+                          ) : null;
+                        })()}
                       </div>
                     </div>
 
@@ -322,19 +318,19 @@ function Dashboard() {
                     {isExpanded && (
                       <div className="px-4 pb-3">
                         <p className="text-xs font-bold text-[#3d2c1e] mb-2">Where is {profile!.name} right now?</p>
-                        <div className="grid grid-cols-2 gap-2">
-                          {MILESTONE_STAGES.map(stage => (
+                        <div className="space-y-2">
+                          {m.stages.map((stage, si) => (
                             <button
                               key={stage.id}
                               onClick={() => saveMilestoneStage(m.id, stage.id)}
-                              className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border-2 text-left transition-all
+                              className={`w-full flex items-start gap-3 px-3 py-2.5 rounded-xl border-2 text-left transition-all
                                 ${savedStage === stage.id
-                                  ? "border-amber-400 bg-amber-50 text-amber-700"
-                                  : "border-[#f0ddd0] bg-[#fffaf7] text-[#7a5c4a] hover:border-amber-300"
+                                  ? "border-amber-400 bg-amber-50"
+                                  : "border-[#f0ddd0] bg-[#fffaf7] hover:border-amber-300"
                                 }`}
                             >
-                              <span className="text-lg">{stage.emoji}</span>
-                              <span className="text-xs font-semibold leading-tight">{stage.label}</span>
+                              <span className="text-xs font-extrabold text-amber-400 mt-0.5 flex-shrink-0">{si + 1}</span>
+                              <span className="text-xs font-semibold leading-tight text-[#3d2c1e]">{stage.label}</span>
                             </button>
                           ))}
                         </div>
