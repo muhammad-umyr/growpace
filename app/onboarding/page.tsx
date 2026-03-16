@@ -1,7 +1,8 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { Suspense, useState, useEffect } from "react";
+import { Suspense, useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import {
   getProfile,
   saveProfile,
@@ -31,6 +32,7 @@ function Onboarding() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [mounted, setMounted] = useState(false);
+  const photoInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (id) {
@@ -80,6 +82,19 @@ function Onboarding() {
     router.push(`/dashboard?id=${profile!.id}`);
   }
 
+  async function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const updated = { ...profile!, photo: reader.result as string };
+      setProfile(updated);
+      saveProfile(updated);
+    };
+    reader.readAsDataURL(file);
+    e.target.value = "";
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F4F3FC] via-[#EEEDF8] to-[#EDF3F0] pb-32">
 
@@ -91,9 +106,20 @@ function Onboarding() {
 
         {/* Child avatar + name */}
         <div className="flex flex-col items-center gap-2 mb-5">
-          <div className="w-16 h-16 rounded-full bg-[#EDF3F0] border-4 border-[#B2ADEB] flex items-center justify-center text-4xl shadow-sm">
-            {genderEmoji}
-          </div>
+          <button
+            onClick={() => photoInputRef.current?.click()}
+            className="relative w-16 h-16 rounded-full bg-[#EDF3F0] border-4 border-[#B2ADEB] flex items-center justify-center text-4xl group overflow-hidden"
+          >
+            {profile.photo ? (
+              <Image src={profile.photo} alt={profile.name} fill className="object-cover" unoptimized />
+            ) : (
+              <span>{genderEmoji}</span>
+            )}
+            <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-full">
+              <span className="text-white text-lg">📷</span>
+            </div>
+          </button>
+          <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
           <h1 className="text-2xl font-extrabold text-[#0A1338]">
             Let&apos;s get to know {profile.name}
           </h1>
