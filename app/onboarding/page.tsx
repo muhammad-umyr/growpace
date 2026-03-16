@@ -47,8 +47,8 @@ function Onboarding() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#EEEDF8] gap-4">
         <span className="text-5xl">🌱</span>
-        <p className="text-[#5E7678] font-semibold">Profile not found.</p>
-        <button onClick={() => router.push("/")} className="text-[#5E7678] font-bold hover:underline">
+        <p className="text-[#202837] font-semibold">Profile not found.</p>
+        <button onClick={() => router.push("/")} className="text-[#202837] font-bold hover:underline">
           Go back home
         </button>
       </div>
@@ -86,7 +86,7 @@ function Onboarding() {
       {/* Header */}
       <div className="max-w-lg mx-auto px-4 pt-10 pb-6 text-center">
         <div className="inline-flex items-center gap-2 mb-6">
-          <span className="text-2xl font-extrabold text-[#5E7678]">Growpace</span>
+          <span className="text-2xl font-extrabold text-[#202837]">Growpace</span>
         </div>
 
         {/* Child avatar + name */}
@@ -97,7 +97,7 @@ function Onboarding() {
           <h1 className="text-2xl font-extrabold text-[#0A1338]">
             Let&apos;s get to know {profile.name}
           </h1>
-          <p className="text-[#5E7678] text-base leading-relaxed max-w-xs">
+          <p className="text-[#202837] text-base leading-relaxed max-w-xs">
             Tap every milestone {profile.name} has already reached.
             This personalises their dashboard so we can focus on what&apos;s next.
           </p>
@@ -148,7 +148,7 @@ function Onboarding() {
                     <span className={`text-4xl transition-all ${isChecked ? "scale-110" : ""}`}>
                       {m.emoji}
                     </span>
-                    <span className={`text-sm font-bold leading-tight ${isChecked ? "text-[#5E7678]" : "text-[#5E7678]"}`}>
+                    <span className={`text-sm font-bold leading-tight ${isChecked ? "text-[#202837]" : "text-[#202837]"}`}>
                       {m.label}
                     </span>
                   </button>
@@ -171,17 +171,17 @@ function Onboarding() {
             {checkedCount > 0 ? (
               <p className="text-base font-bold text-[#0A1338]">
                 {checkedCount} reached ·{" "}
-                <span className="text-[#5E7678] font-normal">
+                <span className="text-[#202837] font-normal">
                   {allMilestones.length - checkedCount} still to come
                 </span>
               </p>
             ) : (
-              <p className="text-base text-[#5E7678]">{calcAge(profile.dob)} old</p>
+              <p className="text-base text-[#202837]">{calcAge(profile.dob)} old</p>
             )}
           </div>
           <button
             onClick={finish}
-            className="bg-[#5E7678] hover:bg-[#4A5F61] text-white font-extrabold px-6 py-3 rounded-2xl transition-colors shadow-md shadow-[#B2ADEB]/30 text-sm"
+            className="bg-[#202837] hover:bg-[#141D28] text-white font-extrabold px-6 py-3 rounded-2xl transition-colors shadow-md shadow-[#B2ADEB]/30 text-sm"
           >
             {checkedCount > 0 ? "See what's next →" : "Skip for now →"}
           </button>

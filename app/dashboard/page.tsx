@@ -19,13 +19,13 @@ import {
 } from "@/lib/store";
 
 const TAG_COLORS: Record<string, string> = {
-  Physical:  "bg-[#EDF3F0] text-[#5E7678]",
-  Language:  "bg-[#EEEDF8] text-[#5E7678]",
-  Cognitive: "bg-[#EEEDF8] text-[#5E7678]",
+  Physical:  "bg-[#EDF3F0] text-[#202837]",
+  Language:  "bg-[#EEEDF8] text-[#202837]",
+  Cognitive: "bg-[#EEEDF8] text-[#202837]",
   Creative:  "bg-[#EDF3F0] text-[#AA6646]",
-  Social:    "bg-[#EEEDF8] text-[#5E7678]",
-  Sensory:   "bg-[#EDF3F0] text-[#5E7678]",
-  Motor:     "bg-[#EEEDF8] text-[#5E7678]",
+  Social:    "bg-[#EEEDF8] text-[#202837]",
+  Sensory:   "bg-[#EDF3F0] text-[#202837]",
+  Motor:     "bg-[#EEEDF8] text-[#202837]",
 };
 
 const JOURNAL_EMOJIS = ["🌟", "💪", "😊", "🎉", "❤️", "📝", "🏆", "🌈"];
@@ -53,8 +53,8 @@ function Dashboard() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#EEEDF8] gap-4">
         <span className="text-5xl">🌱</span>
-        <p className="text-[#5E7678] font-semibold">Profile not found.</p>
-        <button onClick={() => router.push("/")} className="text-[#5E7678] font-bold hover:underline">
+        <p className="text-[#202837] font-semibold">Profile not found.</p>
+        <button onClick={() => router.push("/")} className="text-[#202837] font-bold hover:underline">
           Go back home
         </button>
       </div>
@@ -132,18 +132,18 @@ function Dashboard() {
       <header className="bg-white/80 backdrop-blur-sm border-b border-[#D4DFDD] sticky top-0 z-10">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <button onClick={() => router.push("/")} className="flex items-center gap-2">
-            <span className="text-xl font-extrabold text-[#5E7678]">Growpace</span>
+            <span className="text-xl font-extrabold text-[#202837]">Growpace</span>
           </button>
           <div className="flex items-center gap-4">
             <button
               onClick={() => router.push(`/report?id=${profile.id}`)}
-              className="text-sm text-[#5E7678] hover:text-[#5E7678] font-semibold transition-colors"
+              className="text-sm text-[#202837] hover:text-[#202837] font-semibold transition-colors"
             >
               📄 Report
             </button>
             <button
               onClick={() => router.push("/")}
-              className="text-sm text-[#5E7678] hover:text-[#5E7678] font-semibold transition-colors"
+              className="text-sm text-[#202837] hover:text-[#202837] font-semibold transition-colors"
             >
               + Add Child
             </button>
@@ -165,7 +165,7 @@ function Dashboard() {
             </div>
             <div className="flex-1 min-w-0">
               <h1 className="text-2xl font-extrabold text-[#0A1338] truncate">{profile.name}</h1>
-              <p className="text-[#5E7678] font-semibold text-base mt-0.5">{age}</p>
+              <p className="text-[#202837] font-semibold text-base mt-0.5">{age}</p>
               <p className="text-[#8FA4A6] text-sm mt-0.5">
                 Born {new Date(profile.dob).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
               </p>
@@ -174,14 +174,14 @@ function Dashboard() {
 
           {/* Journey progress bar */}
           <div className="mt-5">
-            <div className="flex justify-between text-sm text-[#5E7678] mb-1.5 font-semibold">
+            <div className="flex justify-between text-sm text-[#202837] mb-1.5 font-semibold">
               <span>Birth</span>
-              <span className="text-[#5E7678]">{progress}% of journey</span>
+              <span className="text-[#202837]">{progress}% of journey</span>
               <span>Age 7</span>
             </div>
             <div className="h-3 bg-[#E4E2F2] rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-[#B2ADEB] to-[#5E7678] rounded-full transition-all duration-1000"
+                className="h-full bg-gradient-to-r from-[#B2ADEB] to-[#202837] rounded-full transition-all duration-1000"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -194,7 +194,7 @@ function Dashboard() {
             <h2 className="text-lg font-extrabold text-[#0A1338]">🎯 This Week&apos;s Activities</h2>
             <button
               onClick={() => router.push(`/activities?id=${profile.id}`)}
-              className="text-sm text-[#5E7678] font-bold hover:underline transition-colors"
+              className="text-sm text-[#202837] font-bold hover:underline transition-colors"
             >
               View all →
             </button>
@@ -204,12 +204,12 @@ function Dashboard() {
             <div className="bg-white rounded-2xl border border-[#E4E2F2] p-6 text-center">
               <p className="text-3xl mb-2">🎯</p>
               <p className="text-[#0A1338] font-bold text-base">No active activities this week</p>
-              <p className="text-[#5E7678] text-sm mt-1 mb-3">
+              <p className="text-[#202837] text-sm mt-1 mb-3">
                 Browse the library to find activities for {profile.name}
               </p>
               <button
                 onClick={() => router.push(`/activities?id=${profile.id}`)}
-                className="text-sm bg-[#5E7678] text-white font-bold px-5 py-2 rounded-full hover:bg-[#4A5F61] transition-colors"
+                className="text-sm bg-[#202837] text-white font-bold px-5 py-2 rounded-full hover:bg-[#141D28] transition-colors"
               >
                 Explore Activities ✨
               </button>
@@ -229,7 +229,7 @@ function Dashboard() {
                           {a.tag}
                         </span>
                       </div>
-                      <p className="text-[#5E7678] text-sm mt-0.5">{a.desc}</p>
+                      <p className="text-[#202837] text-sm mt-0.5">{a.desc}</p>
                       {/* Mini progress bar */}
                       <div className="flex gap-1 mt-2">
                         {[25, 50, 75, 100].map(step => (
@@ -246,7 +246,7 @@ function Dashboard() {
               ))}
               <button
                 onClick={() => router.push(`/activities?id=${profile.id}`)}
-                className="w-full py-2.5 rounded-2xl border-2 border-dashed border-[#A6BFB6] text-[#5E7678] font-bold text-sm hover:bg-[#EEEDF8] transition-colors"
+                className="w-full py-2.5 rounded-2xl border-2 border-dashed border-[#A6BFB6] text-[#202837] font-bold text-sm hover:bg-[#EEEDF8] transition-colors"
               >
                 + Add more activities
               </button>
@@ -260,7 +260,7 @@ function Dashboard() {
             <h2 className="text-lg font-extrabold text-[#0A1338]">🎯 What&apos;s next for {profile.name}</h2>
             <button
               onClick={() => router.push(`/onboarding?id=${profile.id}`)}
-              className="text-sm text-[#5E7678] hover:text-[#5E7678] font-semibold transition-colors"
+              className="text-sm text-[#202837] hover:text-[#202837] font-semibold transition-colors"
             >
               Edit ✏️
             </button>
@@ -270,7 +270,7 @@ function Dashboard() {
             <div className="bg-white rounded-2xl border border-[#E4E2F2] p-6 text-center">
               <p className="text-4xl mb-2">🏆</p>
               <p className="text-[#0A1338] font-extrabold">All milestones reached!</p>
-              <p className="text-[#5E7678] text-sm mt-1">
+              <p className="text-[#202837] text-sm mt-1">
                 {profile.name} is absolutely thriving. Keep it up!
               </p>
             </div>
@@ -296,11 +296,11 @@ function Dashboard() {
                           {isOverdue ? (
                             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FDF3EE] text-[#AA6646]">Around their age</span>
                           ) : (
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EEEDF8] text-[#5E7678]">Coming up</span>
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EEEDF8] text-[#202837]">Coming up</span>
                           )}
                         </div>
                         <p className="text-[#8FA4A6] text-sm mt-0.5">Expected {milestoneExpectedAge(m.minMonths)}</p>
-                        <p className="text-[#5E7678] text-sm mt-2 leading-relaxed">{m.tip}</p>
+                        <p className="text-[#202837] text-sm mt-2 leading-relaxed">{m.tip}</p>
                         {savedStage && !isExpanded && (() => {
                           const stage = m.stages.find(s => s.id === savedStage);
                           return stage ? (
@@ -328,14 +328,14 @@ function Dashboard() {
                                   : "border-[#D4DFDD] bg-[#F7F7FB] hover:border-[#A6BFB6]"
                                 }`}
                             >
-                              <span className="text-sm font-extrabold text-[#5E7678] mt-0.5 flex-shrink-0">{si + 1}</span>
+                              <span className="text-sm font-extrabold text-[#202837] mt-0.5 flex-shrink-0">{si + 1}</span>
                               <span className="text-sm font-semibold leading-tight text-[#0A1338]">{stage.label}</span>
                             </button>
                           ))}
                         </div>
                         <button
                           onClick={() => setExpandedMilestone(null)}
-                          className="mt-2 text-sm text-[#8FA4A6] hover:text-[#5E7678] font-semibold w-full text-center"
+                          className="mt-2 text-sm text-[#8FA4A6] hover:text-[#202837] font-semibold w-full text-center"
                         >
                           Cancel
                         </button>
@@ -355,7 +355,7 @@ function Dashboard() {
                         className={`flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl transition-colors text-center
                           ${onBoard ? "bg-[#EEEDF8] opacity-60 cursor-default" : "bg-[#EEEDF8] hover:bg-[#E0DEFF]"}`}
                       >
-                        <span className="text-[10px] font-bold text-[#5E7678] leading-tight">
+                        <span className="text-[10px] font-bold text-[#202837] leading-tight">
                           {onBoard ? "On board" : "Add to board"}
                         </span>
                       </button>
@@ -379,7 +379,7 @@ function Dashboard() {
             <h2 className="text-lg font-extrabold text-[#0A1338]">📔 Growth Journal</h2>
             <button
               onClick={() => setShowJournalForm(v => !v)}
-              className="text-sm bg-[#5E7678] text-white font-bold px-3 py-1.5 rounded-full hover:bg-[#4A5F61] transition-colors"
+              className="text-sm bg-[#202837] text-white font-bold px-3 py-1.5 rounded-full hover:bg-[#141D28] transition-colors"
             >
               {showJournalForm ? "Cancel" : "+ Add moment"}
             </button>
@@ -404,12 +404,12 @@ function Dashboard() {
                 value={journalText}
                 onChange={e => setJournalText(e.target.value)}
                 placeholder={`What did ${profile.name} do today? A first word, a big step, a funny moment…`}
-                className="w-full px-4 py-3 rounded-2xl border-2 border-[#D4DFDD] bg-[#F7F7FB] focus:outline-none focus:border-[#5E7678] text-[#0A1338] placeholder-[#8FA4A6] text-base resize-none h-24 transition-colors"
+                className="w-full px-4 py-3 rounded-2xl border-2 border-[#D4DFDD] bg-[#F7F7FB] focus:outline-none focus:border-[#202837] text-[#0A1338] placeholder-[#8FA4A6] text-base resize-none h-24 transition-colors"
               />
               <button
                 onClick={addJournalEntry}
                 disabled={!journalText.trim()}
-                className="w-full py-2.5 rounded-2xl bg-[#5E7678] hover:bg-[#4A5F61] disabled:opacity-40 text-white font-bold text-base transition-colors"
+                className="w-full py-2.5 rounded-2xl bg-[#202837] hover:bg-[#141D28] disabled:opacity-40 text-white font-bold text-base transition-colors"
               >
                 Save moment
               </button>
@@ -419,7 +419,7 @@ function Dashboard() {
           {profile.journal.length === 0 && !showJournalForm ? (
             <div className="bg-white rounded-2xl border border-[#E4E2F2] p-6 text-center">
               <p className="text-4xl mb-2">📝</p>
-              <p className="text-[#5E7678] text-base font-semibold">No moments logged yet.</p>
+              <p className="text-[#202837] text-base font-semibold">No moments logged yet.</p>
               <p className="text-[#8FA4A6] text-sm mt-1">Start capturing {profile.name}&apos;s journey!</p>
             </div>
           ) : (
@@ -451,22 +451,22 @@ function Dashboard() {
           <div className="bg-[#EEEDF8] rounded-2xl p-4 border border-[#D4DFDD]">
             <p className="text-2xl mb-1">💬</p>
             <p className="text-sm font-bold text-[#0A1338]">Language</p>
-            <p className="text-sm text-[#5E7678] mt-0.5">On track for age</p>
+            <p className="text-sm text-[#202837] mt-0.5">On track for age</p>
           </div>
           <div className="bg-[#EDF3F0] rounded-2xl p-4 border border-[#D4DFDD]">
             <p className="text-2xl mb-1">🏃</p>
             <p className="text-sm font-bold text-[#0A1338]">Motor Skills</p>
-            <p className="text-sm text-[#5E7678] mt-0.5">Developing well</p>
+            <p className="text-sm text-[#202837] mt-0.5">Developing well</p>
           </div>
           <div className="bg-[#EEEDF8] rounded-2xl p-4 border border-[#D4DFDD]">
             <p className="text-2xl mb-1">🤝</p>
             <p className="text-sm font-bold text-[#0A1338]">Social</p>
-            <p className="text-sm text-[#5E7678] mt-0.5">Ready to explore</p>
+            <p className="text-sm text-[#202837] mt-0.5">Ready to explore</p>
           </div>
           <div className="bg-[#EEEDF8] rounded-2xl p-4 border border-[#D4DFDD]">
             <p className="text-2xl mb-1">🧠</p>
             <p className="text-sm font-bold text-[#0A1338]">Cognitive</p>
-            <p className="text-sm text-[#5E7678] mt-0.5">Growing fast</p>
+            <p className="text-sm text-[#202837] mt-0.5">Growing fast</p>
           </div>
         </section>
 

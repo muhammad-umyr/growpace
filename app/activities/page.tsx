@@ -26,13 +26,13 @@ interface AISuggestion {
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 const TAG_COLORS: Record<string, string> = {
-  Physical:  "bg-[#EDF3F0] text-[#5E7678]",
-  Language:  "bg-[#EEEDF8] text-[#5E7678]",
-  Cognitive: "bg-[#EEEDF8] text-[#5E7678]",
+  Physical:  "bg-[#EDF3F0] text-[#202837]",
+  Language:  "bg-[#EEEDF8] text-[#202837]",
+  Cognitive: "bg-[#EEEDF8] text-[#202837]",
   Creative:  "bg-[#EDF3F0] text-[#AA6646]",
-  Social:    "bg-[#EEEDF8] text-[#5E7678]",
-  Sensory:   "bg-[#EDF3F0] text-[#5E7678]",
-  Motor:     "bg-[#EEEDF8] text-[#5E7678]",
+  Social:    "bg-[#EEEDF8] text-[#202837]",
+  Sensory:   "bg-[#EDF3F0] text-[#202837]",
+  Motor:     "bg-[#EEEDF8] text-[#202837]",
 };
 
 const ALL_TAGS = ["All", "Physical", "Language", "Cognitive", "Creative", "Social", "Sensory", "Motor"];
@@ -67,9 +67,9 @@ function ActivityCard({
             {tag}
           </span>
           <h3 className="font-extrabold text-[#0A1338] text-base leading-tight mt-1">{title}</h3>
-          <p className="text-[#5E7678] text-sm mt-0.5 leading-relaxed">{desc}</p>
+          <p className="text-[#202837] text-sm mt-0.5 leading-relaxed">{desc}</p>
           {reason && (
-            <span className="inline-flex items-center gap-1 mt-2 bg-gradient-to-r from-[#F4F3FC] to-[#EEEDF8] border border-[#D4DFDD] text-[#5E7678] text-[10px] font-bold px-2.5 py-1 rounded-full">
+            <span className="inline-flex items-center gap-1 mt-2 bg-gradient-to-r from-[#F4F3FC] to-[#EEEDF8] border border-[#D4DFDD] text-[#202837] text-[10px] font-bold px-2.5 py-1 rounded-full">
               ✨ {reason}
             </span>
           )}
@@ -82,7 +82,7 @@ function ActivityCard({
           <button
             onClick={() => setShowTips(v => !v)}
             className={`text-xs font-bold px-3 py-1.5 rounded-full transition-colors
-              ${showTips ? "bg-[#EDF3F0] text-[#5E7678]" : "bg-[#E4E2F2] text-[#5E7678] hover:text-[#5E7678]"}`}
+              ${showTips ? "bg-[#EDF3F0] text-[#202837]" : "bg-[#E4E2F2] text-[#202837] hover:text-[#202837]"}`}
           >
             📋 How to {showTips ? "▲" : "▾"}
           </button>
@@ -102,7 +102,7 @@ function ActivityCard({
           className={`text-xs font-bold px-4 py-1.5 rounded-full transition-all
             ${isAdded
               ? "bg-[#E4E2F2] text-[#8FA4A6] cursor-default"
-              : "bg-[#5E7678] text-white hover:bg-[#4A5F61] shadow-sm"
+              : "bg-[#202837] text-white hover:bg-[#141D28] shadow-sm"
             }`}
         >
           {isAdded ? "✓ Added" : "+ Board"}
@@ -114,8 +114,8 @@ function ActivityCard({
         <div className="bg-[#F7F7FB] border-t border-[#E4E2F2] px-4 py-4">
           <ol className="space-y-3">
             {howTo.map((tip, i) => (
-              <li key={i} className="flex items-start gap-3 text-sm text-[#5E7678] leading-relaxed">
-                <span className="w-5 h-5 rounded-full bg-[#EDF3F0] text-[#5E7678] font-extrabold text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">
+              <li key={i} className="flex items-start gap-3 text-sm text-[#202837] leading-relaxed">
+                <span className="w-5 h-5 rounded-full bg-[#EDF3F0] text-[#202837] font-extrabold text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">
                   {i + 1}
                 </span>
                 {tip}
@@ -151,7 +151,7 @@ function ActiveCard({
               {activity.tag}
             </span>
           </div>
-          <p className="text-[#5E7678] text-sm mt-0.5">{activity.desc}</p>
+          <p className="text-[#202837] text-sm mt-0.5">{activity.desc}</p>
         </div>
         <button onClick={onRemove} className="text-[#8FA4A6] hover:text-red-400 transition-colors text-xl flex-shrink-0 leading-none">
           ×
@@ -161,8 +161,8 @@ function ActiveCard({
       {/* Progress tapper */}
       <div>
         <div className="flex items-center justify-between mb-1.5">
-          <span className="text-xs text-[#5E7678] font-semibold">Weekly progress</span>
-          <span className="text-xs font-bold text-[#5E7678]">{activity.progress}%</span>
+          <span className="text-xs text-[#202837] font-semibold">Weekly progress</span>
+          <span className="text-xs font-bold text-[#202837]">{activity.progress}%</span>
         </div>
         <div className="flex gap-1.5">
           {[25, 50, 75, 100].map(step => (
@@ -181,13 +181,13 @@ function ActiveCard({
       <div className="flex gap-2">
         <button
           onClick={onDone}
-          className="flex-1 py-2 rounded-xl bg-[#EDF3F0] text-[#5E7678] font-bold text-xs hover:bg-[#D4DFDD] transition-colors border border-[#D4DFDD]"
+          className="flex-1 py-2 rounded-xl bg-[#EDF3F0] text-[#202837] font-bold text-xs hover:bg-[#D4DFDD] transition-colors border border-[#D4DFDD]"
         >
           ✅ Mark Done
         </button>
         <button
           onClick={onPause}
-          className="flex-1 py-2 rounded-xl bg-[#E4E2F2] text-[#5E7678] font-bold text-xs hover:bg-[#D4DFDD] transition-colors"
+          className="flex-1 py-2 rounded-xl bg-[#E4E2F2] text-[#202837] font-bold text-xs hover:bg-[#D4DFDD] transition-colors"
         >
           ⏸ Save for Later
         </button>
@@ -208,7 +208,7 @@ function SavedCard({
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <p className="font-bold text-[#5E7678] text-base">{activity.title}</p>
+          <p className="font-bold text-[#202837] text-base">{activity.title}</p>
           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full opacity-60 ${TAG_COLORS[activity.tag] ?? "bg-gray-100 text-gray-500"}`}>
             {activity.tag}
           </span>
@@ -217,7 +217,7 @@ function SavedCard({
         <div className="flex gap-2 mt-2">
           <button
             onClick={onActivate}
-            className="text-xs bg-[#5E7678] text-white font-bold px-3 py-1 rounded-full hover:bg-[#4A5F61] transition-colors"
+            className="text-xs bg-[#202837] text-white font-bold px-3 py-1 rounded-full hover:bg-[#141D28] transition-colors"
           >
             Start This Week →
           </button>
@@ -314,8 +314,8 @@ function Activities() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#EEEDF8] gap-4">
         <span className="text-5xl">🌱</span>
-        <p className="text-[#5E7678] font-semibold">Profile not found.</p>
-        <button onClick={() => router.push("/")} className="text-[#5E7678] font-bold hover:underline">
+        <p className="text-[#202837] font-semibold">Profile not found.</p>
+        <button onClick={() => router.push("/")} className="text-[#202837] font-bold hover:underline">
           Go back home
         </button>
       </div>
@@ -379,12 +379,12 @@ function Activities() {
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <button
             onClick={() => router.push(`/dashboard?id=${profile.id}`)}
-            className="text-sm text-[#5E7678] hover:text-[#5E7678] font-semibold transition-colors flex items-center gap-1"
+            className="text-sm text-[#202837] hover:text-[#202837] font-semibold transition-colors flex items-center gap-1"
           >
             ← {profile.name}&apos;s Dashboard
           </button>
           <div className="flex items-center gap-1.5">
-            <span className="text-lg font-extrabold text-[#5E7678]">Growpace</span>
+            <span className="text-lg font-extrabold text-[#202837]">Growpace</span>
           </div>
         </div>
       </header>
@@ -394,7 +394,7 @@ function Activities() {
         {/* Title */}
         <div>
           <h1 className="text-2xl font-extrabold text-[#0A1338]">Activities</h1>
-          <p className="text-[#5E7678] text-base mt-0.5">For {profile.name} · {calcAge(profile.dob)}</p>
+          <p className="text-[#202837] text-base mt-0.5">For {profile.name} · {calcAge(profile.dob)}</p>
         </div>
 
         {/* Tab bar */}
@@ -408,7 +408,7 @@ function Activities() {
               key={t.key}
               onClick={() => setTab(t.key as typeof tab)}
               className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all
-                ${tab === t.key ? "bg-[#5E7678] text-white shadow-sm" : "text-[#5E7678] hover:text-[#5E7678]"}`}
+                ${tab === t.key ? "bg-[#202837] text-white shadow-sm" : "text-[#202837] hover:text-[#202837]"}`}
             >
               {t.label}
             </button>
@@ -429,14 +429,14 @@ function Activities() {
                 <p className="text-sm font-extrabold text-[#0A1338]">
                   Just for {profile.name} ✨
                 </p>
-                <p className="text-sm text-[#5E7678] mt-0.5">
+                <p className="text-sm text-[#202837] mt-0.5">
                   Picked for a {calcAge(profile.dob)} — refreshed every week
                 </p>
               </div>
               <button
                 onClick={fetchSuggestions}
                 disabled={loading}
-                className="flex-shrink-0 text-xs text-[#5E7678] font-bold hover:underline disabled:opacity-40 transition-opacity"
+                className="flex-shrink-0 text-xs text-[#202837] font-bold hover:underline disabled:opacity-40 transition-opacity"
               >
                 ↻ Refresh
               </button>
@@ -444,9 +444,9 @@ function Activities() {
 
             {aiError === "no_key" && (
               <div className="bg-[#EEEDF8] rounded-2xl p-3 border border-[#D4DFDD] text-center">
-                <p className="text-sm text-[#5E7678]">
+                <p className="text-sm text-[#202837]">
                   Showing curated suggestions ·{" "}
-                  <span className="text-[#5E7678] font-bold">Add ANTHROPIC_API_KEY in Vercel</span>
+                  <span className="text-[#202837] font-bold">Add ANTHROPIC_API_KEY in Vercel</span>
                   {" "}for live AI suggestions
                 </p>
               </div>
@@ -455,8 +455,8 @@ function Activities() {
             {aiError === "failed" && !loading && (
               <div className="bg-[#EEEDF8] rounded-2xl p-4 border border-[#D4DFDD] text-center">
                 <p className="text-3xl mb-2">😕</p>
-                <p className="text-[#5E7678] text-base font-semibold">Couldn&apos;t load suggestions.</p>
-                <button onClick={fetchSuggestions} className="mt-2 text-xs text-[#5E7678] font-bold hover:underline">
+                <p className="text-[#202837] text-base font-semibold">Couldn&apos;t load suggestions.</p>
+                <button onClick={fetchSuggestions} className="mt-2 text-xs text-[#202837] font-bold hover:underline">
                   Try again
                 </button>
               </div>
@@ -465,7 +465,7 @@ function Activities() {
             {loading && (
               <div className="text-center py-12">
                 <div className="text-4xl animate-bounce mb-3">🤔</div>
-                <p className="text-[#5E7678] text-base font-semibold">
+                <p className="text-[#202837] text-base font-semibold">
                   Finding the best activities for {profile.name}…
                 </p>
               </div>
@@ -497,8 +497,8 @@ function Activities() {
                   onClick={() => setFilterTag(tag)}
                   className={`text-xs font-bold px-3 py-1.5 rounded-full transition-all
                     ${filterTag === tag
-                      ? "bg-[#5E7678] text-white"
-                      : "bg-white text-[#5E7678] border border-[#D4DFDD] hover:border-[#5E7678]"
+                      ? "bg-[#202837] text-white"
+                      : "bg-white text-[#202837] border border-[#D4DFDD] hover:border-[#202837]"
                     }`}
                 >
                   {tag}
@@ -531,12 +531,12 @@ function Activities() {
               <div className="bg-white rounded-2xl border border-[#E4E2F2] p-8 text-center">
                 <p className="text-4xl mb-3">📋</p>
                 <p className="text-[#0A1338] font-bold">Your board is empty</p>
-                <p className="text-[#5E7678] text-base mt-1 mb-4">
+                <p className="text-[#202837] text-base mt-1 mb-4">
                   Browse suggestions or the library to add activities
                 </p>
                 <button
                   onClick={() => setTab("suggested")}
-                  className="text-sm bg-[#5E7678] text-white font-bold px-5 py-2.5 rounded-full hover:bg-[#4A5F61] transition-colors"
+                  className="text-sm bg-[#202837] text-white font-bold px-5 py-2.5 rounded-full hover:bg-[#141D28] transition-colors"
                 >
                   Browse Suggestions ✨
                 </button>
@@ -546,9 +546,9 @@ function Activities() {
                 {/* Active this week */}
                 {activeActivities.length > 0 && (
                   <div>
-                    <h3 className="text-sm font-extrabold text-[#5E7678] mb-2 flex items-center gap-2">
+                    <h3 className="text-sm font-extrabold text-[#202837] mb-2 flex items-center gap-2">
                       🎯 Active This Week
-                      <span className="bg-[#EDF3F0] text-[#5E7678] text-xs px-2 py-0.5 rounded-full">
+                      <span className="bg-[#EDF3F0] text-[#202837] text-xs px-2 py-0.5 rounded-full">
                         {activeActivities.length}
                       </span>
                     </h3>
@@ -570,9 +570,9 @@ function Activities() {
                 {/* Saved for later */}
                 {savedActivities.length > 0 && (
                   <div>
-                    <h3 className="text-sm font-extrabold text-[#5E7678] mb-2 flex items-center gap-2">
+                    <h3 className="text-sm font-extrabold text-[#202837] mb-2 flex items-center gap-2">
                       💾 Saved for Later
-                      <span className="bg-[#E4E2F2] text-[#5E7678] text-xs px-2 py-0.5 rounded-full">
+                      <span className="bg-[#E4E2F2] text-[#202837] text-xs px-2 py-0.5 rounded-full">
                         {savedActivities.length}
                       </span>
                     </h3>
@@ -592,7 +592,7 @@ function Activities() {
                 {/* Completed */}
                 {doneActivities.length > 0 && (
                   <div>
-                    <h3 className="text-sm font-extrabold text-[#5E7678] mb-2 flex items-center gap-2">
+                    <h3 className="text-sm font-extrabold text-[#202837] mb-2 flex items-center gap-2">
                       ✅ Completed
                       <span className="bg-[#FDF3EE] text-[#AA6646] text-xs px-2 py-0.5 rounded-full">
                         {doneActivities.length}
