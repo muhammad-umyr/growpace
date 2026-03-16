@@ -66,9 +66,10 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   { id: "bike",        emoji: "🚲", label: "Rides a bike",             minMonths: 60, tip: "Lower the seat so both feet rest flat on the ground, then let them walk the bike before attempting to glide." },
 ];
 
-/** Returns milestones expected up to 3 months ahead — used on the onboarding screen */
+/** Returns milestones from the last 12 months up to 3 months ahead — used on the onboarding screen */
 export function getMilestonesForOnboarding(ageMonths: number): MilestoneDef[] {
-  return ALL_MILESTONES.filter(m => m.minMonths <= ageMonths + 3);
+  const minVisible = Math.max(0, ageMonths - 12);
+  return ALL_MILESTONES.filter(m => m.minMonths >= minVisible && m.minMonths <= ageMonths + 3);
 }
 
 /** Returns the next N unchecked milestones for the child's age — drives the dashboard */
