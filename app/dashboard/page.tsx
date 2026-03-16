@@ -12,6 +12,7 @@ import {
   calcAge,
   calcAgeMonths,
   calcProgressPercent,
+  PROGRESS_STAGES,
   Profile,
   JournalEntry,
   MilestoneDef,
@@ -206,10 +207,10 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* Weekly Activities */}
+        {/* Current Activities */}
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-extrabold text-[#0A1338]">🎯 This Week&apos;s Activities</h2>
+            <h2 className="text-lg font-extrabold text-[#0A1338]">🎯 Current Activities</h2>
             <button
               onClick={() => router.push(`/activities?id=${profile.id}`)}
               className="text-sm text-[#202837] font-bold hover:underline transition-colors"
@@ -221,7 +222,7 @@ function Dashboard() {
           {activeActivities.length === 0 ? (
             <div className="bg-white rounded-2xl border border-[#E4E2F2] p-6 text-center">
               <p className="text-3xl mb-2">🎯</p>
-              <p className="text-[#0A1338] font-bold text-base">No active activities this week</p>
+              <p className="text-[#0A1338] font-bold text-base">No active activities yet</p>
               <p className="text-[#202837] text-sm mt-1 mb-3">
                 Browse the library to find activities for {profile.name}
               </p>
@@ -234,34 +235,47 @@ function Dashboard() {
             </div>
           ) : (
             <div className="space-y-3">
-              {activeActivities.map(a => (
-                <div key={a.id} className="bg-white rounded-2xl p-4 border border-[#E4E2F2]">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-[#EEEDF8] flex items-center justify-center text-2xl flex-shrink-0">
-                      {a.emoji}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <p className="font-bold text-[#0A1338] text-base">{a.title}</p>
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[a.tag] ?? "bg-gray-100 text-gray-500"}`}>
-                          {a.tag}
-                        </span>
+              {activeActivities.map(a => {
+                const currentStage = PROGRESS_STAGES.find(s => s.value === a.progress);
+                return (
+                  <div key={a.id} className="bg-white rounded-2xl p-4 border border-[#E4E2F2]">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-[#EEEDF8] flex items-center justify-center text-2xl flex-shrink-0">
+                        {a.emoji}
                       </div>
-                      <p className="text-[#202837] text-sm mt-0.5">{a.desc}</p>
-                      {/* Mini progress bar */}
-                      <div className="flex gap-1 mt-2">
-                        {[25, 50, 75, 100].map(step => (
-                          <div
-                            key={step}
-                            className={`flex-1 h-1.5 rounded-full ${a.progress >= step ? "bg-[#B2ADEB]" : "bg-[#E4E2F2]"}`}
-                          />
-                        ))}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <p className="font-bold text-[#0A1338] text-base">{a.title}</p>
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[a.tag] ?? "bg-gray-100 text-gray-500"}`}>
+                            {a.tag}
+                          </span>
+                        </div>
+                        <p className="text-[#202837] text-sm mt-0.5">{a.desc}</p>
+                        {/* Contextual progress */}
+                        <div className="flex items-center gap-2 mt-2">
+                          <div className="flex gap-1 flex-1">
+                            {PROGRESS_STAGES.map(stage => (
+                              <div
+                                key={stage.value}
+                                className={`flex-1 h-1.5 rounded-full ${a.progress >= stage.value ? "bg-[#B2ADEB]" : "bg-[#E4E2F2]"}`}
+                              />
+                            ))}
+                          </div>
+                          <span className="text-[10px] font-bold text-[#202837] whitespace-nowrap">
+                            {currentStage ? currentStage.short : "Not started"}
+                          </span>
+                        </div>
                       </div>
-                      <p className="text-[10px] text-[#8FA4A6] mt-0.5">{a.progress}% complete</p>
                     </div>
+                    <button
+                      onClick={() => router.push(`/activity?profileId=${profile.id}&activityId=${a.id}`)}
+                      className="mt-3 w-full py-2 rounded-xl bg-[#EEEDF8] text-[#202837] font-bold text-xs hover:bg-[#E4E2F2] transition-colors border border-[#D4DFDD]"
+                    >
+                      View Timeline →
+                    </button>
                   </div>
-                </div>
-              ))}
+                );
+              })}
               <button
                 onClick={() => router.push(`/activities?id=${profile.id}`)}
                 className="w-full py-2.5 rounded-2xl border-2 border-dashed border-[#A6BFB6] text-[#202837] font-bold text-sm hover:bg-[#EEEDF8] transition-colors"
