@@ -9,6 +9,7 @@ import {
   calcAge,
   calcAgeMonths,
   ALL_ACTIVITIES,
+  PROGRESS_STAGES,
   Profile,
   BoardActivity,
 } from "@/lib/store";
@@ -130,14 +131,17 @@ function ActivityCard({
 }
 
 function ActiveCard({
-  activity, onProgress, onDone, onPause, onRemove,
+  activity, profileId, onDone, onPause, onRemove,
 }: {
   activity: BoardActivity;
-  onProgress: (p: number) => void;
+  profileId: string;
   onDone: () => void;
   onPause: () => void;
   onRemove: () => void;
 }) {
+  const router = useRouter();
+  const currentStage = PROGRESS_STAGES.find(s => s.value === activity.progress);
+
   return (
     <div className="bg-white rounded-2xl border border-[#D4DFDD] p-4 space-y-3">
       <div className="flex items-start gap-3">
@@ -158,38 +162,40 @@ function ActiveCard({
         </button>
       </div>
 
-      {/* Progress tapper */}
-      <div>
-        <div className="flex items-center justify-between mb-1.5">
-          <span className="text-xs text-[#202837] font-semibold">Weekly progress</span>
-          <span className="text-xs font-bold text-[#202837]">{activity.progress}%</span>
-        </div>
-        <div className="flex gap-1.5">
-          {[25, 50, 75, 100].map(step => (
-            <button
-              key={step}
-              onClick={() => onProgress(activity.progress === step ? Math.max(0, step - 25) : step)}
-              className={`flex-1 h-3 rounded-full transition-colors
-                ${activity.progress >= step ? "bg-[#B2ADEB]" : "bg-[#E4E2F2] hover:bg-[#D4DFDD]"}`}
-              title={`${step}%`}
+      {/* Contextual progress */}
+      <div className="bg-[#F7F7FB] rounded-xl px-3 py-2.5 flex items-center justify-between gap-3">
+        <div className="flex gap-1.5 flex-1">
+          {PROGRESS_STAGES.map(stage => (
+            <div
+              key={stage.value}
+              className={`flex-1 h-1.5 rounded-full transition-colors ${activity.progress >= stage.value ? "bg-[#B2ADEB]" : "bg-[#E4E2F2]"}`}
             />
           ))}
         </div>
+        <span className="text-xs font-bold text-[#202837] whitespace-nowrap flex-shrink-0">
+          {currentStage ? currentStage.short : "Not started"}
+        </span>
       </div>
 
       {/* Actions */}
       <div className="flex gap-2">
         <button
-          onClick={onDone}
-          className="flex-1 py-2 rounded-xl bg-[#EDF3F0] text-[#202837] font-bold text-xs hover:bg-[#D4DFDD] transition-colors border border-[#D4DFDD]"
+          onClick={() => router.push(`/activity?profileId=${profileId}&activityId=${activity.id}`)}
+          className="flex-1 py-2 rounded-xl bg-[#EEEDF8] text-[#202837] font-bold text-xs hover:bg-[#E4E2F2] transition-colors border border-[#D4DFDD]"
         >
-          ✅ Mark Done
+          View Timeline →
+        </button>
+        <button
+          onClick={onDone}
+          className="py-2 px-3 rounded-xl bg-[#EDF3F0] text-[#202837] font-bold text-xs hover:bg-[#D4DFDD] transition-colors border border-[#D4DFDD]"
+        >
+          ✅ Done
         </button>
         <button
           onClick={onPause}
-          className="flex-1 py-2 rounded-xl bg-[#E4E2F2] text-[#202837] font-bold text-xs hover:bg-[#D4DFDD] transition-colors"
+          className="py-2 px-3 rounded-xl bg-[#E4E2F2] text-[#202837] font-bold text-xs hover:bg-[#D4DFDD] transition-colors"
         >
-          ⏸ Save for Later
+          ⏸ Later
         </button>
       </div>
     </div>
@@ -347,6 +353,7 @@ function Activities() {
       status: "saved",
       addedAt: new Date().toISOString(),
       progress: 0,
+      progressLog: [],
       source,
     };
     update({ ...profile!, board: [...board, activity] });
@@ -359,10 +366,6 @@ function Activities() {
         : a
     );
     update({ ...profile!, board: updated });
-  }
-
-  function setProgress(activityId: string, progress: number) {
-    update({ ...profile!, board: board.map(a => a.id === activityId ? { ...a, progress } : a) });
   }
 
   function removeFromBoard(activityId: string) {
@@ -557,7 +560,7 @@ function Activities() {
                         <ActiveCard
                           key={a.id}
                           activity={a}
-                          onProgress={p => setProgress(a.id, p)}
+                          profileId={profile.id}
                           onDone={() => setStatus(a.id, "done")}
                           onPause={() => setStatus(a.id, "saved")}
                           onRemove={() => removeFromBoard(a.id)}

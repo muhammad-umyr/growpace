@@ -104,6 +104,7 @@ function Dashboard() {
       status: "saved",
       addedAt: new Date().toISOString(),
       progress: 0,
+      progressLog: [],
       source: "library",
     };
     update({ ...profile!, board: [...(profile!.board ?? []), activity] });

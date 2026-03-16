@@ -1,5 +1,18 @@
 // ── Types ────────────────────────────────────────────────────────────────────
 
+export interface ProgressEntry {
+  date: string;      // ISO string
+  progress: number;  // 25 | 50 | 75 | 100
+  note?: string;
+}
+
+export const PROGRESS_STAGES: { value: number; label: string; short: string }[] = [
+  { value: 25,  label: "Just started",      short: "Started" },
+  { value: 50,  label: "Making progress",   short: "In progress" },
+  { value: 75,  label: "Almost there",      short: "Almost there" },
+  { value: 100, label: "Completed!",        short: "Done" },
+];
+
 export interface BoardActivity {
   id: string;
   title: string;
@@ -10,6 +23,7 @@ export interface BoardActivity {
   addedAt: string;
   activatedAt?: string;
   progress: number; // 0 | 25 | 50 | 75 | 100
+  progressLog: ProgressEntry[];
   source: "library" | "ai";
 }
 
@@ -709,7 +723,7 @@ export function deleteProfile(id: string): void {
 // ── Board helpers ─────────────────────────────────────────────────────────────
 
 export function getBoard(profile: Profile): BoardActivity[] {
-  return profile.board || [];
+  return (profile.board || []).map(a => ({ ...a, progressLog: a.progressLog ?? [] }));
 }
 
 export function updateBoard(profile: Profile, board: BoardActivity[]): Profile {
