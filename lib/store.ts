@@ -27,6 +27,7 @@ export interface Profile {
   gender: string;
   photo: string | null; // base64 data URL
   milestones: Record<string, boolean>;
+  milestoneProgress: Record<string, string>; // milestoneId → stage id
   journal: JournalEntry[];
   board: BoardActivity[];
   createdAt: string;
@@ -39,31 +40,32 @@ export interface MilestoneDef {
   emoji: string;
   label: string;
   minMonths: number;
-  tip: string; // actionable advice to help the child reach this milestone
+  tip: string;
+  tag: string;
 }
 
 export const ALL_MILESTONES: MilestoneDef[] = [
-  { id: "smile",       emoji: "😊", label: "First social smile",      minMonths: 1,  tip: "Respond to every coo and expression — lots of face-to-face time and smiling back is what triggers it." },
-  { id: "head_up",     emoji: "💪", label: "Holds head up",            minMonths: 2,  tip: "Daily tummy time is the key — even 2–3 minutes several times a day rapidly builds the neck strength needed." },
-  { id: "tracks",      emoji: "👀", label: "Tracks objects with eyes", minMonths: 2,  tip: "Hold a bright toy about 25 cm from their face and move it slowly side to side for them to follow with their eyes." },
-  { id: "babbles",     emoji: "🗣️", label: "Babbles & coos",           minMonths: 3,  tip: "Talk back using their sounds — if they say 'ba ba', you echo 'ba ba!' This turn-taking encourages more." },
-  { id: "sits",        emoji: "🪑", label: "Sits without support",     minMonths: 6,  tip: "Practice supported sitting with cushions around them and let them reach for toys to build core balance." },
-  { id: "crawls",      emoji: "🐾", label: "Crawls",                   minMonths: 8,  tip: "Place a favourite toy just out of reach during tummy time to give them a reason to move towards it." },
-  { id: "waves",       emoji: "👋", label: "Waves bye-bye",            minMonths: 9,  tip: "Wave and say 'bye-bye' consistently every time someone leaves — repetition over weeks is what works." },
-  { id: "first_words", emoji: "💬", label: "First words",              minMonths: 10, tip: "Name everything you see and do together. The more varied language they hear, the sooner words come." },
-  { id: "walks",       emoji: "🚶", label: "Walking",                  minMonths: 12, tip: "Encourage cruising along furniture and offer your hands for support — avoid baby walkers, which can delay walking." },
-  { id: "spoon",       emoji: "🥄", label: "Uses spoon",               minMonths: 15, tip: "Start with thick foods like yogurt or mashed potato and let them explore freely. Expect mess — it's part of learning!" },
-  { id: "two_words",   emoji: "🗨️", label: "2-word phrases",           minMonths: 18, tip: "Expand their single words — when they say 'ball', respond 'big ball!' or 'kick ball!' to model combinations." },
-  { id: "runs",        emoji: "🏃", label: "Running",                  minMonths: 18, tip: "Active play like chasing a rolling ball, dancing, and climbing gentle slopes builds the coordination needed." },
-  { id: "sings",       emoji: "🎵", label: "Sings simple songs",       minMonths: 24, tip: "Sing the same 2–3 songs repeatedly every day. Repetition is how they learn the words — 'Twinkle Twinkle' is perfect." },
-  { id: "potty",       emoji: "🚽", label: "Toilet training begun",    minMonths: 24, tip: "Look for readiness signs: staying dry for 2+ hours, showing interest in the toilet, or telling you when they're wet." },
-  { id: "scissors",    emoji: "✂️", label: "Using scissors",           minMonths: 36, tip: "Start with playdough — squeezing scissors to cut it builds exactly the hand strength needed before moving to paper." },
-  { id: "sharing",     emoji: "🤝", label: "Sharing with peers",       minMonths: 36, tip: "Play turn-taking games with blocks or balls and use consistent language: 'My turn, now your turn.'" },
-  { id: "draws",       emoji: "🎨", label: "Draws shapes",             minMonths: 36, tip: "Let them scribble freely first, then draw a face together — 'circle for the head, two dots for eyes' is a great start." },
-  { id: "letters",     emoji: "🔡", label: "Recognises letters",       minMonths: 42, tip: "Point out letters everywhere on signs, packaging, and books. Always start with the letters in their own name." },
-  { id: "reads",       emoji: "📖", label: "Reads simple words",       minMonths: 60, tip: "Pair simple words with pictures they know well. Start with their name, family names, and labels on familiar objects." },
-  { id: "writes_name", emoji: "✏️", label: "Writes own name",          minMonths: 60, tip: "Trace their name in sand or salt first — chunky crayons help build the pencil grip they need to write independently." },
-  { id: "bike",        emoji: "🚲", label: "Rides a bike",             minMonths: 60, tip: "Lower the seat so both feet rest flat on the ground, then let them walk the bike before attempting to glide." },
+  { id: "smile",       emoji: "😊", label: "First social smile",      minMonths: 1,  tag: "Social",    tip: "Respond to every coo and expression — lots of face-to-face time and smiling back is what triggers it." },
+  { id: "head_up",     emoji: "💪", label: "Holds head up",            minMonths: 2,  tag: "Motor",     tip: "Daily tummy time is the key — even 2–3 minutes several times a day rapidly builds the neck strength needed." },
+  { id: "tracks",      emoji: "👀", label: "Tracks objects with eyes", minMonths: 2,  tag: "Sensory",   tip: "Hold a bright toy about 25 cm from their face and move it slowly side to side for them to follow with their eyes." },
+  { id: "babbles",     emoji: "🗣️", label: "Babbles & coos",           minMonths: 3,  tag: "Language",  tip: "Talk back using their sounds — if they say 'ba ba', you echo 'ba ba!' This turn-taking encourages more." },
+  { id: "sits",        emoji: "🪑", label: "Sits without support",     minMonths: 6,  tag: "Motor",     tip: "Practice supported sitting with cushions around them and let them reach for toys to build core balance." },
+  { id: "crawls",      emoji: "🐾", label: "Crawls",                   minMonths: 8,  tag: "Motor",     tip: "Place a favourite toy just out of reach during tummy time to give them a reason to move towards it." },
+  { id: "waves",       emoji: "👋", label: "Waves bye-bye",            minMonths: 9,  tag: "Social",    tip: "Wave and say 'bye-bye' consistently every time someone leaves — repetition over weeks is what works." },
+  { id: "first_words", emoji: "💬", label: "First words",              minMonths: 10, tag: "Language",  tip: "Name everything you see and do together. The more varied language they hear, the sooner words come." },
+  { id: "walks",       emoji: "🚶", label: "Walking",                  minMonths: 12, tag: "Motor",     tip: "Encourage cruising along furniture and offer your hands for support — avoid baby walkers, which can delay walking." },
+  { id: "spoon",       emoji: "🥄", label: "Uses spoon",               minMonths: 15, tag: "Motor",     tip: "Start with thick foods like yogurt or mashed potato and let them explore freely. Expect mess — it's part of learning!" },
+  { id: "two_words",   emoji: "🗨️", label: "2-word phrases",           minMonths: 18, tag: "Language",  tip: "Expand their single words — when they say 'ball', respond 'big ball!' or 'kick ball!' to model combinations." },
+  { id: "runs",        emoji: "🏃", label: "Running",                  minMonths: 18, tag: "Physical",  tip: "Active play like chasing a rolling ball, dancing, and climbing gentle slopes builds the coordination needed." },
+  { id: "sings",       emoji: "🎵", label: "Sings simple songs",       minMonths: 24, tag: "Language",  tip: "Sing the same 2–3 songs repeatedly every day. Repetition is how they learn the words — 'Twinkle Twinkle' is perfect." },
+  { id: "potty",       emoji: "🚽", label: "Toilet training begun",    minMonths: 24, tag: "Physical",  tip: "Look for readiness signs: staying dry for 2+ hours, showing interest in the toilet, or telling you when they're wet." },
+  { id: "scissors",    emoji: "✂️", label: "Using scissors",           minMonths: 36, tag: "Motor",     tip: "Start with playdough — squeezing scissors to cut it builds exactly the hand strength needed before moving to paper." },
+  { id: "sharing",     emoji: "🤝", label: "Sharing with peers",       minMonths: 36, tag: "Social",    tip: "Play turn-taking games with blocks or balls and use consistent language: 'My turn, now your turn.'" },
+  { id: "draws",       emoji: "🎨", label: "Draws shapes",             minMonths: 36, tag: "Creative",  tip: "Let them scribble freely first, then draw a face together — 'circle for the head, two dots for eyes' is a great start." },
+  { id: "letters",     emoji: "🔡", label: "Recognises letters",       minMonths: 42, tag: "Cognitive", tip: "Point out letters everywhere on signs, packaging, and books. Always start with the letters in their own name." },
+  { id: "reads",       emoji: "📖", label: "Reads simple words",       minMonths: 60, tag: "Cognitive", tip: "Pair simple words with pictures they know well. Start with their name, family names, and labels on familiar objects." },
+  { id: "writes_name", emoji: "✏️", label: "Writes own name",          minMonths: 60, tag: "Cognitive", tip: "Trace their name in sand or salt first — chunky crayons help build the pencil grip they need to write independently." },
+  { id: "bike",        emoji: "🚲", label: "Rides a bike",             minMonths: 60, tag: "Physical",  tip: "Lower the seat so both feet rest flat on the ground, then let them walk the bike before attempting to glide." },
 ];
 
 /** Returns milestones from the last 12 months up to 3 months ahead — used on the onboarding screen */
@@ -491,7 +493,9 @@ export function getProfiles(): Profile[] {
 }
 
 export function getProfile(id: string): Profile | null {
-  return getProfiles().find(p => p.id === id) ?? null;
+  const p = getProfiles().find(p => p.id === id) ?? null;
+  if (p && !p.milestoneProgress) p.milestoneProgress = {};
+  return p;
 }
 
 export function saveProfile(profile: Profile): void {

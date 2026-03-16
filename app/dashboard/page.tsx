@@ -14,7 +14,16 @@ import {
   calcProgressPercent,
   Profile,
   JournalEntry,
+  MilestoneDef,
+  BoardActivity,
 } from "@/lib/store";
+
+const MILESTONE_STAGES = [
+  { id: "exploring",   emoji: "🌱", label: "Just started exploring" },
+  { id: "early_signs", emoji: "👀", label: "Showing early signs" },
+  { id: "progressing", emoji: "📈", label: "Progressing well" },
+  { id: "almost",      emoji: "🔥", label: "Almost there!" },
+];
 
 const TAG_COLORS: Record<string, string> = {
   Physical:  "bg-[#f0fbf4] text-green-600",
@@ -38,6 +47,7 @@ function Dashboard() {
   const [journalText, setJournalText] = useState("");
   const [journalEmoji, setJournalEmoji] = useState("🌟");
   const [showJournalForm, setShowJournalForm] = useState(false);
+  const [expandedMilestone, setExpandedMilestone] = useState<string | null>(null);
 
   useEffect(() => {
     if (id) setProfile(getProfile(id));
@@ -72,11 +82,37 @@ function Dashboard() {
     saveProfile(updated);
   }
 
-  function markMilestoneReached(milestoneId: string) {
+  function markMilestoneAccomplished(milestoneId: string) {
+    const next = { ...profile!.milestones, [milestoneId]: true };
+    const nextProgress = { ...profile!.milestoneProgress };
+    delete nextProgress[milestoneId];
+    update({ ...profile!, milestones: next, milestoneProgress: nextProgress });
+    setExpandedMilestone(null);
+  }
+
+  function saveMilestoneStage(milestoneId: string, stageId: string) {
     update({
       ...profile!,
-      milestones: { ...profile!.milestones, [milestoneId]: true },
+      milestoneProgress: { ...(profile!.milestoneProgress ?? {}), [milestoneId]: stageId },
     });
+    setExpandedMilestone(null);
+  }
+
+  function addMilestoneToBoard(m: MilestoneDef) {
+    const already = (profile!.board ?? []).some(a => a.id === `milestone-${m.id}`);
+    if (already) return;
+    const activity: BoardActivity = {
+      id: `milestone-${m.id}`,
+      title: m.label,
+      emoji: m.emoji,
+      desc: m.tip,
+      tag: m.tag,
+      status: "saved",
+      addedAt: new Date().toISOString(),
+      progress: 0,
+      source: "library",
+    };
+    update({ ...profile!, board: [...(profile!.board ?? []), activity] });
   }
 
   function addJournalEntry() {
@@ -250,49 +286,92 @@ function Dashboard() {
             <div className="space-y-3">
               {nextMilestones.map((m, i) => {
                 const isOverdue = m.minMonths <= ageMonths;
+                const isExpanded = expandedMilestone === m.id;
+                const savedStage = (profile!.milestoneProgress ?? {})[m.id];
+                const onBoard = (profile!.board ?? []).some(a => a.id === `milestone-${m.id}`);
                 return (
                   <div
                     key={m.id}
                     className="bg-white rounded-2xl shadow-sm border border-orange-50 overflow-hidden"
                   >
                     <div className="p-4 flex items-start gap-4">
-                      {/* Emoji */}
                       <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#fff3e8] to-[#fde8d8] flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">
                         {m.emoji}
                       </div>
-
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="font-extrabold text-[#3d2c1e] text-base leading-tight">
-                            {m.label}
-                          </h3>
+                          <h3 className="font-extrabold text-[#3d2c1e] text-base leading-tight">{m.label}</h3>
                           {isOverdue ? (
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-500">
-                              Around their age
-                            </span>
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-500">Around their age</span>
                           ) : (
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#f0f8ff] text-[#6baed6]">
-                              Coming up
-                            </span>
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#f0f8ff] text-[#6baed6]">Coming up</span>
                           )}
                         </div>
-                        <p className="text-[#c4a898] text-xs mt-0.5">
-                          Expected {milestoneExpectedAge(m.minMonths)}
-                        </p>
+                        <p className="text-[#c4a898] text-xs mt-0.5">Expected {milestoneExpectedAge(m.minMonths)}</p>
                         <p className="text-[#7a5c4a] text-xs mt-2 leading-relaxed">{m.tip}</p>
+                        {savedStage && !isExpanded && (
+                          <p className="text-[10px] font-bold text-amber-500 mt-1.5">
+                            {MILESTONE_STAGES.find(s => s.id === savedStage)?.emoji}{" "}
+                            {MILESTONE_STAGES.find(s => s.id === savedStage)?.label}
+                          </p>
+                        )}
                       </div>
                     </div>
 
-                    {/* Action bar */}
-                    <div className="border-t border-[#f5ebe0] px-4 py-2.5 flex items-center justify-between">
-                      <span className="text-[10px] text-[#c4a898] font-semibold">
-                        #{i + 1} on the roadmap
-                      </span>
+                    {/* Stage picker — shown when expanded */}
+                    {isExpanded && (
+                      <div className="px-4 pb-3">
+                        <p className="text-xs font-bold text-[#3d2c1e] mb-2">Where is {profile!.name} right now?</p>
+                        <div className="grid grid-cols-2 gap-2">
+                          {MILESTONE_STAGES.map(stage => (
+                            <button
+                              key={stage.id}
+                              onClick={() => saveMilestoneStage(m.id, stage.id)}
+                              className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border-2 text-left transition-all
+                                ${savedStage === stage.id
+                                  ? "border-amber-400 bg-amber-50 text-amber-700"
+                                  : "border-[#f0ddd0] bg-[#fffaf7] text-[#7a5c4a] hover:border-amber-300"
+                                }`}
+                            >
+                              <span className="text-lg">{stage.emoji}</span>
+                              <span className="text-xs font-semibold leading-tight">{stage.label}</span>
+                            </button>
+                          ))}
+                        </div>
+                        <button
+                          onClick={() => setExpandedMilestone(null)}
+                          className="mt-2 text-xs text-[#c4a898] hover:text-[#a07060] font-semibold w-full text-center"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    )}
+
+                    {/* 3 CTAs */}
+                    <div className="border-t border-[#f5ebe0] px-3 py-2.5 grid grid-cols-3 gap-1.5">
                       <button
-                        onClick={() => markMilestoneReached(m.id)}
-                        className="text-xs bg-[#e8834a] hover:bg-[#d6723b] text-white font-bold px-4 py-1.5 rounded-full transition-colors"
+                        onClick={() => setExpandedMilestone(isExpanded ? null : m.id)}
+                        className="flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl bg-amber-50 hover:bg-amber-100 transition-colors text-center"
                       >
-                        ✓ We&apos;ve reached this!
+                        <span className="text-sm">⏳</span>
+                        <span className="text-[10px] font-bold text-amber-600 leading-tight">In progress</span>
+                      </button>
+                      <button
+                        onClick={() => addMilestoneToBoard(m)}
+                        className={`flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl transition-colors text-center
+                          ${onBoard ? "bg-[#f0f8ff] opacity-60 cursor-default" : "bg-[#f0f8ff] hover:bg-blue-100"}`}
+                      >
+                        <span className="text-sm">📋</span>
+                        <span className="text-[10px] font-bold text-blue-500 leading-tight">
+                          {onBoard ? "On board" : "Add to board"}
+                        </span>
+                      </button>
+                      <button
+                        onClick={() => markMilestoneAccomplished(m.id)}
+                        className="flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl bg-[#f0fbf4] hover:bg-green-100 transition-colors text-center"
+                      >
+                        <span className="text-sm">🏆</span>
+                        <span className="text-[10px] font-bold text-green-600 leading-tight">Accomplished!</span>
                       </button>
                     </div>
                   </div>

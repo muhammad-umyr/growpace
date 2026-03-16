@@ -77,6 +77,7 @@ export default function Home() {
       gender,
       photo: photoUrl,
       milestones: {},
+      milestoneProgress: {},
       journal: [],
       board: [],
       createdAt: new Date().toISOString(),
