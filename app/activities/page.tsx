@@ -52,45 +52,36 @@ function ActivityCard({
   )}`;
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-orange-50 overflow-hidden">
-      {/* Main row */}
-      <div className="p-4 flex items-start gap-4">
-        <div className="w-12 h-12 rounded-2xl bg-[#fff8f0] flex items-center justify-center text-2xl flex-shrink-0">
+    <div className="bg-white rounded-2xl shadow-md border border-orange-50 overflow-hidden">
+
+      {/* Body */}
+      <div className="p-4 flex gap-4 items-start">
+        {/* Emoji */}
+        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#fff3e8] to-[#fde8d8] flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">
           {emoji}
         </div>
+
+        {/* Content */}
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <p className="font-bold text-[#3d2c1e] text-sm">{title}</p>
-            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[tag] ?? "bg-gray-100 text-gray-500"}`}>
-              {tag}
-            </span>
-          </div>
-          <p className="text-[#a07060] text-xs mt-0.5">{desc}</p>
+          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[tag] ?? "bg-gray-100 text-gray-500"}`}>
+            {tag}
+          </span>
+          <h3 className="font-extrabold text-[#3d2c1e] text-base leading-tight mt-1">{title}</h3>
+          <p className="text-[#a07060] text-xs mt-0.5 leading-relaxed">{desc}</p>
           {reason && (
-            <span className="inline-flex items-center gap-1 mt-1.5 bg-gradient-to-r from-[#fff3e8] to-[#fef0f8] border border-orange-100 text-[#e8834a] text-[10px] font-bold px-2 py-0.5 rounded-full">
+            <span className="inline-flex items-center gap-1 mt-2 bg-gradient-to-r from-[#fff3e8] to-[#fef0f8] border border-orange-100 text-[#e8834a] text-[10px] font-bold px-2.5 py-1 rounded-full">
               ✨ {reason}
             </span>
           )}
         </div>
-        <button
-          onClick={onAdd}
-          disabled={isAdded}
-          className={`flex-shrink-0 text-xs font-bold px-3 py-1.5 rounded-full transition-all
-            ${isAdded
-              ? "bg-[#f5ebe0] text-[#c4a898] cursor-default"
-              : "bg-[#e8834a] text-white hover:bg-[#d6723b] shadow-sm"
-            }`}
-        >
-          {isAdded ? "Added ✓" : "+ Board"}
-        </button>
       </div>
 
-      {/* Footer: how-to + watch */}
-      <div className="px-4 pb-3 flex items-center gap-2 border-t border-[#f5ebe0] pt-2.5">
+      {/* Action bar */}
+      <div className="border-t border-[#f5ebe0] px-4 py-2.5 flex items-center gap-2">
         {howTo?.length ? (
           <button
             onClick={() => setShowTips(v => !v)}
-            className={`text-xs font-bold px-3 py-1 rounded-full transition-colors
+            className={`text-xs font-bold px-3 py-1.5 rounded-full transition-colors
               ${showTips ? "bg-[#fff0e6] text-[#e8834a]" : "bg-[#f5ebe0] text-[#a07060] hover:text-[#e8834a]"}`}
           >
             📋 How to {showTips ? "▲" : "▾"}
@@ -100,18 +91,30 @@ function ActivityCard({
           href={watchUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-xs bg-red-50 text-red-500 font-bold px-3 py-1 rounded-full hover:bg-red-100 transition-colors flex items-center gap-1"
+          className="text-xs bg-red-50 text-red-500 font-bold px-3 py-1.5 rounded-full hover:bg-red-100 transition-colors flex items-center gap-1"
         >
-          ▶ Watch video
+          ▶ Watch
         </a>
+        <div className="flex-1" />
+        <button
+          onClick={onAdd}
+          disabled={isAdded}
+          className={`text-xs font-bold px-4 py-1.5 rounded-full transition-all
+            ${isAdded
+              ? "bg-[#f5ebe0] text-[#c4a898] cursor-default"
+              : "bg-[#e8834a] text-white hover:bg-[#d6723b] shadow-sm"
+            }`}
+        >
+          {isAdded ? "✓ Added" : "+ Board"}
+        </button>
       </div>
 
       {/* Expandable tips */}
       {showTips && howTo && (
-        <div className="px-4 pb-4">
-          <ol className="space-y-2">
+        <div className="bg-[#fffaf7] border-t border-[#f5ebe0] px-4 py-4">
+          <ol className="space-y-3">
             {howTo.map((tip, i) => (
-              <li key={i} className="flex items-start gap-2.5 text-xs text-[#a07060] leading-relaxed">
+              <li key={i} className="flex items-start gap-3 text-xs text-[#7a5c4a] leading-relaxed">
                 <span className="w-5 h-5 rounded-full bg-[#fff0e6] text-[#e8834a] font-extrabold text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">
                   {i + 1}
                 </span>
@@ -121,6 +124,7 @@ function ActivityCard({
           </ol>
         </div>
       )}
+
     </div>
   );
 }
@@ -469,24 +473,16 @@ function Activities() {
             )}
 
             {!loading && suggestions.map((s, i) => (
-              <div key={i} className="relative">
-                {/* Personalised ribbon */}
-                <div className="absolute -top-px left-4 right-4 h-0.5 rounded-full bg-gradient-to-r from-[#e8834a] to-[#f4b98a]" />
-                <div className="absolute top-2.5 right-[5.5rem] flex items-center gap-1">
-                  <span className="text-[9px] font-extrabold text-[#e8834a] tracking-wide uppercase">
-                    For {profile.name}
-                  </span>
-                </div>
-                <ActivityCard
-                  emoji={s.emoji}
-                  title={s.title}
-                  desc={s.desc}
-                  tag={s.tag}
-                  reason={s.reason}
-                  isAdded={addedTitles.has(s.title)}
-                  onAdd={() => addToBoard(s.title, s.emoji, s.desc, s.tag, "ai")}
-                />
-              </div>
+              <ActivityCard
+                key={i}
+                emoji={s.emoji}
+                title={s.title}
+                desc={s.desc}
+                tag={s.tag}
+                reason={s.reason}
+                isAdded={addedTitles.has(s.title)}
+                onAdd={() => addToBoard(s.title, s.emoji, s.desc, s.tag, "ai")}
+              />
             ))}
           </div>
         )}
