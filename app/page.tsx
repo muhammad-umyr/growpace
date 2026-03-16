@@ -100,20 +100,20 @@ export default function Home() {
   const showCreateForm = !hasProfiles || showForm;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F0FAF8] via-[#F7F4FC] to-[#EEF2F9] flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-[#F4F3FC] via-[#EEEDF8] to-[#EDF3F0] flex flex-col items-center justify-center px-4 py-12">
 
       {/* Logo */}
       <div className="mb-8 text-center">
         <div className="inline-flex items-center gap-2 mb-2">
-          <span className="text-3xl font-extrabold text-[#2D8C7A]">Growpace</span>
+          <span className="text-3xl font-extrabold text-[#5E7678]">Growpace</span>
         </div>
-        <p className="text-[#7A6E8A] text-base font-medium">Every child grows at their own pace.</p>
+        <p className="text-[#5E7678] text-base font-medium">Every child grows at their own pace.</p>
       </div>
 
       {/* ── Profiles list ── */}
       {showProfiles && (
         <div className="w-full max-w-md space-y-4">
-          <h2 className="text-lg font-extrabold text-[#0F1E29]">Your children</h2>
+          <h2 className="text-lg font-extrabold text-[#0A1338]">Your children</h2>
 
           <div className="grid grid-cols-2 gap-3">
             {profiles.map(p => {
@@ -122,23 +122,23 @@ export default function Home() {
                 <div key={p.id} className="relative group">
                   <button
                     onClick={() => router.push(`/dashboard?id=${p.id}`)}
-                    className="w-full bg-white rounded-2xl p-4 flex flex-col items-center gap-2 hover:scale-[1.02] transition-all border border-[#EDE9F5]"
+                    className="w-full bg-white rounded-2xl p-4 flex flex-col items-center gap-2 hover:scale-[1.02] transition-all border border-[#E4E2F2]"
                   >
-                    <div className="relative w-16 h-16 rounded-full bg-[#EDF7F5] border-4 border-[#A8D5CC] overflow-hidden flex items-center justify-center">
+                    <div className="relative w-16 h-16 rounded-full bg-[#EDF3F0] border-4 border-[#A6BFB6] overflow-hidden flex items-center justify-center">
                       {p.photo ? (
                         <Image src={p.photo} alt={p.name} fill className="object-cover" unoptimized />
                       ) : (
                         <span className="text-3xl">{genderEmoji}</span>
                       )}
                     </div>
-                    <p className="font-extrabold text-[#0F1E29] text-base">{p.name}</p>
-                    <p className="text-[#2D8C7A] text-sm font-semibold">{calcAge(p.dob)}</p>
+                    <p className="font-extrabold text-[#0A1338] text-base">{p.name}</p>
+                    <p className="text-[#5E7678] text-sm font-semibold">{calcAge(p.dob)}</p>
                   </button>
 
                   {/* Delete button */}
                   {confirmDelete === p.id ? (
                     <div className="absolute inset-0 bg-white/95 rounded-2xl flex flex-col items-center justify-center gap-2 border border-red-100">
-                      <p className="text-sm font-bold text-[#0F1E29] text-center px-2">Remove {p.name}?</p>
+                      <p className="text-sm font-bold text-[#0A1338] text-center px-2">Remove {p.name}?</p>
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleDelete(p.id)}
@@ -148,7 +148,7 @@ export default function Home() {
                         </button>
                         <button
                           onClick={() => setConfirmDelete(null)}
-                          className="text-xs bg-[#EDE9F5] text-[#7A6E8A] font-bold px-3 py-1 rounded-full hover:bg-[#E2DCF0] transition-colors"
+                          className="text-xs bg-[#E4E2F2] text-[#5E7678] font-bold px-3 py-1 rounded-full hover:bg-[#D4DFDD] transition-colors"
                         >
                           Cancel
                         </button>
@@ -157,7 +157,7 @@ export default function Home() {
                   ) : (
                     <button
                       onClick={() => setConfirmDelete(p.id)}
-                      className="absolute top-2 right-2 w-6 h-6 rounded-full bg-[#EDE9F5] text-[#A89EC0] hover:bg-red-100 hover:text-red-400 transition-colors text-xs font-bold opacity-0 group-hover:opacity-100 flex items-center justify-center"
+                      className="absolute top-2 right-2 w-6 h-6 rounded-full bg-[#E4E2F2] text-[#8FA4A6] hover:bg-red-100 hover:text-red-400 transition-colors text-xs font-bold opacity-0 group-hover:opacity-100 flex items-center justify-center"
                       title="Remove profile"
                     >
                       ×
@@ -170,7 +170,7 @@ export default function Home() {
 
           <button
             onClick={() => setShowForm(true)}
-            className="w-full py-3.5 rounded-2xl border-2 border-dashed border-[#A8D5CC] text-[#2D8C7A] font-bold text-sm hover:bg-[#F0FAF8] transition-colors"
+            className="w-full py-3.5 rounded-2xl border-2 border-dashed border-[#A6BFB6] text-[#5E7678] font-bold text-sm hover:bg-[#EEEDF8] transition-colors"
           >
             + Add another child
           </button>
@@ -183,14 +183,14 @@ export default function Home() {
           {showForm && hasProfiles && (
             <button
               onClick={() => setShowForm(false)}
-              className="text-sm text-[#7A6E8A] hover:text-[#2D8C7A] font-semibold mb-4 flex items-center gap-1 transition-colors"
+              className="text-sm text-[#5E7678] hover:text-[#5E7678] font-semibold mb-4 flex items-center gap-1 transition-colors"
             >
               ← Back
             </button>
           )}
 
-          <h1 className="text-2xl font-extrabold text-[#0F1E29] mb-1">Create a child profile</h1>
-          <p className="text-[#7A6E8A] text-base mb-7">Let&apos;s get to know your little one 🐣</p>
+          <h1 className="text-2xl font-extrabold text-[#0A1338] mb-1">Create a child profile</h1>
+          <p className="text-[#5E7678] text-base mb-7">Let&apos;s get to know your little one 🐣</p>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Photo upload */}
@@ -198,12 +198,12 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => fileRef.current?.click()}
-                className="relative w-24 h-24 rounded-full bg-[#EDF7F5] border-4 border-dashed border-[#A8D5CC] hover:border-[#2D8C7A] transition-colors overflow-hidden"
+                className="relative w-24 h-24 rounded-full bg-[#EDF3F0] border-4 border-dashed border-[#A6BFB6] hover:border-[#5E7678] transition-colors overflow-hidden"
               >
                 {photoUrl ? (
                   <Image src={photoUrl} alt="Child photo" fill className="object-cover" unoptimized />
                 ) : (
-                  <div className="flex flex-col items-center justify-center h-full text-[#2D8C7A] gap-1">
+                  <div className="flex flex-col items-center justify-center h-full text-[#5E7678] gap-1">
                     <span className="text-2xl">📷</span>
                     <span className="text-[10px] font-semibold">Add photo</span>
                   </div>
@@ -214,7 +214,7 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={() => setPhotoUrl(null)}
-                  className="text-xs text-[#7A6E8A] hover:text-red-400 transition-colors"
+                  className="text-xs text-[#5E7678] hover:text-red-400 transition-colors"
                 >
                   Remove photo
                 </button>
@@ -223,38 +223,38 @@ export default function Home() {
 
             {/* Name */}
             <div>
-              <label className="block text-sm font-bold text-[#0F1E29] mb-1.5">
-                Child&apos;s name <span className="text-[#2D8C7A]">*</span>
+              <label className="block text-sm font-bold text-[#0A1338] mb-1.5">
+                Child&apos;s name <span className="text-[#5E7678]">*</span>
               </label>
               <input
                 type="text"
                 value={name}
                 onChange={e => { setName(e.target.value); setErrors(p => ({ ...p, name: "" })); }}
                 placeholder="e.g. Aisha, Liam, Noah…"
-                className="w-full px-4 py-3 rounded-2xl border-2 border-[#E2DCF0] bg-[#FAF8FD] focus:outline-none focus:border-[#2D8C7A] text-[#0F1E29] placeholder-[#A89EC0] transition-colors"
+                className="w-full px-4 py-3 rounded-2xl border-2 border-[#D4DFDD] bg-[#F7F7FB] focus:outline-none focus:border-[#5E7678] text-[#0A1338] placeholder-[#8FA4A6] transition-colors"
               />
               {errors.name && <p className="mt-1 text-sm text-red-400">{errors.name}</p>}
             </div>
 
             {/* Date of birth */}
             <div>
-              <label className="block text-sm font-bold text-[#0F1E29] mb-1.5">
-                Date of birth <span className="text-[#2D8C7A]">*</span>
+              <label className="block text-sm font-bold text-[#0A1338] mb-1.5">
+                Date of birth <span className="text-[#5E7678]">*</span>
               </label>
               <input
                 type="date"
                 value={dob}
                 max={new Date().toISOString().split("T")[0]}
                 onChange={e => { setDob(e.target.value); setErrors(p => ({ ...p, dob: "" })); }}
-                className="w-full px-4 py-3 rounded-2xl border-2 border-[#E2DCF0] bg-[#FAF8FD] focus:outline-none focus:border-[#2D8C7A] text-[#0F1E29] transition-colors"
+                className="w-full px-4 py-3 rounded-2xl border-2 border-[#D4DFDD] bg-[#F7F7FB] focus:outline-none focus:border-[#5E7678] text-[#0A1338] transition-colors"
               />
               {errors.dob && <p className="mt-1 text-sm text-red-400">{errors.dob}</p>}
             </div>
 
             {/* Gender */}
             <div>
-              <label className="block text-sm font-bold text-[#0F1E29] mb-2">
-                Gender <span className="text-[#2D8C7A]">*</span>
+              <label className="block text-sm font-bold text-[#0A1338] mb-2">
+                Gender <span className="text-[#5E7678]">*</span>
               </label>
               <div className="grid grid-cols-2 gap-3">
                 {GENDERS.map(g => (
@@ -264,8 +264,8 @@ export default function Home() {
                     onClick={() => { setGender(g.value); setErrors(p => ({ ...p, gender: "" })); }}
                     className={`flex flex-col items-center gap-1 py-3 rounded-2xl border-2 transition-all font-semibold text-sm
                       ${gender === g.value
-                        ? "border-[#2D8C7A] bg-[#F0FAF8] text-[#2D8C7A] scale-105 shadow-sm"
-                        : "border-[#E2DCF0] bg-[#FAF8FD] text-[#7A6E8A] hover:border-[#2D8C7A]"
+                        ? "border-[#5E7678] bg-[#EEEDF8] text-[#5E7678] scale-105 shadow-sm"
+                        : "border-[#D4DFDD] bg-[#F7F7FB] text-[#5E7678] hover:border-[#5E7678]"
                       }`}
                   >
                     <span className="text-2xl">{g.emoji}</span>
@@ -279,7 +279,7 @@ export default function Home() {
             {/* Submit */}
             <button
               type="submit"
-              className="w-full py-3.5 rounded-2xl bg-[#2D8C7A] hover:bg-[#1E6B5A] text-white font-extrabold text-base transition-colors shadow-md shadow-teal-200 mt-2 cursor-pointer"
+              className="w-full py-3.5 rounded-2xl bg-[#5E7678] hover:bg-[#4A5F61] text-white font-extrabold text-base transition-colors shadow-md shadow-[#B2ADEB]/30 mt-2 cursor-pointer"
             >
               Create Profile 🌟
             </button>
@@ -287,7 +287,7 @@ export default function Home() {
         </div>
       )}
 
-      <p className="mt-6 text-sm text-[#A89EC0] text-center">
+      <p className="mt-6 text-sm text-[#8FA4A6] text-center">
         Your data stays on your device. No account needed to get started.
       </p>
     </div>

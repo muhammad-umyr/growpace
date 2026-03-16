@@ -26,13 +26,13 @@ interface AISuggestion {
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 const TAG_COLORS: Record<string, string> = {
-  Physical:  "bg-[#f0fbf4] text-green-600",
-  Language:  "bg-[#EEF2F9] text-[#6baed6]",
-  Cognitive: "bg-[#fdf4ff] text-purple-500",
-  Creative:  "bg-[#F0FAF8] text-[#2D8C7A]",
-  Social:    "bg-[#fff0f5] text-pink-500",
-  Sensory:   "bg-[#f5fff0] text-lime-600",
-  Motor:     "bg-[#eff6ff] text-blue-500",
+  Physical:  "bg-[#EDF3F0] text-[#5E7678]",
+  Language:  "bg-[#EEEDF8] text-[#5E7678]",
+  Cognitive: "bg-[#EEEDF8] text-[#5E7678]",
+  Creative:  "bg-[#EDF3F0] text-[#AA6646]",
+  Social:    "bg-[#EEEDF8] text-[#5E7678]",
+  Sensory:   "bg-[#EDF3F0] text-[#5E7678]",
+  Motor:     "bg-[#EEEDF8] text-[#5E7678]",
 };
 
 const ALL_TAGS = ["All", "Physical", "Language", "Cognitive", "Creative", "Social", "Sensory", "Motor"];
@@ -52,12 +52,12 @@ function ActivityCard({
   )}`;
 
   return (
-    <div className="bg-white rounded-2xl border border-[#EDE9F5] overflow-hidden">
+    <div className="bg-white rounded-2xl border border-[#E4E2F2] overflow-hidden">
 
       {/* Body */}
       <div className="p-4 flex gap-4 items-start">
         {/* Emoji */}
-        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#F0FAF8] to-[#D5EDE9] flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">
+        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#F4F3FC] to-[#D4DFDD] flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">
           {emoji}
         </div>
 
@@ -66,10 +66,10 @@ function ActivityCard({
           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[tag] ?? "bg-gray-100 text-gray-500"}`}>
             {tag}
           </span>
-          <h3 className="font-extrabold text-[#0F1E29] text-base leading-tight mt-1">{title}</h3>
-          <p className="text-[#7A6E8A] text-sm mt-0.5 leading-relaxed">{desc}</p>
+          <h3 className="font-extrabold text-[#0A1338] text-base leading-tight mt-1">{title}</h3>
+          <p className="text-[#5E7678] text-sm mt-0.5 leading-relaxed">{desc}</p>
           {reason && (
-            <span className="inline-flex items-center gap-1 mt-2 bg-gradient-to-r from-[#F0FAF8] to-[#F7F4FC] border border-[#E2DCF0] text-[#2D8C7A] text-[10px] font-bold px-2.5 py-1 rounded-full">
+            <span className="inline-flex items-center gap-1 mt-2 bg-gradient-to-r from-[#F4F3FC] to-[#EEEDF8] border border-[#D4DFDD] text-[#5E7678] text-[10px] font-bold px-2.5 py-1 rounded-full">
               ✨ {reason}
             </span>
           )}
@@ -77,12 +77,12 @@ function ActivityCard({
       </div>
 
       {/* Action bar */}
-      <div className="border-t border-[#EDE9F5] px-4 py-2.5 flex items-center gap-2">
+      <div className="border-t border-[#E4E2F2] px-4 py-2.5 flex items-center gap-2">
         {howTo?.length ? (
           <button
             onClick={() => setShowTips(v => !v)}
             className={`text-xs font-bold px-3 py-1.5 rounded-full transition-colors
-              ${showTips ? "bg-[#EDF7F5] text-[#2D8C7A]" : "bg-[#EDE9F5] text-[#7A6E8A] hover:text-[#2D8C7A]"}`}
+              ${showTips ? "bg-[#EDF3F0] text-[#5E7678]" : "bg-[#E4E2F2] text-[#5E7678] hover:text-[#5E7678]"}`}
           >
             📋 How to {showTips ? "▲" : "▾"}
           </button>
@@ -101,8 +101,8 @@ function ActivityCard({
           disabled={isAdded}
           className={`text-xs font-bold px-4 py-1.5 rounded-full transition-all
             ${isAdded
-              ? "bg-[#EDE9F5] text-[#A89EC0] cursor-default"
-              : "bg-[#2D8C7A] text-white hover:bg-[#1E6B5A] shadow-sm"
+              ? "bg-[#E4E2F2] text-[#8FA4A6] cursor-default"
+              : "bg-[#5E7678] text-white hover:bg-[#4A5F61] shadow-sm"
             }`}
         >
           {isAdded ? "✓ Added" : "+ Board"}
@@ -111,11 +111,11 @@ function ActivityCard({
 
       {/* Expandable tips */}
       {showTips && howTo && (
-        <div className="bg-[#FAF8FD] border-t border-[#EDE9F5] px-4 py-4">
+        <div className="bg-[#F7F7FB] border-t border-[#E4E2F2] px-4 py-4">
           <ol className="space-y-3">
             {howTo.map((tip, i) => (
-              <li key={i} className="flex items-start gap-3 text-sm text-[#7A6E8A] leading-relaxed">
-                <span className="w-5 h-5 rounded-full bg-[#EDF7F5] text-[#2D8C7A] font-extrabold text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">
+              <li key={i} className="flex items-start gap-3 text-sm text-[#5E7678] leading-relaxed">
+                <span className="w-5 h-5 rounded-full bg-[#EDF3F0] text-[#5E7678] font-extrabold text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">
                   {i + 1}
                 </span>
                 {tip}
@@ -139,21 +139,21 @@ function ActiveCard({
   onRemove: () => void;
 }) {
   return (
-    <div className="bg-white rounded-2xl border border-[#E2DCF0] p-4 space-y-3">
+    <div className="bg-white rounded-2xl border border-[#D4DFDD] p-4 space-y-3">
       <div className="flex items-start gap-3">
-        <div className="w-11 h-11 rounded-2xl bg-[#F0FAF8] flex items-center justify-center text-2xl flex-shrink-0">
+        <div className="w-11 h-11 rounded-2xl bg-[#EEEDF8] flex items-center justify-center text-2xl flex-shrink-0">
           {activity.emoji}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <p className="font-bold text-[#0F1E29] text-base">{activity.title}</p>
+            <p className="font-bold text-[#0A1338] text-base">{activity.title}</p>
             <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[activity.tag] ?? "bg-gray-100 text-gray-500"}`}>
               {activity.tag}
             </span>
           </div>
-          <p className="text-[#7A6E8A] text-sm mt-0.5">{activity.desc}</p>
+          <p className="text-[#5E7678] text-sm mt-0.5">{activity.desc}</p>
         </div>
-        <button onClick={onRemove} className="text-[#A89EC0] hover:text-red-400 transition-colors text-xl flex-shrink-0 leading-none">
+        <button onClick={onRemove} className="text-[#8FA4A6] hover:text-red-400 transition-colors text-xl flex-shrink-0 leading-none">
           ×
         </button>
       </div>
@@ -161,8 +161,8 @@ function ActiveCard({
       {/* Progress tapper */}
       <div>
         <div className="flex items-center justify-between mb-1.5">
-          <span className="text-xs text-[#7A6E8A] font-semibold">Weekly progress</span>
-          <span className="text-xs font-bold text-[#2D8C7A]">{activity.progress}%</span>
+          <span className="text-xs text-[#5E7678] font-semibold">Weekly progress</span>
+          <span className="text-xs font-bold text-[#5E7678]">{activity.progress}%</span>
         </div>
         <div className="flex gap-1.5">
           {[25, 50, 75, 100].map(step => (
@@ -170,7 +170,7 @@ function ActiveCard({
               key={step}
               onClick={() => onProgress(activity.progress === step ? Math.max(0, step - 25) : step)}
               className={`flex-1 h-3 rounded-full transition-colors
-                ${activity.progress >= step ? "bg-[#2D8C7A]" : "bg-[#EDE9F5] hover:bg-[#E2DCF0]"}`}
+                ${activity.progress >= step ? "bg-[#5E7678]" : "bg-[#E4E2F2] hover:bg-[#D4DFDD]"}`}
               title={`${step}%`}
             />
           ))}
@@ -181,13 +181,13 @@ function ActiveCard({
       <div className="flex gap-2">
         <button
           onClick={onDone}
-          className="flex-1 py-2 rounded-xl bg-green-50 text-green-600 font-bold text-xs hover:bg-green-100 transition-colors border border-green-100"
+          className="flex-1 py-2 rounded-xl bg-[#EDF3F0] text-[#5E7678] font-bold text-xs hover:bg-[#D4DFDD] transition-colors border border-[#D4DFDD]"
         >
           ✅ Mark Done
         </button>
         <button
           onClick={onPause}
-          className="flex-1 py-2 rounded-xl bg-[#EDE9F5] text-[#7A6E8A] font-bold text-xs hover:bg-[#E2DCF0] transition-colors"
+          className="flex-1 py-2 rounded-xl bg-[#E4E2F2] text-[#5E7678] font-bold text-xs hover:bg-[#D4DFDD] transition-colors"
         >
           ⏸ Save for Later
         </button>
@@ -202,28 +202,28 @@ function SavedCard({
   activity: BoardActivity; onActivate: () => void; onRemove: () => void;
 }) {
   return (
-    <div className="bg-white rounded-2xl border border-[#EDE9F5] p-4 flex items-start gap-3">
+    <div className="bg-white rounded-2xl border border-[#E4E2F2] p-4 flex items-start gap-3">
       <div className="w-11 h-11 rounded-2xl bg-[#f5f5f5] flex items-center justify-center text-2xl flex-shrink-0 opacity-70">
         {activity.emoji}
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <p className="font-bold text-[#7A6E8A] text-base">{activity.title}</p>
+          <p className="font-bold text-[#5E7678] text-base">{activity.title}</p>
           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full opacity-60 ${TAG_COLORS[activity.tag] ?? "bg-gray-100 text-gray-500"}`}>
             {activity.tag}
           </span>
         </div>
-        <p className="text-[#A89EC0] text-sm mt-0.5">{activity.desc}</p>
+        <p className="text-[#8FA4A6] text-sm mt-0.5">{activity.desc}</p>
         <div className="flex gap-2 mt-2">
           <button
             onClick={onActivate}
-            className="text-xs bg-[#2D8C7A] text-white font-bold px-3 py-1 rounded-full hover:bg-[#1E6B5A] transition-colors"
+            className="text-xs bg-[#5E7678] text-white font-bold px-3 py-1 rounded-full hover:bg-[#4A5F61] transition-colors"
           >
             Start This Week →
           </button>
           <button
             onClick={onRemove}
-            className="text-xs text-[#A89EC0] hover:text-red-400 transition-colors font-semibold"
+            className="text-xs text-[#8FA4A6] hover:text-red-400 transition-colors font-semibold"
           >
             Remove
           </button>
@@ -312,10 +312,10 @@ function Activities() {
 
   if (!profile) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F0FAF8] gap-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#EEEDF8] gap-4">
         <span className="text-5xl">🌱</span>
-        <p className="text-[#7A6E8A] font-semibold">Profile not found.</p>
-        <button onClick={() => router.push("/")} className="text-[#2D8C7A] font-bold hover:underline">
+        <p className="text-[#5E7678] font-semibold">Profile not found.</p>
+        <button onClick={() => router.push("/")} className="text-[#5E7678] font-bold hover:underline">
           Go back home
         </button>
       </div>
@@ -372,19 +372,19 @@ function Activities() {
   // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F0FAF8] via-[#F7F4FC] to-[#EEF2F9]">
+    <div className="min-h-screen bg-gradient-to-br from-[#F4F3FC] via-[#EEEDF8] to-[#EDF3F0]">
 
       {/* Nav */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-[#E2DCF0] sticky top-0 z-10">
+      <header className="bg-white/80 backdrop-blur-sm border-b border-[#D4DFDD] sticky top-0 z-10">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <button
             onClick={() => router.push(`/dashboard?id=${profile.id}`)}
-            className="text-sm text-[#7A6E8A] hover:text-[#2D8C7A] font-semibold transition-colors flex items-center gap-1"
+            className="text-sm text-[#5E7678] hover:text-[#5E7678] font-semibold transition-colors flex items-center gap-1"
           >
             ← {profile.name}&apos;s Dashboard
           </button>
           <div className="flex items-center gap-1.5">
-            <span className="text-lg font-extrabold text-[#2D8C7A]">Growpace</span>
+            <span className="text-lg font-extrabold text-[#5E7678]">Growpace</span>
           </div>
         </div>
       </header>
@@ -393,12 +393,12 @@ function Activities() {
 
         {/* Title */}
         <div>
-          <h1 className="text-2xl font-extrabold text-[#0F1E29]">Activities</h1>
-          <p className="text-[#7A6E8A] text-base mt-0.5">For {profile.name} · {calcAge(profile.dob)}</p>
+          <h1 className="text-2xl font-extrabold text-[#0A1338]">Activities</h1>
+          <p className="text-[#5E7678] text-base mt-0.5">For {profile.name} · {calcAge(profile.dob)}</p>
         </div>
 
         {/* Tab bar */}
-        <div className="bg-white rounded-2xl p-1 border border-[#EDE9F5] flex gap-1">
+        <div className="bg-white rounded-2xl p-1 border border-[#E4E2F2] flex gap-1">
           {[
             { key: "suggested", label: "✨ Suggested" },
             { key: "library",   label: "📚 Library" },
@@ -408,7 +408,7 @@ function Activities() {
               key={t.key}
               onClick={() => setTab(t.key as typeof tab)}
               className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all
-                ${tab === t.key ? "bg-[#2D8C7A] text-white shadow-sm" : "text-[#7A6E8A] hover:text-[#2D8C7A]"}`}
+                ${tab === t.key ? "bg-[#5E7678] text-white shadow-sm" : "text-[#5E7678] hover:text-[#5E7678]"}`}
             >
               {t.label}
             </button>
@@ -420,43 +420,43 @@ function Activities() {
           <div className="space-y-3">
 
             {/* Personalisation banner */}
-            <div className="rounded-2xl bg-gradient-to-r from-[#F0FAF8] to-[#F7F4FC] border border-[#E2DCF0] p-4 flex items-center gap-4">
+            <div className="rounded-2xl bg-gradient-to-r from-[#F4F3FC] to-[#EEEDF8] border border-[#D4DFDD] p-4 flex items-center gap-4">
               {/* Avatar */}
-              <div className="w-12 h-12 rounded-full bg-[#EDF7F5] border-2 border-[#A8D5CC] flex items-center justify-center flex-shrink-0 text-2xl">
+              <div className="w-12 h-12 rounded-full bg-[#EDF3F0] border-2 border-[#A6BFB6] flex items-center justify-center flex-shrink-0 text-2xl">
                 {profile.gender === "boy" ? "👦" : profile.gender === "girl" ? "👧" : "🌈"}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-extrabold text-[#0F1E29]">
+                <p className="text-sm font-extrabold text-[#0A1338]">
                   Just for {profile.name} ✨
                 </p>
-                <p className="text-sm text-[#7A6E8A] mt-0.5">
+                <p className="text-sm text-[#5E7678] mt-0.5">
                   Picked for a {calcAge(profile.dob)} — refreshed every week
                 </p>
               </div>
               <button
                 onClick={fetchSuggestions}
                 disabled={loading}
-                className="flex-shrink-0 text-xs text-[#2D8C7A] font-bold hover:underline disabled:opacity-40 transition-opacity"
+                className="flex-shrink-0 text-xs text-[#5E7678] font-bold hover:underline disabled:opacity-40 transition-opacity"
               >
                 ↻ Refresh
               </button>
             </div>
 
             {aiError === "no_key" && (
-              <div className="bg-[#F0FAF8] rounded-2xl p-3 border border-[#E2DCF0] text-center">
-                <p className="text-sm text-[#7A6E8A]">
+              <div className="bg-[#EEEDF8] rounded-2xl p-3 border border-[#D4DFDD] text-center">
+                <p className="text-sm text-[#5E7678]">
                   Showing curated suggestions ·{" "}
-                  <span className="text-[#2D8C7A] font-bold">Add ANTHROPIC_API_KEY in Vercel</span>
+                  <span className="text-[#5E7678] font-bold">Add ANTHROPIC_API_KEY in Vercel</span>
                   {" "}for live AI suggestions
                 </p>
               </div>
             )}
 
             {aiError === "failed" && !loading && (
-              <div className="bg-[#F0FAF8] rounded-2xl p-4 border border-[#E2DCF0] text-center">
+              <div className="bg-[#EEEDF8] rounded-2xl p-4 border border-[#D4DFDD] text-center">
                 <p className="text-3xl mb-2">😕</p>
-                <p className="text-[#7A6E8A] text-base font-semibold">Couldn&apos;t load suggestions.</p>
-                <button onClick={fetchSuggestions} className="mt-2 text-xs text-[#2D8C7A] font-bold hover:underline">
+                <p className="text-[#5E7678] text-base font-semibold">Couldn&apos;t load suggestions.</p>
+                <button onClick={fetchSuggestions} className="mt-2 text-xs text-[#5E7678] font-bold hover:underline">
                   Try again
                 </button>
               </div>
@@ -465,7 +465,7 @@ function Activities() {
             {loading && (
               <div className="text-center py-12">
                 <div className="text-4xl animate-bounce mb-3">🤔</div>
-                <p className="text-[#7A6E8A] text-base font-semibold">
+                <p className="text-[#5E7678] text-base font-semibold">
                   Finding the best activities for {profile.name}…
                 </p>
               </div>
@@ -497,8 +497,8 @@ function Activities() {
                   onClick={() => setFilterTag(tag)}
                   className={`text-xs font-bold px-3 py-1.5 rounded-full transition-all
                     ${filterTag === tag
-                      ? "bg-[#2D8C7A] text-white"
-                      : "bg-white text-[#7A6E8A] border border-[#E2DCF0] hover:border-[#2D8C7A]"
+                      ? "bg-[#5E7678] text-white"
+                      : "bg-white text-[#5E7678] border border-[#D4DFDD] hover:border-[#5E7678]"
                     }`}
                 >
                   {tag}
@@ -528,15 +528,15 @@ function Activities() {
         {tab === "board" && (
           <div className="space-y-5">
             {board.length === 0 ? (
-              <div className="bg-white rounded-2xl border border-[#EDE9F5] p-8 text-center">
+              <div className="bg-white rounded-2xl border border-[#E4E2F2] p-8 text-center">
                 <p className="text-4xl mb-3">📋</p>
-                <p className="text-[#0F1E29] font-bold">Your board is empty</p>
-                <p className="text-[#7A6E8A] text-base mt-1 mb-4">
+                <p className="text-[#0A1338] font-bold">Your board is empty</p>
+                <p className="text-[#5E7678] text-base mt-1 mb-4">
                   Browse suggestions or the library to add activities
                 </p>
                 <button
                   onClick={() => setTab("suggested")}
-                  className="text-sm bg-[#2D8C7A] text-white font-bold px-5 py-2.5 rounded-full hover:bg-[#1E6B5A] transition-colors"
+                  className="text-sm bg-[#5E7678] text-white font-bold px-5 py-2.5 rounded-full hover:bg-[#4A5F61] transition-colors"
                 >
                   Browse Suggestions ✨
                 </button>
@@ -546,9 +546,9 @@ function Activities() {
                 {/* Active this week */}
                 {activeActivities.length > 0 && (
                   <div>
-                    <h3 className="text-sm font-extrabold text-[#2D8C7A] mb-2 flex items-center gap-2">
+                    <h3 className="text-sm font-extrabold text-[#5E7678] mb-2 flex items-center gap-2">
                       🎯 Active This Week
-                      <span className="bg-[#EDF7F5] text-[#2D8C7A] text-xs px-2 py-0.5 rounded-full">
+                      <span className="bg-[#EDF3F0] text-[#5E7678] text-xs px-2 py-0.5 rounded-full">
                         {activeActivities.length}
                       </span>
                     </h3>
@@ -570,9 +570,9 @@ function Activities() {
                 {/* Saved for later */}
                 {savedActivities.length > 0 && (
                   <div>
-                    <h3 className="text-sm font-extrabold text-[#7A6E8A] mb-2 flex items-center gap-2">
+                    <h3 className="text-sm font-extrabold text-[#5E7678] mb-2 flex items-center gap-2">
                       💾 Saved for Later
-                      <span className="bg-[#EDE9F5] text-[#7A6E8A] text-xs px-2 py-0.5 rounded-full">
+                      <span className="bg-[#E4E2F2] text-[#5E7678] text-xs px-2 py-0.5 rounded-full">
                         {savedActivities.length}
                       </span>
                     </h3>
@@ -592,9 +592,9 @@ function Activities() {
                 {/* Completed */}
                 {doneActivities.length > 0 && (
                   <div>
-                    <h3 className="text-sm font-extrabold text-green-600 mb-2 flex items-center gap-2">
+                    <h3 className="text-sm font-extrabold text-[#5E7678] mb-2 flex items-center gap-2">
                       ✅ Completed
-                      <span className="bg-green-50 text-green-600 text-xs px-2 py-0.5 rounded-full">
+                      <span className="bg-[#EDF3F0] text-[#5E7678] text-xs px-2 py-0.5 rounded-full">
                         {doneActivities.length}
                       </span>
                     </h3>
@@ -602,16 +602,16 @@ function Activities() {
                       {doneActivities.map(a => (
                         <div
                           key={a.id}
-                          className="bg-white rounded-2xl p-4 border border-green-50 flex items-center gap-3 opacity-70"
+                          className="bg-white rounded-2xl p-4 border border-[#EDF3F0] flex items-center gap-3 opacity-70"
                         >
                           <span className="text-2xl">{a.emoji}</span>
                           <div className="flex-1 min-w-0">
-                            <p className="text-base font-bold text-[#0F1E29] line-through">{a.title}</p>
-                            <p className="text-xs text-green-600 font-semibold mt-0.5">✅ Completed</p>
+                            <p className="text-base font-bold text-[#0A1338] line-through">{a.title}</p>
+                            <p className="text-xs text-[#5E7678] font-semibold mt-0.5">✅ Completed</p>
                           </div>
                           <button
                             onClick={() => removeFromBoard(a.id)}
-                            className="text-[#A89EC0] hover:text-red-400 transition-colors text-xl leading-none"
+                            className="text-[#8FA4A6] hover:text-red-400 transition-colors text-xl leading-none"
                           >
                             ×
                           </button>
@@ -633,7 +633,7 @@ function Activities() {
 export default function ActivitiesPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-[#F0FAF8]">
+      <div className="min-h-screen flex items-center justify-center bg-[#EEEDF8]">
         <div className="text-4xl animate-bounce">🌱</div>
       </div>
     }>
