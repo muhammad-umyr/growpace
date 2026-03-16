@@ -27,9 +27,9 @@ interface AISuggestion {
 
 const TAG_COLORS: Record<string, string> = {
   Physical:  "bg-[#f0fbf4] text-green-600",
-  Language:  "bg-[#f0f8ff] text-[#6baed6]",
+  Language:  "bg-[#EEF2F9] text-[#6baed6]",
   Cognitive: "bg-[#fdf4ff] text-purple-500",
-  Creative:  "bg-[#fff8f0] text-[#e8834a]",
+  Creative:  "bg-[#FCF0F4] text-[#ED6481]",
   Social:    "bg-[#fff0f5] text-pink-500",
   Sensory:   "bg-[#f5fff0] text-lime-600",
   Motor:     "bg-[#eff6ff] text-blue-500",
@@ -52,12 +52,12 @@ function ActivityCard({
   )}`;
 
   return (
-    <div className="bg-white rounded-2xl border border-orange-50 overflow-hidden">
+    <div className="bg-white rounded-2xl border border-[#EDE9F5] overflow-hidden">
 
       {/* Body */}
       <div className="p-4 flex gap-4 items-start">
         {/* Emoji */}
-        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#fff3e8] to-[#fde8d8] flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">
+        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#FAF0F8] to-[#F5E0EE] flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">
           {emoji}
         </div>
 
@@ -66,10 +66,10 @@ function ActivityCard({
           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[tag] ?? "bg-gray-100 text-gray-500"}`}>
             {tag}
           </span>
-          <h3 className="font-extrabold text-[#3d2c1e] text-base leading-tight mt-1">{title}</h3>
-          <p className="text-[#a07060] text-sm mt-0.5 leading-relaxed">{desc}</p>
+          <h3 className="font-extrabold text-[#0F1E29] text-base leading-tight mt-1">{title}</h3>
+          <p className="text-[#7A6E8A] text-sm mt-0.5 leading-relaxed">{desc}</p>
           {reason && (
-            <span className="inline-flex items-center gap-1 mt-2 bg-gradient-to-r from-[#fff3e8] to-[#fef0f8] border border-orange-100 text-[#e8834a] text-[10px] font-bold px-2.5 py-1 rounded-full">
+            <span className="inline-flex items-center gap-1 mt-2 bg-gradient-to-r from-[#FAF0F8] to-[#F7F4FC] border border-[#E2DCF0] text-[#ED6481] text-[10px] font-bold px-2.5 py-1 rounded-full">
               ✨ {reason}
             </span>
           )}
@@ -77,12 +77,12 @@ function ActivityCard({
       </div>
 
       {/* Action bar */}
-      <div className="border-t border-[#f5ebe0] px-4 py-2.5 flex items-center gap-2">
+      <div className="border-t border-[#EDE9F5] px-4 py-2.5 flex items-center gap-2">
         {howTo?.length ? (
           <button
             onClick={() => setShowTips(v => !v)}
             className={`text-xs font-bold px-3 py-1.5 rounded-full transition-colors
-              ${showTips ? "bg-[#fff0e6] text-[#e8834a]" : "bg-[#f5ebe0] text-[#a07060] hover:text-[#e8834a]"}`}
+              ${showTips ? "bg-[#F5F0FC] text-[#ED6481]" : "bg-[#EDE9F5] text-[#7A6E8A] hover:text-[#ED6481]"}`}
           >
             📋 How to {showTips ? "▲" : "▾"}
           </button>
@@ -101,8 +101,8 @@ function ActivityCard({
           disabled={isAdded}
           className={`text-xs font-bold px-4 py-1.5 rounded-full transition-all
             ${isAdded
-              ? "bg-[#f5ebe0] text-[#c4a898] cursor-default"
-              : "bg-[#e8834a] text-white hover:bg-[#d6723b] shadow-sm"
+              ? "bg-[#EDE9F5] text-[#A89EC0] cursor-default"
+              : "bg-[#ED6481] text-white hover:bg-[#C4354F] shadow-sm"
             }`}
         >
           {isAdded ? "✓ Added" : "+ Board"}
@@ -111,11 +111,11 @@ function ActivityCard({
 
       {/* Expandable tips */}
       {showTips && howTo && (
-        <div className="bg-[#fffaf7] border-t border-[#f5ebe0] px-4 py-4">
+        <div className="bg-[#FAF8FD] border-t border-[#EDE9F5] px-4 py-4">
           <ol className="space-y-3">
             {howTo.map((tip, i) => (
-              <li key={i} className="flex items-start gap-3 text-sm text-[#7a5c4a] leading-relaxed">
-                <span className="w-5 h-5 rounded-full bg-[#fff0e6] text-[#e8834a] font-extrabold text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">
+              <li key={i} className="flex items-start gap-3 text-sm text-[#7A6E8A] leading-relaxed">
+                <span className="w-5 h-5 rounded-full bg-[#F5F0FC] text-[#ED6481] font-extrabold text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">
                   {i + 1}
                 </span>
                 {tip}
@@ -139,21 +139,21 @@ function ActiveCard({
   onRemove: () => void;
 }) {
   return (
-    <div className="bg-white rounded-2xl border border-orange-100 p-4 space-y-3">
+    <div className="bg-white rounded-2xl border border-[#E2DCF0] p-4 space-y-3">
       <div className="flex items-start gap-3">
-        <div className="w-11 h-11 rounded-2xl bg-[#fff8f0] flex items-center justify-center text-2xl flex-shrink-0">
+        <div className="w-11 h-11 rounded-2xl bg-[#FCF0F4] flex items-center justify-center text-2xl flex-shrink-0">
           {activity.emoji}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <p className="font-bold text-[#3d2c1e] text-base">{activity.title}</p>
+            <p className="font-bold text-[#0F1E29] text-base">{activity.title}</p>
             <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[activity.tag] ?? "bg-gray-100 text-gray-500"}`}>
               {activity.tag}
             </span>
           </div>
-          <p className="text-[#a07060] text-sm mt-0.5">{activity.desc}</p>
+          <p className="text-[#7A6E8A] text-sm mt-0.5">{activity.desc}</p>
         </div>
-        <button onClick={onRemove} className="text-[#c4a898] hover:text-red-400 transition-colors text-xl flex-shrink-0 leading-none">
+        <button onClick={onRemove} className="text-[#A89EC0] hover:text-red-400 transition-colors text-xl flex-shrink-0 leading-none">
           ×
         </button>
       </div>
@@ -161,8 +161,8 @@ function ActiveCard({
       {/* Progress tapper */}
       <div>
         <div className="flex items-center justify-between mb-1.5">
-          <span className="text-xs text-[#a07060] font-semibold">Weekly progress</span>
-          <span className="text-xs font-bold text-[#e8834a]">{activity.progress}%</span>
+          <span className="text-xs text-[#7A6E8A] font-semibold">Weekly progress</span>
+          <span className="text-xs font-bold text-[#ED6481]">{activity.progress}%</span>
         </div>
         <div className="flex gap-1.5">
           {[25, 50, 75, 100].map(step => (
@@ -170,7 +170,7 @@ function ActiveCard({
               key={step}
               onClick={() => onProgress(activity.progress === step ? Math.max(0, step - 25) : step)}
               className={`flex-1 h-3 rounded-full transition-colors
-                ${activity.progress >= step ? "bg-[#e8834a]" : "bg-[#f5ebe0] hover:bg-[#f0ddd0]"}`}
+                ${activity.progress >= step ? "bg-[#ED6481]" : "bg-[#EDE9F5] hover:bg-[#E2DCF0]"}`}
               title={`${step}%`}
             />
           ))}
@@ -187,7 +187,7 @@ function ActiveCard({
         </button>
         <button
           onClick={onPause}
-          className="flex-1 py-2 rounded-xl bg-[#f5ebe0] text-[#a07060] font-bold text-xs hover:bg-[#f0ddd0] transition-colors"
+          className="flex-1 py-2 rounded-xl bg-[#EDE9F5] text-[#7A6E8A] font-bold text-xs hover:bg-[#E2DCF0] transition-colors"
         >
           ⏸ Save for Later
         </button>
@@ -202,28 +202,28 @@ function SavedCard({
   activity: BoardActivity; onActivate: () => void; onRemove: () => void;
 }) {
   return (
-    <div className="bg-white rounded-2xl border border-orange-50 p-4 flex items-start gap-3">
+    <div className="bg-white rounded-2xl border border-[#EDE9F5] p-4 flex items-start gap-3">
       <div className="w-11 h-11 rounded-2xl bg-[#f5f5f5] flex items-center justify-center text-2xl flex-shrink-0 opacity-70">
         {activity.emoji}
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <p className="font-bold text-[#a07060] text-base">{activity.title}</p>
+          <p className="font-bold text-[#7A6E8A] text-base">{activity.title}</p>
           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full opacity-60 ${TAG_COLORS[activity.tag] ?? "bg-gray-100 text-gray-500"}`}>
             {activity.tag}
           </span>
         </div>
-        <p className="text-[#c4a898] text-sm mt-0.5">{activity.desc}</p>
+        <p className="text-[#A89EC0] text-sm mt-0.5">{activity.desc}</p>
         <div className="flex gap-2 mt-2">
           <button
             onClick={onActivate}
-            className="text-xs bg-[#e8834a] text-white font-bold px-3 py-1 rounded-full hover:bg-[#d6723b] transition-colors"
+            className="text-xs bg-[#ED6481] text-white font-bold px-3 py-1 rounded-full hover:bg-[#C4354F] transition-colors"
           >
             Start This Week →
           </button>
           <button
             onClick={onRemove}
-            className="text-xs text-[#c4a898] hover:text-red-400 transition-colors font-semibold"
+            className="text-xs text-[#A89EC0] hover:text-red-400 transition-colors font-semibold"
           >
             Remove
           </button>
@@ -312,10 +312,10 @@ function Activities() {
 
   if (!profile) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#fff8f0] gap-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#FCF0F4] gap-4">
         <span className="text-5xl">🌱</span>
-        <p className="text-[#a07060] font-semibold">Profile not found.</p>
-        <button onClick={() => router.push("/")} className="text-[#e8834a] font-bold hover:underline">
+        <p className="text-[#7A6E8A] font-semibold">Profile not found.</p>
+        <button onClick={() => router.push("/")} className="text-[#ED6481] font-bold hover:underline">
           Go back home
         </button>
       </div>
@@ -372,20 +372,20 @@ function Activities() {
   // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#fff8f0] via-[#fef3f8] to-[#f0f8ff]">
+    <div className="min-h-screen bg-gradient-to-br from-[#FCF0F4] via-[#F7F4FC] to-[#EEF2F9]">
 
       {/* Nav */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-orange-100 sticky top-0 z-10">
+      <header className="bg-white/80 backdrop-blur-sm border-b border-[#E2DCF0] sticky top-0 z-10">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <button
             onClick={() => router.push(`/dashboard?id=${profile.id}`)}
-            className="text-sm text-[#a07060] hover:text-[#e8834a] font-semibold transition-colors flex items-center gap-1"
+            className="text-sm text-[#7A6E8A] hover:text-[#ED6481] font-semibold transition-colors flex items-center gap-1"
           >
             ← {profile.name}&apos;s Dashboard
           </button>
           <div className="flex items-center gap-1.5">
             <span className="text-xl">🌱</span>
-            <span className="text-lg font-extrabold text-[#e8834a]">Growpace</span>
+            <span className="text-lg font-extrabold text-[#ED6481]">Growpace</span>
           </div>
         </div>
       </header>
@@ -394,12 +394,12 @@ function Activities() {
 
         {/* Title */}
         <div>
-          <h1 className="text-2xl font-extrabold text-[#3d2c1e]">Activities</h1>
-          <p className="text-[#a07060] text-base mt-0.5">For {profile.name} · {calcAge(profile.dob)}</p>
+          <h1 className="text-2xl font-extrabold text-[#0F1E29]">Activities</h1>
+          <p className="text-[#7A6E8A] text-base mt-0.5">For {profile.name} · {calcAge(profile.dob)}</p>
         </div>
 
         {/* Tab bar */}
-        <div className="bg-white rounded-2xl p-1 border border-orange-50 flex gap-1">
+        <div className="bg-white rounded-2xl p-1 border border-[#EDE9F5] flex gap-1">
           {[
             { key: "suggested", label: "✨ Suggested" },
             { key: "library",   label: "📚 Library" },
@@ -409,7 +409,7 @@ function Activities() {
               key={t.key}
               onClick={() => setTab(t.key as typeof tab)}
               className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all
-                ${tab === t.key ? "bg-[#e8834a] text-white shadow-sm" : "text-[#a07060] hover:text-[#e8834a]"}`}
+                ${tab === t.key ? "bg-[#ED6481] text-white shadow-sm" : "text-[#7A6E8A] hover:text-[#ED6481]"}`}
             >
               {t.label}
             </button>
@@ -421,43 +421,43 @@ function Activities() {
           <div className="space-y-3">
 
             {/* Personalisation banner */}
-            <div className="rounded-2xl bg-gradient-to-r from-[#fff3e8] to-[#fef0f8] border border-orange-100 p-4 flex items-center gap-4">
+            <div className="rounded-2xl bg-gradient-to-r from-[#FAF0F8] to-[#F7F4FC] border border-[#E2DCF0] p-4 flex items-center gap-4">
               {/* Avatar */}
-              <div className="w-12 h-12 rounded-full bg-[#fff0e6] border-2 border-[#f4b98a] flex items-center justify-center flex-shrink-0 text-2xl">
+              <div className="w-12 h-12 rounded-full bg-[#F5F0FC] border-2 border-[#F0A0B5] flex items-center justify-center flex-shrink-0 text-2xl">
                 {profile.gender === "boy" ? "👦" : profile.gender === "girl" ? "👧" : "🌈"}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-extrabold text-[#3d2c1e]">
+                <p className="text-sm font-extrabold text-[#0F1E29]">
                   Just for {profile.name} ✨
                 </p>
-                <p className="text-sm text-[#a07060] mt-0.5">
+                <p className="text-sm text-[#7A6E8A] mt-0.5">
                   Picked for a {calcAge(profile.dob)} — refreshed every week
                 </p>
               </div>
               <button
                 onClick={fetchSuggestions}
                 disabled={loading}
-                className="flex-shrink-0 text-xs text-[#e8834a] font-bold hover:underline disabled:opacity-40 transition-opacity"
+                className="flex-shrink-0 text-xs text-[#ED6481] font-bold hover:underline disabled:opacity-40 transition-opacity"
               >
                 ↻ Refresh
               </button>
             </div>
 
             {aiError === "no_key" && (
-              <div className="bg-[#fff8f0] rounded-2xl p-3 border border-orange-100 text-center">
-                <p className="text-sm text-[#a07060]">
+              <div className="bg-[#FCF0F4] rounded-2xl p-3 border border-[#E2DCF0] text-center">
+                <p className="text-sm text-[#7A6E8A]">
                   Showing curated suggestions ·{" "}
-                  <span className="text-[#e8834a] font-bold">Add ANTHROPIC_API_KEY in Vercel</span>
+                  <span className="text-[#ED6481] font-bold">Add ANTHROPIC_API_KEY in Vercel</span>
                   {" "}for live AI suggestions
                 </p>
               </div>
             )}
 
             {aiError === "failed" && !loading && (
-              <div className="bg-[#fff8f0] rounded-2xl p-4 border border-orange-100 text-center">
+              <div className="bg-[#FCF0F4] rounded-2xl p-4 border border-[#E2DCF0] text-center">
                 <p className="text-3xl mb-2">😕</p>
-                <p className="text-[#a07060] text-base font-semibold">Couldn&apos;t load suggestions.</p>
-                <button onClick={fetchSuggestions} className="mt-2 text-xs text-[#e8834a] font-bold hover:underline">
+                <p className="text-[#7A6E8A] text-base font-semibold">Couldn&apos;t load suggestions.</p>
+                <button onClick={fetchSuggestions} className="mt-2 text-xs text-[#ED6481] font-bold hover:underline">
                   Try again
                 </button>
               </div>
@@ -466,7 +466,7 @@ function Activities() {
             {loading && (
               <div className="text-center py-12">
                 <div className="text-4xl animate-bounce mb-3">🤔</div>
-                <p className="text-[#a07060] text-base font-semibold">
+                <p className="text-[#7A6E8A] text-base font-semibold">
                   Finding the best activities for {profile.name}…
                 </p>
               </div>
@@ -498,8 +498,8 @@ function Activities() {
                   onClick={() => setFilterTag(tag)}
                   className={`text-xs font-bold px-3 py-1.5 rounded-full transition-all
                     ${filterTag === tag
-                      ? "bg-[#e8834a] text-white"
-                      : "bg-white text-[#a07060] border border-orange-100 hover:border-[#e8834a]"
+                      ? "bg-[#ED6481] text-white"
+                      : "bg-white text-[#7A6E8A] border border-[#E2DCF0] hover:border-[#ED6481]"
                     }`}
                 >
                   {tag}
@@ -529,15 +529,15 @@ function Activities() {
         {tab === "board" && (
           <div className="space-y-5">
             {board.length === 0 ? (
-              <div className="bg-white rounded-2xl border border-orange-50 p-8 text-center">
+              <div className="bg-white rounded-2xl border border-[#EDE9F5] p-8 text-center">
                 <p className="text-4xl mb-3">📋</p>
-                <p className="text-[#3d2c1e] font-bold">Your board is empty</p>
-                <p className="text-[#a07060] text-base mt-1 mb-4">
+                <p className="text-[#0F1E29] font-bold">Your board is empty</p>
+                <p className="text-[#7A6E8A] text-base mt-1 mb-4">
                   Browse suggestions or the library to add activities
                 </p>
                 <button
                   onClick={() => setTab("suggested")}
-                  className="text-sm bg-[#e8834a] text-white font-bold px-5 py-2.5 rounded-full hover:bg-[#d6723b] transition-colors"
+                  className="text-sm bg-[#ED6481] text-white font-bold px-5 py-2.5 rounded-full hover:bg-[#C4354F] transition-colors"
                 >
                   Browse Suggestions ✨
                 </button>
@@ -547,9 +547,9 @@ function Activities() {
                 {/* Active this week */}
                 {activeActivities.length > 0 && (
                   <div>
-                    <h3 className="text-sm font-extrabold text-[#e8834a] mb-2 flex items-center gap-2">
+                    <h3 className="text-sm font-extrabold text-[#ED6481] mb-2 flex items-center gap-2">
                       🎯 Active This Week
-                      <span className="bg-[#fff0e6] text-[#e8834a] text-xs px-2 py-0.5 rounded-full">
+                      <span className="bg-[#F5F0FC] text-[#ED6481] text-xs px-2 py-0.5 rounded-full">
                         {activeActivities.length}
                       </span>
                     </h3>
@@ -571,9 +571,9 @@ function Activities() {
                 {/* Saved for later */}
                 {savedActivities.length > 0 && (
                   <div>
-                    <h3 className="text-sm font-extrabold text-[#a07060] mb-2 flex items-center gap-2">
+                    <h3 className="text-sm font-extrabold text-[#7A6E8A] mb-2 flex items-center gap-2">
                       💾 Saved for Later
-                      <span className="bg-[#f5ebe0] text-[#a07060] text-xs px-2 py-0.5 rounded-full">
+                      <span className="bg-[#EDE9F5] text-[#7A6E8A] text-xs px-2 py-0.5 rounded-full">
                         {savedActivities.length}
                       </span>
                     </h3>
@@ -607,12 +607,12 @@ function Activities() {
                         >
                           <span className="text-2xl">{a.emoji}</span>
                           <div className="flex-1 min-w-0">
-                            <p className="text-base font-bold text-[#3d2c1e] line-through">{a.title}</p>
+                            <p className="text-base font-bold text-[#0F1E29] line-through">{a.title}</p>
                             <p className="text-xs text-green-600 font-semibold mt-0.5">✅ Completed</p>
                           </div>
                           <button
                             onClick={() => removeFromBoard(a.id)}
-                            className="text-[#c4a898] hover:text-red-400 transition-colors text-xl leading-none"
+                            className="text-[#A89EC0] hover:text-red-400 transition-colors text-xl leading-none"
                           >
                             ×
                           </button>
@@ -634,7 +634,7 @@ function Activities() {
 export default function ActivitiesPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-[#fff8f0]">
+      <div className="min-h-screen flex items-center justify-center bg-[#FCF0F4]">
         <div className="text-4xl animate-bounce">🌱</div>
       </div>
     }>

@@ -45,10 +45,10 @@ function Onboarding() {
 
   if (!profile) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#fff8f0] gap-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#FCF0F4] gap-4">
         <span className="text-5xl">🌱</span>
-        <p className="text-[#a07060] font-semibold">Profile not found.</p>
-        <button onClick={() => router.push("/")} className="text-[#e8834a] font-bold hover:underline">
+        <p className="text-[#7A6E8A] font-semibold">Profile not found.</p>
+        <button onClick={() => router.push("/")} className="text-[#ED6481] font-bold hover:underline">
           Go back home
         </button>
       </div>
@@ -81,24 +81,24 @@ function Onboarding() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#fff8f0] via-[#fef3f8] to-[#f0f8ff] pb-32">
+    <div className="min-h-screen bg-gradient-to-br from-[#FCF0F4] via-[#F7F4FC] to-[#EEF2F9] pb-32">
 
       {/* Header */}
       <div className="max-w-lg mx-auto px-4 pt-10 pb-6 text-center">
         <div className="inline-flex items-center gap-2 mb-6">
           <span className="text-3xl">🌱</span>
-          <span className="text-2xl font-extrabold text-[#e8834a]">Growpace</span>
+          <span className="text-2xl font-extrabold text-[#ED6481]">Growpace</span>
         </div>
 
         {/* Child avatar + name */}
         <div className="flex flex-col items-center gap-2 mb-5">
-          <div className="w-16 h-16 rounded-full bg-[#fff0e6] border-4 border-[#f4b98a] flex items-center justify-center text-4xl shadow-sm">
+          <div className="w-16 h-16 rounded-full bg-[#F5F0FC] border-4 border-[#F0A0B5] flex items-center justify-center text-4xl shadow-sm">
             {genderEmoji}
           </div>
-          <h1 className="text-2xl font-extrabold text-[#3d2c1e]">
+          <h1 className="text-2xl font-extrabold text-[#0F1E29]">
             Let&apos;s get to know {profile.name}
           </h1>
-          <p className="text-[#a07060] text-base leading-relaxed max-w-xs">
+          <p className="text-[#7A6E8A] text-base leading-relaxed max-w-xs">
             Tap every milestone {profile.name} has already reached.
             This personalises their dashboard so we can focus on what&apos;s next.
           </p>
@@ -106,7 +106,7 @@ function Onboarding() {
 
         {/* Progress summary */}
         {checkedCount > 0 && (
-          <div className="inline-flex items-center gap-2 bg-[#fff0e6] border border-orange-100 text-[#e8834a] font-bold text-base px-4 py-2 rounded-full">
+          <div className="inline-flex items-center gap-2 bg-[#F5F0FC] border border-[#E2DCF0] text-[#ED6481] font-bold text-base px-4 py-2 rounded-full">
             🎉 {checkedCount} milestone{checkedCount !== 1 ? "s" : ""} reached so far!
           </div>
         )}
@@ -118,11 +118,11 @@ function Onboarding() {
           <div key={group.label}>
             {/* Group header */}
             <div className="flex items-center gap-3 mb-3">
-              <div className="flex-1 h-px bg-[#f0ddd0]" />
-              <span className="text-xs font-extrabold text-[#c4a898] uppercase tracking-wide">
+              <div className="flex-1 h-px bg-[#E2DCF0]" />
+              <span className="text-xs font-extrabold text-[#A89EC0] uppercase tracking-wide">
                 {group.label}
               </span>
-              <div className="flex-1 h-px bg-[#f0ddd0]" />
+              <div className="flex-1 h-px bg-[#E2DCF0]" />
             </div>
 
             {/* Milestone grid */}
@@ -135,13 +135,13 @@ function Onboarding() {
                     onClick={() => toggle(m)}
                     className={`relative flex flex-col items-center gap-2 p-4 rounded-2xl border-2 transition-all duration-150 text-center
                       ${isChecked
-                        ? "bg-gradient-to-br from-[#fff3e8] to-[#fde8d8] border-[#e8834a] scale-[1.02]"
-                        : "bg-white border-[#f0ddd0] hover:border-[#f4b98a]"
+                        ? "bg-gradient-to-br from-[#FAF0F8] to-[#F5E0EE] border-[#ED6481] scale-[1.02]"
+                        : "bg-white border-[#E2DCF0] hover:border-[#F0A0B5]"
                       }`}
                   >
                     {/* Checkmark badge */}
                     {isChecked && (
-                      <div className="absolute top-2.5 right-2.5 w-5 h-5 rounded-full bg-[#e8834a] flex items-center justify-center">
+                      <div className="absolute top-2.5 right-2.5 w-5 h-5 rounded-full bg-[#ED6481] flex items-center justify-center">
                         <span className="text-white text-[10px] font-extrabold">✓</span>
                       </div>
                     )}
@@ -149,7 +149,7 @@ function Onboarding() {
                     <span className={`text-4xl transition-all ${isChecked ? "scale-110" : ""}`}>
                       {m.emoji}
                     </span>
-                    <span className={`text-sm font-bold leading-tight ${isChecked ? "text-[#e8834a]" : "text-[#a07060]"}`}>
+                    <span className={`text-sm font-bold leading-tight ${isChecked ? "text-[#ED6481]" : "text-[#7A6E8A]"}`}>
                       {m.label}
                     </span>
                   </button>
@@ -160,29 +160,29 @@ function Onboarding() {
         ))}
 
         {/* Skip hint */}
-        <p className="text-center text-sm text-[#c4a898] pb-2">
+        <p className="text-center text-sm text-[#A89EC0] pb-2">
           Not sure? That&apos;s okay — you can always update these from {profile.name}&apos;s dashboard.
         </p>
       </div>
 
       {/* Sticky footer CTA */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-t border-orange-100 px-4 py-4 z-20">
+      <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-t border-[#E2DCF0] px-4 py-4 z-20">
         <div className="max-w-lg mx-auto flex items-center gap-4">
           <div className="flex-1">
             {checkedCount > 0 ? (
-              <p className="text-base font-bold text-[#3d2c1e]">
+              <p className="text-base font-bold text-[#0F1E29]">
                 {checkedCount} reached ·{" "}
-                <span className="text-[#a07060] font-normal">
+                <span className="text-[#7A6E8A] font-normal">
                   {allMilestones.length - checkedCount} still to come
                 </span>
               </p>
             ) : (
-              <p className="text-base text-[#a07060]">{calcAge(profile.dob)} old</p>
+              <p className="text-base text-[#7A6E8A]">{calcAge(profile.dob)} old</p>
             )}
           </div>
           <button
             onClick={finish}
-            className="bg-[#e8834a] hover:bg-[#d6723b] text-white font-extrabold px-6 py-3 rounded-2xl transition-colors shadow-md shadow-orange-200 text-sm"
+            className="bg-[#ED6481] hover:bg-[#C4354F] text-white font-extrabold px-6 py-3 rounded-2xl transition-colors shadow-md shadow-pink-200 text-sm"
           >
             {checkedCount > 0 ? "See what's next →" : "Skip for now →"}
           </button>
@@ -196,7 +196,7 @@ function Onboarding() {
 export default function OnboardingPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-[#fff8f0]">
+      <div className="min-h-screen flex items-center justify-center bg-[#FCF0F4]">
         <div className="text-4xl animate-bounce">🌱</div>
       </div>
     }>
