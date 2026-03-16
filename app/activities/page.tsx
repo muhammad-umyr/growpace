@@ -413,17 +413,25 @@ function Activities() {
         {/* ── SUGGESTED TAB ── */}
         {tab === "suggested" && (
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs bg-gradient-to-r from-[#e8834a] to-[#f4b98a] text-white font-bold px-3 py-1 rounded-full">
-                  ✨ AI Personalised
-                </span>
-                <span className="text-xs text-[#a07060]">for {calcAge(profile.dob)}</span>
+
+            {/* Personalisation banner */}
+            <div className="rounded-2xl bg-gradient-to-r from-[#fff3e8] to-[#fef0f8] border border-orange-100 p-4 flex items-center gap-4">
+              {/* Avatar */}
+              <div className="w-12 h-12 rounded-full bg-[#fff0e6] border-2 border-[#f4b98a] flex items-center justify-center flex-shrink-0 text-2xl">
+                {profile.gender === "boy" ? "👦" : profile.gender === "girl" ? "👧" : "🌈"}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-extrabold text-[#3d2c1e]">
+                  Just for {profile.name} ✨
+                </p>
+                <p className="text-xs text-[#a07060] mt-0.5">
+                  Picked for a {calcAge(profile.dob)} — refreshed every week
+                </p>
               </div>
               <button
                 onClick={fetchSuggestions}
                 disabled={loading}
-                className="text-xs text-[#e8834a] font-bold hover:underline disabled:opacity-40 transition-opacity"
+                className="flex-shrink-0 text-xs text-[#e8834a] font-bold hover:underline disabled:opacity-40 transition-opacity"
               >
                 ↻ Refresh
               </button>
@@ -453,22 +461,30 @@ function Activities() {
               <div className="text-center py-12">
                 <div className="text-4xl animate-bounce mb-3">🤔</div>
                 <p className="text-[#a07060] text-sm font-semibold">
-                  Generating ideas for {profile.name}…
+                  Finding the best activities for {profile.name}…
                 </p>
               </div>
             )}
 
             {!loading && suggestions.map((s, i) => (
-              <ActivityCard
-                key={i}
-                emoji={s.emoji}
-                title={s.title}
-                desc={s.desc}
-                tag={s.tag}
-                reason={s.reason}
-                isAdded={addedTitles.has(s.title)}
-                onAdd={() => addToBoard(s.title, s.emoji, s.desc, s.tag, "ai")}
-              />
+              <div key={i} className="relative">
+                {/* Personalised ribbon */}
+                <div className="absolute -top-px left-4 right-4 h-0.5 rounded-full bg-gradient-to-r from-[#e8834a] to-[#f4b98a]" />
+                <div className="absolute top-2.5 right-[5.5rem] flex items-center gap-1">
+                  <span className="text-[9px] font-extrabold text-[#e8834a] tracking-wide uppercase">
+                    For {profile.name}
+                  </span>
+                </div>
+                <ActivityCard
+                  emoji={s.emoji}
+                  title={s.title}
+                  desc={s.desc}
+                  tag={s.tag}
+                  reason={s.reason}
+                  isAdded={addedTitles.has(s.title)}
+                  onAdd={() => addToBoard(s.title, s.emoji, s.desc, s.tag, "ai")}
+                />
+              </div>
             ))}
           </div>
         )}
