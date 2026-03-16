@@ -5,7 +5,7 @@ import { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
 import {
   getProfile,
-  getMilestonesForAge,
+  getMilestonesForOnboarding,
   calcAge,
   calcAgeMonths,
   calcProgressPercent,
@@ -40,7 +40,7 @@ function Report() {
   }
 
   const ageMonths = calcAgeMonths(profile.dob);
-  const milestones = getMilestonesForAge(ageMonths);
+  const milestones = getMilestonesForOnboarding(ageMonths);
   const doneCount = milestones.filter(m => profile.milestones[m.id]).length;
   const progress = calcProgressPercent(profile.dob);
   const milestonePercent = milestones.length > 0

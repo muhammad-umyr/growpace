@@ -7,7 +7,8 @@ import {
   getProfile,
   saveProfile,
   getBoard,
-  getMilestonesForAge,
+  getNextMilestones,
+  milestoneExpectedAge,
   calcAge,
   calcAgeMonths,
   calcProgressPercent,
@@ -62,20 +63,19 @@ function Dashboard() {
   const progress = calcProgressPercent(profile.dob);
   const genderEmoji = profile.gender === "boy" ? "👦" : profile.gender === "girl" ? "👧" : "🌈";
 
-  const milestones = getMilestonesForAge(ageMonths);
   const board = getBoard(profile);
   const activeActivities = board.filter(a => a.status === "active");
-  const doneCount = milestones.filter(m => profile.milestones[m.id]).length;
+  const nextMilestones = getNextMilestones(profile, 3);
 
   function update(updated: Profile) {
     setProfile(updated);
     saveProfile(updated);
   }
 
-  function toggleMilestone(milestoneId: string) {
+  function markMilestoneReached(milestoneId: string) {
     update({
       ...profile!,
-      milestones: { ...profile!.milestones, [milestoneId]: !profile!.milestones[milestoneId] },
+      milestones: { ...profile!.milestones, [milestoneId]: true },
     });
   }
 
@@ -226,32 +226,80 @@ function Dashboard() {
           )}
         </section>
 
-        {/* Milestones */}
+        {/* What's next */}
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-extrabold text-[#3d2c1e]">🏆 Milestones</h2>
-            <span className="text-xs text-[#a07060] font-semibold">{doneCount}/{milestones.length} reached</span>
+            <h2 className="text-lg font-extrabold text-[#3d2c1e]">🎯 What&apos;s next for {profile.name}</h2>
+            <button
+              onClick={() => router.push(`/onboarding?id=${profile.id}`)}
+              className="text-xs text-[#a07060] hover:text-[#e8834a] font-semibold transition-colors"
+            >
+              Edit ✏️
+            </button>
           </div>
-          <div className="bg-white rounded-2xl shadow-sm shadow-orange-50 border border-orange-50 overflow-hidden">
-            {milestones.map((m, i) => (
-              <button
-                key={m.id}
-                onClick={() => toggleMilestone(m.id)}
-                className={`w-full flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-[#fffaf7] text-left
-                  ${i < milestones.length - 1 ? "border-b border-orange-50" : ""}`}
-              >
-                <span className="text-xl w-7 text-center">{m.emoji}</span>
-                <span className={`flex-1 text-sm font-semibold ${profile.milestones[m.id] ? "text-[#3d2c1e]" : "text-[#c4a898]"}`}>
-                  {m.label}
-                </span>
-                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors
-                  ${profile.milestones[m.id] ? "bg-[#e8834a] text-white" : "bg-[#f5ebe0] text-[#c4a898]"}`}>
-                  {profile.milestones[m.id] ? "✓" : "·"}
-                </div>
-              </button>
-            ))}
-          </div>
-          <p className="text-xs text-[#c4a898] mt-2 text-center">Tap a milestone to mark it as reached</p>
+
+          {nextMilestones.length === 0 ? (
+            <div className="bg-white rounded-2xl border border-orange-50 p-6 text-center">
+              <p className="text-4xl mb-2">🏆</p>
+              <p className="text-[#3d2c1e] font-extrabold">All milestones reached!</p>
+              <p className="text-[#a07060] text-xs mt-1">
+                {profile.name} is absolutely thriving. Keep it up!
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {nextMilestones.map((m, i) => {
+                const isOverdue = m.minMonths <= ageMonths;
+                return (
+                  <div
+                    key={m.id}
+                    className="bg-white rounded-2xl shadow-sm border border-orange-50 overflow-hidden"
+                  >
+                    <div className="p-4 flex items-start gap-4">
+                      {/* Emoji */}
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#fff3e8] to-[#fde8d8] flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">
+                        {m.emoji}
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="font-extrabold text-[#3d2c1e] text-base leading-tight">
+                            {m.label}
+                          </h3>
+                          {isOverdue ? (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-500">
+                              Around their age
+                            </span>
+                          ) : (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#f0f8ff] text-[#6baed6]">
+                              Coming up
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-[#c4a898] text-xs mt-0.5">
+                          Expected {milestoneExpectedAge(m.minMonths)}
+                        </p>
+                        <p className="text-[#7a5c4a] text-xs mt-2 leading-relaxed">{m.tip}</p>
+                      </div>
+                    </div>
+
+                    {/* Action bar */}
+                    <div className="border-t border-[#f5ebe0] px-4 py-2.5 flex items-center justify-between">
+                      <span className="text-[10px] text-[#c4a898] font-semibold">
+                        #{i + 1} on the roadmap
+                      </span>
+                      <button
+                        onClick={() => markMilestoneReached(m.id)}
+                        className="text-xs bg-[#e8834a] hover:bg-[#d6723b] text-white font-bold px-4 py-1.5 rounded-full transition-colors"
+                      >
+                        ✓ We&apos;ve reached this!
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </section>
 
         {/* Growth Journal */}

@@ -84,7 +84,7 @@ export default function Home() {
     };
 
     saveProfile(profile);
-    router.push(`/dashboard?id=${profile.id}`);
+    router.push(`/onboarding?id=${profile.id}`);
   }
 
   function handleDelete(id: string) {
