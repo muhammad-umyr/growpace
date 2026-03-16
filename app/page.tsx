@@ -79,6 +79,7 @@ export default function Home() {
       photo: photoUrl,
       milestones: {},
       journal: [],
+      board: [],
       createdAt: new Date().toISOString(),
     };
 

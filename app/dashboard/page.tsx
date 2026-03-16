@@ -6,8 +6,8 @@ import Image from "next/image";
 import {
   getProfile,
   saveProfile,
+  getBoard,
   getMilestonesForAge,
-  getActivitiesForAge,
   calcAge,
   calcAgeMonths,
   calcProgressPercent,
@@ -63,7 +63,8 @@ function Dashboard() {
   const genderEmoji = profile.gender === "boy" ? "👦" : profile.gender === "girl" ? "👧" : "🌈";
 
   const milestones = getMilestonesForAge(ageMonths);
-  const activities = getActivitiesForAge(ageMonths);
+  const board = getBoard(profile);
+  const activeActivities = board.filter(a => a.status === "active");
   const doneCount = milestones.filter(m => profile.milestones[m.id]).length;
 
   function update(updated: Profile) {
@@ -163,26 +164,66 @@ function Dashboard() {
         <section>
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-extrabold text-[#3d2c1e]">🎯 This Week&apos;s Activities</h2>
-            <span className="text-xs bg-[#fff0e6] text-[#e8834a] font-bold px-3 py-1 rounded-full">Age-matched</span>
+            <button
+              onClick={() => router.push(`/activities?id=${profile.id}`)}
+              className="text-xs text-[#e8834a] font-bold hover:underline transition-colors"
+            >
+              View all →
+            </button>
           </div>
-          <div className="space-y-3">
-            {activities.map((a, i) => (
-              <div key={i} className="bg-white rounded-2xl p-4 shadow-sm shadow-orange-50 flex items-start gap-4 border border-orange-50">
-                <div className="w-12 h-12 rounded-2xl bg-[#fff8f0] flex items-center justify-center text-2xl flex-shrink-0">
-                  {a.emoji}
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <p className="font-bold text-[#3d2c1e] text-sm">{a.title}</p>
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[a.tag] || "bg-gray-100 text-gray-500"}`}>
-                      {a.tag}
-                    </span>
+
+          {activeActivities.length === 0 ? (
+            <div className="bg-white rounded-2xl border border-orange-50 p-6 text-center">
+              <p className="text-3xl mb-2">🎯</p>
+              <p className="text-[#3d2c1e] font-bold text-sm">No active activities this week</p>
+              <p className="text-[#a07060] text-xs mt-1 mb-3">
+                Browse the library to find activities for {profile.name}
+              </p>
+              <button
+                onClick={() => router.push(`/activities?id=${profile.id}`)}
+                className="text-sm bg-[#e8834a] text-white font-bold px-5 py-2 rounded-full hover:bg-[#d6723b] transition-colors"
+              >
+                Explore Activities ✨
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {activeActivities.map(a => (
+                <div key={a.id} className="bg-white rounded-2xl p-4 shadow-sm border border-orange-50">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-2xl bg-[#fff8f0] flex items-center justify-center text-2xl flex-shrink-0">
+                      {a.emoji}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <p className="font-bold text-[#3d2c1e] text-sm">{a.title}</p>
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[a.tag] ?? "bg-gray-100 text-gray-500"}`}>
+                          {a.tag}
+                        </span>
+                      </div>
+                      <p className="text-[#a07060] text-xs mt-0.5">{a.desc}</p>
+                      {/* Mini progress bar */}
+                      <div className="flex gap-1 mt-2">
+                        {[25, 50, 75, 100].map(step => (
+                          <div
+                            key={step}
+                            className={`flex-1 h-1.5 rounded-full ${a.progress >= step ? "bg-[#e8834a]" : "bg-[#f5ebe0]"}`}
+                          />
+                        ))}
+                      </div>
+                      <p className="text-[10px] text-[#c4a898] mt-0.5">{a.progress}% complete</p>
+                    </div>
                   </div>
-                  <p className="text-[#a07060] text-xs mt-0.5">{a.desc}</p>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+              <button
+                onClick={() => router.push(`/activities?id=${profile.id}`)}
+                className="w-full py-2.5 rounded-2xl border-2 border-dashed border-[#f4b98a] text-[#e8834a] font-bold text-sm hover:bg-[#fff8f0] transition-colors"
+              >
+                + Add more activities
+              </button>
+            </div>
+          )}
         </section>
 
         {/* Milestones */}
