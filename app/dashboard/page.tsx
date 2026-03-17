@@ -17,6 +17,8 @@ import {
   JournalEntry,
   MilestoneDef,
   BoardActivity,
+  Caregiver,
+  CaregiverRole,
 } from "@/lib/store";
 
 const TAG_COLORS: Record<string, string> = {
@@ -42,6 +44,9 @@ function Dashboard() {
   const [journalEmoji, setJournalEmoji] = useState("🌟");
   const [showJournalForm, setShowJournalForm] = useState(false);
   const [expandedMilestone, setExpandedMilestone] = useState<string | null>(null);
+  const [showAddCaregiver, setShowAddCaregiver] = useState(false);
+  const [caregiverName, setCaregiverName] = useState("");
+  const [caregiverRole, setCaregiverRole] = useState<CaregiverRole>("nanny");
   const photoInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -116,6 +121,23 @@ function Dashboard() {
       a.id === activityId ? { ...a, status: "active" as const, activatedAt: new Date().toISOString() } : a
     )};
     update(updated);
+  }
+
+  function addCaregiver() {
+    if (!caregiverName.trim()) return;
+    const caregiver: Caregiver = {
+      id: crypto.randomUUID(),
+      name: caregiverName.trim(),
+      role: caregiverRole,
+    };
+    update({ ...profile!, caregivers: [...(profile!.caregivers ?? []), caregiver] });
+    setCaregiverName("");
+    setCaregiverRole("nanny");
+    setShowAddCaregiver(false);
+  }
+
+  function removeCaregiver(id: string) {
+    update({ ...profile!, caregivers: (profile!.caregivers ?? []).filter(c => c.id !== id) });
   }
 
   function addJournalEntry() {
@@ -508,6 +530,51 @@ function Dashboard() {
           )}
         </section>
 
+        {/* Care Team */}
+        <section>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-extrabold text-[#0A1338]">👥 Care Team</h2>
+            <button
+              onClick={() => setShowAddCaregiver(true)}
+              className="text-sm text-[#202837] font-bold hover:underline transition-colors"
+            >
+              + Add person
+            </button>
+          </div>
+
+          {(profile.caregivers ?? []).length === 0 ? (
+            <div className="bg-white rounded-2xl border border-dashed border-[#D4DFDD] p-5 text-center">
+              <p className="text-2xl mb-1">🤝</p>
+              <p className="text-[#0A1338] font-bold text-sm">No one added yet</p>
+              <p className="text-[#8FA4A6] text-xs mt-1">Add a nanny, teacher, trainer, or partner</p>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {(profile.caregivers ?? []).map(c => {
+                const roleIcon: Record<CaregiverRole, string> = { nanny: "🧑‍🍼", teacher: "📚", trainer: "🏋️", partner: "❤️" };
+                const roleLabel: Record<CaregiverRole, string> = { nanny: "Nanny", teacher: "Teacher", trainer: "Trainer", partner: "Partner" };
+                return (
+                  <div key={c.id} className="bg-white rounded-2xl border border-[#E4E2F2] px-4 py-3 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-[#EEEDF8] flex items-center justify-center text-xl flex-shrink-0">
+                      {roleIcon[c.role]}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-[#0A1338] text-sm">{c.name}</p>
+                      <p className="text-[#8FA4A6] text-xs">{roleLabel[c.role]}</p>
+                    </div>
+                    <button
+                      onClick={() => removeCaregiver(c.id)}
+                      className="text-[#D4DFDD] hover:text-red-400 transition-colors text-xl leading-none"
+                    >
+                      ×
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </section>
+
         {/* Quick insights */}
         <section className="grid grid-cols-2 gap-3 pb-8">
           <div className="bg-[#EEEDF8] rounded-2xl p-4 border border-[#D4DFDD]">
@@ -533,6 +600,61 @@ function Dashboard() {
         </section>
 
       </main>
+
+      {/* Add Caregiver Modal */}
+      {showAddCaregiver && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm px-4 pb-8">
+          <div className="bg-white rounded-3xl w-full max-w-sm p-6 space-y-5 shadow-2xl">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-extrabold text-[#0A1338]">Who are you adding?</h3>
+              <button onClick={() => setShowAddCaregiver(false)} className="text-[#8FA4A6] text-2xl leading-none hover:text-[#202837]">×</button>
+            </div>
+
+            {/* Role picker */}
+            <div className="grid grid-cols-2 gap-2">
+              {(["nanny", "teacher", "trainer", "partner"] as CaregiverRole[]).map(role => {
+                const icon: Record<CaregiverRole, string> = { nanny: "🧑‍🍼", teacher: "📚", trainer: "🏋️", partner: "❤️" };
+                const label: Record<CaregiverRole, string> = { nanny: "Nanny", teacher: "Teacher", trainer: "Trainer", partner: "Partner" };
+                return (
+                  <button
+                    key={role}
+                    onClick={() => setCaregiverRole(role)}
+                    className={`flex items-center gap-2 px-4 py-3 rounded-2xl border-2 font-bold text-sm transition-all
+                      ${caregiverRole === role
+                        ? "border-[#B2ADEB] bg-[#EEEDF8] text-[#0A1338]"
+                        : "border-[#E4E2F2] bg-white text-[#8FA4A6] hover:border-[#B2ADEB]"}`}
+                  >
+                    <span className="text-xl">{icon[role]}</span>
+                    {label[role]}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Name input */}
+            <div>
+              <label className="text-xs font-bold text-[#8FA4A6] uppercase tracking-wide">Their name</label>
+              <input
+                type="text"
+                value={caregiverName}
+                onChange={e => setCaregiverName(e.target.value)}
+                onKeyDown={e => e.key === "Enter" && addCaregiver()}
+                placeholder={caregiverRole === "partner" ? "e.g. Sarah" : "e.g. Maria"}
+                className="mt-1.5 w-full bg-[#F7F7FB] border border-[#E4E2F2] rounded-xl px-4 py-3 text-[#0A1338] font-semibold text-base focus:outline-none focus:border-[#B2ADEB]"
+                autoFocus
+              />
+            </div>
+
+            <button
+              onClick={addCaregiver}
+              disabled={!caregiverName.trim()}
+              className="w-full h-12 rounded-2xl bg-[#202837] text-white font-bold text-base disabled:opacity-40 hover:bg-[#141D28] transition-colors"
+            >
+              Add to care team
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

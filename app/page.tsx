@@ -80,6 +80,7 @@ export default function Home() {
       milestoneProgress: {},
       journal: [],
       board: [],
+      caregivers: [],
       createdAt: new Date().toISOString(),
     };
 

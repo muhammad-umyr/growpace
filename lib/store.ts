@@ -34,6 +34,14 @@ export interface JournalEntry {
   emoji: string;
 }
 
+export type CaregiverRole = "nanny" | "teacher" | "trainer" | "partner";
+
+export interface Caregiver {
+  id: string;
+  name: string;
+  role: CaregiverRole;
+}
+
 export interface Profile {
   id: string;
   name: string;
@@ -44,6 +52,7 @@ export interface Profile {
   milestoneProgress: Record<string, string>; // milestoneId → stage id
   journal: JournalEntry[];
   board: BoardActivity[];
+  caregivers: Caregiver[];
   createdAt: string;
 }
 
