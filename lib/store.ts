@@ -69,7 +69,7 @@ export interface MilestoneDef {
 export const ALL_MILESTONES: MilestoneDef[] = [
   {
     id: "smile", emoji: "😊", label: "First social smile", minMonths: 1, tag: "Social",
-    image: "https://source.unsplash.com/featured/800x400/?baby,smile,mother,face",
+    image: "https://images.pexels.com/photos/3279203/pexels-photo-3279203.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Respond to every coo and expression — lots of face-to-face time and smiling back is what triggers it.",
     stages: [
       { id: "s1", label: "No smiles yet, mostly sleeping", nextTip: "This is completely normal in the first weeks. Hold your baby close during feeds and talk softly to their face — eye contact and calm voices set the stage for that first smile." },
@@ -80,7 +80,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "head_up", emoji: "💪", label: "Holds head up", minMonths: 2, tag: "Motor",
-    image: "https://source.unsplash.com/featured/800x400/?baby,tummy,time,floor",
+    image: "https://images.pexels.com/photos/359571/pexels-photo-359571.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Daily tummy time is the key — even 2–3 minutes several times a day rapidly builds the neck strength needed.",
     stages: [
       { id: "s1", label: "Head flops down immediately", nextTip: "Start tummy time on your chest, not the floor — your body's warmth and smell keeps them calm long enough to try. Do 1–2 minutes after each nappy change." },
@@ -91,7 +91,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "tracks", emoji: "👀", label: "Tracks objects with eyes", minMonths: 2, tag: "Sensory",
-    image: "https://source.unsplash.com/featured/800x400/?baby,toy,newborn,play",
+    image: "https://images.pexels.com/photos/10190040/pexels-photo-10190040.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Hold a bright toy about 25 cm from their face and move it slowly side to side for them to follow with their eyes.",
     stages: [
       { id: "s1", label: "Eyes don't seem to follow anything yet", nextTip: "Newborn vision is still developing. Use high-contrast black-and-white patterns held 20–30 cm away. Faces are the strongest magnet — yours works best." },
@@ -102,7 +102,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "babbles", emoji: "🗣️", label: "Babbles & coos", minMonths: 3, tag: "Language",
-    image: "https://source.unsplash.com/featured/800x400/?mother,baby,talking,bonding",
+    image: "https://images.pexels.com/photos/3875131/pexels-photo-3875131.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Talk back using their sounds — if they say 'ba ba', you echo 'ba ba!' This turn-taking encourages more.",
     stages: [
       { id: "s1", label: "Mostly quiet, only cries or grunts", nextTip: "Talk constantly during daily routines — nappy changes, baths, feeds. They are absorbing every word even before responding. Narrate everything you do together." },
@@ -113,7 +113,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "sits", emoji: "🪑", label: "Sits without support", minMonths: 6, tag: "Motor",
-    image: "https://source.unsplash.com/featured/800x400/?baby,sitting,floor,play",
+    image: "https://images.pexels.com/photos/4491672/pexels-photo-4491672.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Practice supported sitting with cushions around them and let them reach for toys to build core balance.",
     stages: [
       { id: "s1", label: "Can't sit even with hands propped", nextTip: "Keep doing floor time on their tummy and back. Supported sitting in your lap helps them feel the upright position safely — do this during play for 5–10 minutes a day." },
@@ -124,7 +124,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "crawls", emoji: "🐾", label: "Crawls", minMonths: 8, tag: "Motor",
-    image: "https://source.unsplash.com/featured/800x400/?baby,crawling,floor",
+    image: "https://images.pexels.com/photos/325693/pexels-photo-325693.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Place a favourite toy just out of reach during tummy time to give them a reason to move towards it.",
     stages: [
       { id: "s1", label: "Not moving independently yet", nextTip: "Make sure they have lots of time on a firm floor surface (not a soft mattress). Place a toy just out of reach during tummy time — motivation to move is everything at this stage." },
@@ -135,7 +135,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "waves", emoji: "👋", label: "Waves bye-bye", minMonths: 9, tag: "Social",
-    image: "https://source.unsplash.com/featured/800x400/?toddler,waving,parent,happy",
+    image: "https://images.pexels.com/photos/7499576/pexels-photo-7499576.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Wave and say 'bye-bye' consistently every time someone leaves — repetition over weeks is what works.",
     stages: [
       { id: "s1", label: "No reaction to waving or goodbyes", nextTip: "Wave at close range (30 cm) and say 'bye-bye!' in an animated voice every single time someone leaves. Pair it with something fun — like a big smile — so they pay attention to the gesture." },
@@ -146,7 +146,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "first_words", emoji: "💬", label: "First words", minMonths: 10, tag: "Language",
-    image: "https://source.unsplash.com/featured/800x400/?toddler,parent,speech,talking",
+    image: "https://images.pexels.com/photos/11369475/pexels-photo-11369475.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Name everything you see and do together. The more varied language they hear, the sooner words come.",
     stages: [
       { id: "s1", label: "Babbling but no clear words yet", nextTip: "Keep narrating your day constantly. The magic number is 21,000 words a day — you don't have to count, just never stop talking to them during routines, walks, and play." },
@@ -157,7 +157,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "walks", emoji: "🚶", label: "Walking", minMonths: 12, tag: "Motor",
-    image: "https://source.unsplash.com/featured/800x400/?toddler,walking,first,steps,parent",
+    image: "https://images.pexels.com/photos/3932692/pexels-photo-3932692.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Encourage cruising along furniture and offer your hands for support — avoid baby walkers, which can delay walking.",
     stages: [
       { id: "s1", label: "Not pulling to stand yet", nextTip: "Position them next to low sturdy furniture with a motivating toy on top. Gently assist them into a standing position and let them hold on — getting comfortable with weight-bearing comes first." },
@@ -168,7 +168,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "spoon", emoji: "🥄", label: "Uses spoon", minMonths: 15, tag: "Motor",
-    image: "https://source.unsplash.com/featured/800x400/?toddler,eating,spoon,messy,food",
+    image: "https://images.pexels.com/photos/9410989/pexels-photo-9410989.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Start with thick foods like yogurt or mashed potato and let them explore freely. Expect mess — it's part of learning!",
     stages: [
       { id: "s1", label: "Won't hold a spoon at all", nextTip: "Give them a spoon to hold during every meal — even if they don't use it to eat. Let them bang it, chew it, wave it. Familiarity comes before function." },
@@ -179,7 +179,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "two_words", emoji: "🗨️", label: "2-word phrases", minMonths: 18, tag: "Language",
-    image: "https://source.unsplash.com/featured/800x400/?toddler,mother,conversation,talking",
+    image: "https://images.pexels.com/photos/3661335/pexels-photo-3661335.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Expand their single words — when they say 'ball', respond 'big ball!' or 'kick ball!' to model combinations.",
     stages: [
       { id: "s1", label: "Single words only, no combining yet", nextTip: "Consistently model two-word phrases yourself: 'more milk', 'daddy go', 'big dog'. Keep them simple. Repeat them every day in natural situations so they become familiar patterns." },
@@ -190,7 +190,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "runs", emoji: "🏃", label: "Running", minMonths: 18, tag: "Physical",
-    image: "https://source.unsplash.com/featured/800x400/?toddler,running,park,outside,play",
+    image: "https://images.pexels.com/photos/4543646/pexels-photo-4543646.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Active play like chasing a rolling ball, dancing, and climbing gentle slopes builds the coordination needed.",
     stages: [
       { id: "s1", label: "Walking steadily but no running yet", nextTip: "Chase games are the best motivator — run away from them slowly and let them 'catch' you. The urgency naturally shifts their gait from walk to run without them realising." },
@@ -201,7 +201,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "sings", emoji: "🎵", label: "Sings simple songs", minMonths: 24, tag: "Language",
-    image: "https://source.unsplash.com/featured/800x400/?child,singing,music,happy,mother",
+    image: "https://images.pexels.com/photos/7567337/pexels-photo-7567337.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Sing the same 2–3 songs repeatedly every day. Repetition is how they learn the words — 'Twinkle Twinkle' is perfect.",
     stages: [
       { id: "s1", label: "Enjoys music but doesn't attempt to sing", nextTip: "Sing to them daily — the same 3 or 4 songs every day without fail. They are memorising the melody and words long before they attempt to sing. Familiarity is the foundation." },
@@ -212,7 +212,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "potty", emoji: "🚽", label: "Toilet training begun", minMonths: 24, tag: "Physical",
-    image: "https://source.unsplash.com/featured/800x400/?toddler,independence,learning,growing",
+    image: "https://images.pexels.com/photos/5103918/pexels-photo-5103918.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Look for readiness signs: staying dry for 2+ hours, showing interest in the toilet, or telling you when they're wet.",
     stages: [
       { id: "s1", label: "No awareness of needing to go yet", nextTip: "Don't start training yet — they need to recognise the sensation first. Start by narrating: 'I think you're doing a wee now!' when you notice signs. Read books about potties and let them sit on one fully clothed to get familiar." },
@@ -223,7 +223,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "scissors", emoji: "✂️", label: "Using scissors", minMonths: 36, tag: "Motor",
-    image: "https://source.unsplash.com/featured/800x400/?child,scissors,cutting,paper,craft,mother",
+    image: "https://images.pexels.com/photos/8612992/pexels-photo-8612992.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Start with playdough — squeezing scissors to cut it builds exactly the hand strength needed before moving to paper.",
     stages: [
       { id: "s1", label: "Can't hold scissors correctly yet", nextTip: "Start with tongs or tweezers to build the same pincer motion with less complexity. Playdough squeezed with both hands also builds the same muscles. Only introduce child scissors once grip is comfortable." },
@@ -234,7 +234,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "sharing", emoji: "🤝", label: "Sharing with peers", minMonths: 36, tag: "Social",
-    image: "https://source.unsplash.com/featured/800x400/?children,sharing,playing,together,toys",
+    image: "https://images.pexels.com/photos/3661388/pexels-photo-3661388.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Play turn-taking games with blocks or balls and use consistent language: 'My turn, now your turn.'",
     stages: [
       { id: "s1", label: "Refuses to share anything at all", nextTip: "This is developmentally normal before age 3 — the concept of 'mine' is very new. Don't force sharing; instead narrate turn-taking: 'You have it now, then Liam will have a turn.' Keep expectations low and patience high." },
@@ -245,7 +245,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "draws", emoji: "🎨", label: "Draws shapes", minMonths: 36, tag: "Creative",
-    image: "https://source.unsplash.com/featured/800x400/?child,drawing,crayons,art,creative",
+    image: "https://images.pexels.com/photos/5094665/pexels-photo-5094665.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Let them scribble freely first, then draw a face together — 'circle for the head, two dots for eyes' is a great start.",
     stages: [
       { id: "s1", label: "Only random scribbles, no intent", nextTip: "Scribbling IS the foundation — they are building hand control and learning that marks mean something. Comment on what they make: 'I love all those lines!' Give them chunky crayons and large paper and make it joyful." },
@@ -256,7 +256,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "letters", emoji: "🔡", label: "Recognises letters", minMonths: 42, tag: "Cognitive",
-    image: "https://source.unsplash.com/featured/800x400/?child,alphabet,learning,letters,education",
+    image: "https://images.pexels.com/photos/7334320/pexels-photo-7334320.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Point out letters everywhere on signs, packaging, and books. Always start with the letters in their own name.",
     stages: [
       { id: "s1", label: "No letter recognition yet", nextTip: "Start with their name — it is the most motivating set of letters they will ever learn. Spell it out on fridge magnets, write it on their drawings, point to it on their bag. Own-name recognition typically comes 6–8 weeks before other letters." },
@@ -267,7 +267,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "reads", emoji: "📖", label: "Reads simple words", minMonths: 60, tag: "Cognitive",
-    image: "https://source.unsplash.com/featured/800x400/?child,reading,book,parent,together",
+    image: "https://images.pexels.com/photos/3890481/pexels-photo-3890481.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Pair simple words with pictures they know well. Start with their name, family names, and labels on familiar objects.",
     stages: [
       { id: "s1", label: "Knows letter sounds but can't blend yet", nextTip: "Blending is a separate skill from knowing sounds. Practice 'sound talking': say c-a-t slowly then 'push' the sounds together. Start with simple 3-letter words (CVC: consonant-vowel-consonant) — cat, dog, big, hop." },
@@ -278,7 +278,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "writes_name", emoji: "✏️", label: "Writes own name", minMonths: 60, tag: "Cognitive",
-    image: "https://source.unsplash.com/featured/800x400/?child,writing,pencil,paper,learning",
+    image: "https://images.pexels.com/photos/8363159/pexels-photo-8363159.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Trace their name in sand or salt first — chunky crayons help build the pencil grip they need to write independently.",
     stages: [
       { id: "s1", label: "Can't hold a pencil with a proper grip yet", nextTip: "Build grip strength with playdough, threading beads, and using tweezers to pick up small objects. A triangular pencil grip attachment is helpful. Don't force a tripod grip — guide gently and model it yourself." },
@@ -289,7 +289,7 @@ export const ALL_MILESTONES: MilestoneDef[] = [
   },
   {
     id: "bike", emoji: "🚲", label: "Rides a bike", minMonths: 60, tag: "Physical",
-    image: "https://source.unsplash.com/featured/800x400/?child,bicycle,riding,park,outdoor",
+    image: "https://images.pexels.com/photos/3932888/pexels-photo-3932888.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
     tip: "Lower the seat so both feet rest flat on the ground, then let them walk the bike before attempting to glide.",
     stages: [
       { id: "s1", label: "Not interested or scared of the bike", nextTip: "Don't push — forced early experiences create lasting reluctance. Let them sit on the bike while it is stationary and just play. Watch other children riding. Interest has to come from them; your role is exposure without pressure." },
