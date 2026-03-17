@@ -183,6 +183,12 @@ function Dashboard() {
               📄 Report
             </button>
             <button
+              onClick={() => setShowAddCaregiver(true)}
+              className="text-sm text-[#202837] hover:text-[#202837] font-semibold transition-colors"
+            >
+              👥 Add Care Person
+            </button>
+            <button
               onClick={() => router.push("/")}
               className="text-sm text-[#202837] hover:text-[#202837] font-semibold transition-colors"
             >
