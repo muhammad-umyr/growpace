@@ -69,7 +69,7 @@ function Dashboard() {
   const genderEmoji = profile.gender === "boy" ? "👦" : profile.gender === "girl" ? "👧" : "🌈";
 
   const board = getBoard(profile);
-  const activeActivities = board.filter(a => a.status === "active");
+  const boardActivities = board.filter(a => a.status !== "done");
   const nextMilestones = getNextMilestones(profile, 3);
 
   function update(updated: Profile) {
@@ -109,6 +109,13 @@ function Dashboard() {
       source: "library",
     };
     update({ ...profile!, board: [...(profile!.board ?? []), activity] });
+  }
+
+  function startActivity(activityId: string) {
+    const updated = { ...profile!, board: (profile!.board ?? []).map(a =>
+      a.id === activityId ? { ...a, status: "active" as const, activatedAt: new Date().toISOString() } : a
+    )};
+    update(updated);
   }
 
   function addJournalEntry() {
@@ -219,10 +226,10 @@ function Dashboard() {
             </button>
           </div>
 
-          {activeActivities.length === 0 ? (
+          {boardActivities.length === 0 ? (
             <div className="bg-white rounded-2xl border border-[#E4E2F2] p-6 text-center">
               <p className="text-3xl mb-2">🎯</p>
-              <p className="text-[#0A1338] font-bold text-base">No active activities yet</p>
+              <p className="text-[#0A1338] font-bold text-base">No activities yet</p>
               <p className="text-[#202837] text-sm mt-1 mb-3">
                 Browse the library to find activities for {profile.name}
               </p>
@@ -235,12 +242,13 @@ function Dashboard() {
             </div>
           ) : (
             <div className="space-y-3">
-              {activeActivities.map(a => {
+              {boardActivities.map(a => {
                 const currentStage = PROGRESS_STAGES.find(s => s.value === a.progress);
+                const isSaved = a.status === "saved";
                 return (
-                  <div key={a.id} className="bg-white rounded-2xl p-4 border border-[#E4E2F2]">
+                  <div key={a.id} className={`bg-white rounded-2xl p-4 border ${isSaved ? "border-dashed border-[#D4DFDD] opacity-80" : "border-[#E4E2F2]"}`}>
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-[#EEEDF8] flex items-center justify-center text-2xl flex-shrink-0">
+                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 ${isSaved ? "bg-[#F4F3FC]" : "bg-[#EEEDF8]"}`}>
                         {a.emoji}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -249,30 +257,45 @@ function Dashboard() {
                           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[a.tag] ?? "bg-gray-100 text-gray-500"}`}>
                             {a.tag}
                           </span>
+                          {isSaved && (
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#F4F3FC] text-[#8FA4A6]">
+                              Saved
+                            </span>
+                          )}
                         </div>
                         <p className="text-[#202837] text-sm mt-0.5">{a.desc}</p>
-                        {/* Contextual progress */}
-                        <div className="flex items-center gap-2 mt-2">
-                          <div className="flex gap-1 flex-1">
-                            {PROGRESS_STAGES.map(stage => (
-                              <div
-                                key={stage.value}
-                                className={`flex-1 h-1.5 rounded-full ${a.progress >= stage.value ? "bg-[#B2ADEB]" : "bg-[#E4E2F2]"}`}
-                              />
-                            ))}
+                        {!isSaved && (
+                          <div className="flex items-center gap-2 mt-2">
+                            <div className="flex gap-1 flex-1">
+                              {PROGRESS_STAGES.map(stage => (
+                                <div
+                                  key={stage.value}
+                                  className={`flex-1 h-1.5 rounded-full ${a.progress >= stage.value ? "bg-[#B2ADEB]" : "bg-[#E4E2F2]"}`}
+                                />
+                              ))}
+                            </div>
+                            <span className="text-[10px] font-bold text-[#202837] whitespace-nowrap">
+                              {currentStage ? currentStage.short : "Not started"}
+                            </span>
                           </div>
-                          <span className="text-[10px] font-bold text-[#202837] whitespace-nowrap">
-                            {currentStage ? currentStage.short : "Not started"}
-                          </span>
-                        </div>
+                        )}
                       </div>
                     </div>
-                    <button
-                      onClick={() => router.push(`/activity?profileId=${profile.id}&activityId=${a.id}`)}
-                      className="mt-3 w-full h-12 flex items-center justify-center rounded-xl bg-[#EEEDF8] text-[#202837] font-bold text-xs hover:bg-[#E4E2F2] transition-colors border border-[#D4DFDD]"
-                    >
-                      Log a progress update
-                    </button>
+                    {isSaved ? (
+                      <button
+                        onClick={() => startActivity(a.id)}
+                        className="mt-3 w-full h-10 flex items-center justify-center rounded-xl bg-[#202837] text-white font-bold text-xs hover:bg-[#141D28] transition-colors"
+                      >
+                        Start this activity →
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => router.push(`/activity?profileId=${profile.id}&activityId=${a.id}`)}
+                        className="mt-3 w-full h-12 flex items-center justify-center rounded-xl bg-[#EEEDF8] text-[#202837] font-bold text-xs hover:bg-[#E4E2F2] transition-colors border border-[#D4DFDD]"
+                      >
+                        Log a progress update
+                      </button>
+                    )}
                   </div>
                 );
               })}
