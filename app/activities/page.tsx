@@ -41,9 +41,9 @@ const ALL_TAGS = ["All", "Physical", "Language", "Cognitive", "Creative", "Socia
 // ── Sub-components ────────────────────────────────────────────────────────────
 
 function ActivityCard({
-  emoji, title, desc, tag, reason, isAdded, onAdd, howTo, videoQuery,
+  emoji, image, title, desc, tag, reason, isAdded, onAdd, howTo, videoQuery,
 }: {
-  emoji: string; title: string; desc: string; tag: string;
+  emoji: string; image?: string; title: string; desc: string; tag: string;
   reason?: string; isAdded: boolean; onAdd: () => void;
   howTo?: string[]; videoQuery?: string;
 }) {
@@ -57,10 +57,22 @@ function ActivityCard({
 
       {/* Body */}
       <div className="p-4 flex gap-4 items-start">
-        {/* Emoji */}
-        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#F4F3FC] to-[#D4DFDD] flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">
-          {emoji}
-        </div>
+        {/* Thumbnail */}
+        {image ? (
+          <div className="w-28 h-28 rounded-2xl overflow-hidden flex-shrink-0 shadow-sm bg-[#F4F3FC]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={image}
+              alt={title}
+              className="w-full h-full object-cover"
+              onError={e => { (e.target as HTMLImageElement).style.display = "none"; }}
+            />
+          </div>
+        ) : (
+          <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-[#F4F3FC] to-[#D4DFDD] flex items-center justify-center text-5xl flex-shrink-0 shadow-sm">
+            {emoji}
+          </div>
+        )}
 
         {/* Content */}
         <div className="flex-1 min-w-0">
@@ -514,6 +526,7 @@ function Activities() {
                 <ActivityCard
                   key={i}
                   emoji={a.emoji}
+                  image={a.image}
                   title={a.title}
                   desc={a.desc}
                   tag={a.tag}
