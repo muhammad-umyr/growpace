@@ -311,10 +311,10 @@ function Activities() {
       } else if (data.activities?.length > 0) {
         setSuggestions(data.activities);
       } else {
-        setAiError("failed");
+        setAiError(data.detail ?? "failed");
       }
-    } catch {
-      setAiError("failed");
+    } catch (e) {
+      setAiError(e instanceof Error ? e.message : "failed");
     } finally {
       setLoading(false);
     }
@@ -467,10 +467,13 @@ function Activities() {
               </div>
             )}
 
-            {aiError === "failed" && !loading && (
+            {aiError && aiError !== "no_key" && !loading && (
               <div className="bg-[#EEEDF8] rounded-2xl p-4 border border-[#D4DFDD] text-center">
                 <p className="text-3xl mb-2">😕</p>
                 <p className="text-[#202837] text-base font-semibold">Couldn&apos;t load suggestions.</p>
+                {aiError !== "failed" && (
+                  <p className="text-[10px] text-[#8FA4A6] mt-1 font-mono break-all">{aiError}</p>
+                )}
                 <button onClick={fetchSuggestions} className="mt-2 text-xs text-[#202837] font-bold hover:underline">
                   Try again
                 </button>

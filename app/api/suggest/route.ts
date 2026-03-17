@@ -41,7 +41,8 @@ Make the activities diverse across different tags. Be specific to the ${ageStr} 
 
     return NextResponse.json({ activities });
   } catch (err) {
-    console.error("Suggest API error:", err);
-    return NextResponse.json({ error: "failed" }, { status: 500 });
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("Suggest API error:", message);
+    return NextResponse.json({ error: "failed", detail: message }, { status: 500 });
   }
 }
