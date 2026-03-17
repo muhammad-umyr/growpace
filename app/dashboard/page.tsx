@@ -318,6 +318,17 @@ function Dashboard() {
                     key={m.id}
                     className="bg-white rounded-2xl border border-[#E4E2F2] overflow-hidden"
                   >
+                    {m.image && (
+                      <div className="w-full h-40 bg-[#F4F3FC] overflow-hidden">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={m.image}
+                          alt={m.label}
+                          className="w-full h-full object-cover"
+                          onError={e => { (e.target as HTMLImageElement).style.display = "none"; }}
+                        />
+                      </div>
+                    )}
                     <div className="p-4">
                       <div className="flex items-start gap-4">
                         <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#F4F3FC] to-[#D4DFDD] flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">
