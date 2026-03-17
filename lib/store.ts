@@ -4,6 +4,7 @@ export interface ProgressEntry {
   date: string;      // ISO string
   progress: number;  // 25 | 50 | 75 | 100
   note?: string;
+  photo?: string;    // base64 data URL
 }
 
 export const PROGRESS_STAGES: { value: number; label: string; short: string }[] = [
