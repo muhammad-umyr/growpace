@@ -330,23 +330,16 @@ function Dashboard() {
                       </div>
                     )}
                     <div className="p-4">
-                      <div className="flex items-start gap-4">
-                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#F4F3FC] to-[#D4DFDD] flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">
-                          {m.emoji}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <h3 className="font-extrabold text-[#0A1338] text-base leading-tight">{m.label}</h3>
-                            {isOverdue ? (
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FDF3EE] text-[#AA6646]">Around their age</span>
-                            ) : (
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EEEDF8] text-[#202837]">Coming up</span>
-                            )}
-                          </div>
-                          <p className="text-[#8FA4A6] text-sm mt-0.5">Expected {milestoneExpectedAge(m.minMonths)}</p>
-                          <p className="text-[#202837] text-sm mt-2 leading-relaxed">{m.tip}</p>
-                        </div>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="font-extrabold text-[#0A1338] text-base leading-tight">{m.label}</h3>
+                        {isOverdue ? (
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FDF3EE] text-[#AA6646]">Around their age</span>
+                        ) : (
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EEEDF8] text-[#202837]">Coming up</span>
+                        )}
                       </div>
+                      <p className="text-[#8FA4A6] text-sm mt-0.5">Expected {milestoneExpectedAge(m.minMonths)}</p>
+                      <p className="text-[#202837] text-sm mt-2 leading-relaxed">{m.tip}</p>
                       {savedStage && !isExpanded && (() => {
                         const stage = m.stages.find(s => s.id === savedStage);
                         return stage ? (
