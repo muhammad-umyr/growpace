@@ -181,19 +181,19 @@ function ActiveCard({
       <div className="flex gap-2">
         <button
           onClick={() => router.push(`/activity?profileId=${profileId}&activityId=${activity.id}`)}
-          className="flex-1 py-2 rounded-xl bg-[#EEEDF8] text-[#202837] font-bold text-xs hover:bg-[#E4E2F2] transition-colors border border-[#D4DFDD]"
+          className="flex-1 h-12 flex items-center justify-center rounded-xl bg-[#EEEDF8] text-[#202837] font-bold text-xs hover:bg-[#E4E2F2] transition-colors border border-[#D4DFDD]"
         >
           Log a progress update
         </button>
         <button
           onClick={onDone}
-          className="py-2 px-3 rounded-xl bg-[#EDF3F0] text-[#202837] font-bold text-xs hover:bg-[#D4DFDD] transition-colors border border-[#D4DFDD]"
+          className="h-12 px-3 flex items-center justify-center rounded-xl bg-[#EDF3F0] text-[#202837] font-bold text-xs hover:bg-[#D4DFDD] transition-colors border border-[#D4DFDD]"
         >
           ✅ Done
         </button>
         <button
           onClick={onPause}
-          className="py-2 px-3 rounded-xl bg-[#E4E2F2] text-[#202837] font-bold text-xs hover:bg-[#D4DFDD] transition-colors"
+          className="h-12 px-3 flex items-center justify-center rounded-xl bg-[#E4E2F2] text-[#202837] font-bold text-xs hover:bg-[#D4DFDD] transition-colors"
         >
           ⏸ Later
         </button>

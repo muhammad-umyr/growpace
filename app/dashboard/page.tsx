@@ -269,7 +269,7 @@ function Dashboard() {
                     </div>
                     <button
                       onClick={() => router.push(`/activity?profileId=${profile.id}&activityId=${a.id}`)}
-                      className="mt-3 w-full py-2 rounded-xl bg-[#EEEDF8] text-[#202837] font-bold text-xs hover:bg-[#E4E2F2] transition-colors border border-[#D4DFDD]"
+                      className="mt-3 w-full h-12 flex items-center justify-center rounded-xl bg-[#EEEDF8] text-[#202837] font-bold text-xs hover:bg-[#E4E2F2] transition-colors border border-[#D4DFDD]"
                     >
                       Log a progress update
                     </button>
@@ -318,31 +318,34 @@ function Dashboard() {
                     key={m.id}
                     className="bg-white rounded-2xl border border-[#E4E2F2] overflow-hidden"
                   >
-                    <div className="p-4 flex items-start gap-4">
-                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#F4F3FC] to-[#D4DFDD] flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">
-                        {m.emoji}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="font-extrabold text-[#0A1338] text-base leading-tight">{m.label}</h3>
-                          {isOverdue ? (
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FDF3EE] text-[#AA6646]">Around their age</span>
-                          ) : (
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EEEDF8] text-[#202837]">Coming up</span>
-                          )}
+                    <div className="p-4">
+                      <div className="flex items-start gap-4">
+                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#F4F3FC] to-[#D4DFDD] flex items-center justify-center text-3xl flex-shrink-0 shadow-sm">
+                          {m.emoji}
                         </div>
-                        <p className="text-[#8FA4A6] text-sm mt-0.5">Expected {milestoneExpectedAge(m.minMonths)}</p>
-                        <p className="text-[#202837] text-sm mt-2 leading-relaxed">{m.tip}</p>
-                        {savedStage && !isExpanded && (() => {
-                          const stage = m.stages.find(s => s.id === savedStage);
-                          return stage ? (
-                            <div className="mt-2 bg-[#EEEDF8] rounded-xl p-2.5">
-                              <p className="text-[10px] font-bold text-[#7A74C0] mb-1">📍 {stage.label}</p>
-                              <p className="text-[10px] text-[#5E4FA8] leading-relaxed">{stage.nextTip}</p>
-                            </div>
-                          ) : null;
-                        })()}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <h3 className="font-extrabold text-[#0A1338] text-base leading-tight">{m.label}</h3>
+                            {isOverdue ? (
+                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FDF3EE] text-[#AA6646]">Around their age</span>
+                            ) : (
+                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EEEDF8] text-[#202837]">Coming up</span>
+                            )}
+                          </div>
+                          <p className="text-[#8FA4A6] text-sm mt-0.5">Expected {milestoneExpectedAge(m.minMonths)}</p>
+                          <p className="text-[#202837] text-sm mt-2 leading-relaxed">{m.tip}</p>
+                        </div>
                       </div>
+                      {savedStage && !isExpanded && (() => {
+                        const stage = m.stages.find(s => s.id === savedStage);
+                        return stage ? (
+                          <div className="mt-3 bg-[#EEEDF8] rounded-xl p-3">
+                            <p className="text-[10px] font-bold text-[#7A74C0] mb-1.5">📍 Currently at: {stage.label}</p>
+                            <p className="text-xs font-bold text-[#5E4FA8] mb-1.5">💡 Tip to reach the next stage</p>
+                            <p className="text-sm text-[#5E4FA8] leading-relaxed">{stage.nextTip}</p>
+                          </div>
+                        ) : null;
+                      })()}
                     </div>
 
                     {/* Stage picker — shown when expanded */}
