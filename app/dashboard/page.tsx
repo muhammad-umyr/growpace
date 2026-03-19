@@ -3,6 +3,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense, useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { ActivityBubbles } from "./ActivityBubbles";
 import {
   getProfile,
   saveProfile,
@@ -11,7 +12,6 @@ import {
   milestoneExpectedAge,
   calcAge,
   calcAgeMonths,
-  calcProgressPercent,
   PROGRESS_STAGES,
   Profile,
   JournalEntry,
@@ -163,7 +163,6 @@ function Dashboard() {
 
   const age = calcAge(profile.dob);
   const ageMonths = calcAgeMonths(profile.dob);
-  const progress = calcProgressPercent(profile.dob);
   const genderEmoji = profile.gender === "boy" ? "👦" : profile.gender === "girl" ? "👧" : "🌈";
 
   const board = getBoard(profile);
@@ -319,20 +318,7 @@ function Dashboard() {
             </div>
           </div>
 
-          {/* Journey progress bar */}
-          <div className="mt-5">
-            <div className="flex justify-between text-sm text-[#1F2937] mb-1.5 font-semibold">
-              <span>Birth</span>
-              <span className="text-[#1F2937]">{progress}% of journey</span>
-              <span>Age 7</span>
-            </div>
-            <div className="h-3 bg-[#E5E5E5] rounded-full overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-[#222222] to-[#1F2937] rounded-full transition-all duration-1000"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-          </div>
+          <ActivityBubbles profile={profile} />
         </div>
 
         {/* ── Daily acknowledgment ── quiet one-liner, only if logged today */}
