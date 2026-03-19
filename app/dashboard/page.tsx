@@ -515,9 +515,10 @@ function Dashboard() {
           ) : (
             /* Horizontal snap scroll — one card visible, peek of next */
             <div
-              className="flex gap-3 overflow-x-auto snap-x snap-mandatory -mx-4 pl-4 pb-2"
+              className="overflow-x-auto snap-x snap-mandatory pb-2"
               style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
             >
+              <div className="flex gap-3">
               {boardActivities.map(a => {
                 const currentStage = PROGRESS_STAGES.find(s => s.value === a.progress);
                 const isSaved = a.status === "saved";
@@ -596,7 +597,7 @@ function Dashboard() {
               })}
 
               {/* Add more — last card in the scroll */}
-              <div className="snap-start flex-shrink-0 w-[85%] flex items-center justify-center mr-3">
+              <div className="snap-start flex-shrink-0 w-[85%] flex items-center justify-center">
                 <button
                   onClick={() => router.push(`/activities?id=${profile.id}`)}
                   className="w-full py-8 rounded-2xl border-2 border-dashed border-[#D9D9D9] text-[#94A3B8] font-bold text-sm hover:bg-[#F5F5F5] transition-colors"
