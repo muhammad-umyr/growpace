@@ -186,7 +186,7 @@ function Dashboard() {
               onClick={() => setShowAddCaregiver(true)}
               className="text-sm text-[#1F2937] hover:text-[#1F2937] font-semibold transition-colors"
             >
-              👥 Add Care Person
+              👥 Add Partner
             </button>
             <button
               onClick={() => router.push("/")}
