@@ -524,7 +524,7 @@ function Dashboard() {
                 return (
                   <div
                     key={a.id}
-                    className={`snap-start flex-shrink-0 w-[85%] bg-white rounded-2xl p-4 border first:ml-3 ${isSaved ? "border-dashed border-[#D9D9D9] opacity-80" : "border-[#E5E5E5]"}`}
+                    className={`snap-start flex-shrink-0 w-[85%] bg-white rounded-2xl p-4 border first:ml-4 ${isSaved ? "border-dashed border-[#D9D9D9] opacity-80" : "border-[#E5E5E5]"}`}
                   >
                     {/* Header row */}
                     <div className="flex items-start gap-3">
