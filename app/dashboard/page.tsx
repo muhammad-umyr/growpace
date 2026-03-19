@@ -515,7 +515,7 @@ function Dashboard() {
           ) : (
             /* Horizontal snap scroll — one card visible, peek of next */
             <div
-              className="flex gap-3 overflow-x-auto snap-x snap-mandatory -mx-4 px-4 pb-2"
+              className="flex gap-3 overflow-x-auto snap-x snap-mandatory -mx-4 pb-2"
               style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
             >
               {boardActivities.map(a => {
@@ -524,7 +524,7 @@ function Dashboard() {
                 return (
                   <div
                     key={a.id}
-                    className={`snap-start flex-shrink-0 w-[85%] bg-white rounded-2xl p-4 border ${isSaved ? "border-dashed border-[#D9D9D9] opacity-80" : "border-[#E5E5E5]"}`}
+                    className={`snap-start flex-shrink-0 w-[85%] bg-white rounded-2xl p-4 border first:ml-4 ${isSaved ? "border-dashed border-[#D9D9D9] opacity-80" : "border-[#E5E5E5]"}`}
                   >
                     {/* Header row */}
                     <div className="flex items-start gap-3">
@@ -596,7 +596,7 @@ function Dashboard() {
               })}
 
               {/* Add more — last card in the scroll */}
-              <div className="snap-start flex-shrink-0 w-[85%] flex items-center justify-center">
+              <div className="snap-start flex-shrink-0 w-[85%] flex items-center justify-center mr-4">
                 <button
                   onClick={() => router.push(`/activities?id=${profile.id}`)}
                   className="w-full py-8 rounded-2xl border-2 border-dashed border-[#D9D9D9] text-[#94A3B8] font-bold text-sm hover:bg-[#F5F5F5] transition-colors"
