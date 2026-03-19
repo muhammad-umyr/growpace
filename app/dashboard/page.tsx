@@ -63,6 +63,13 @@ function Dashboard() {
   const [caregiverRole, setCaregiverRole] = useState<CaregiverRole>("nanny");
   const photoInputRef = useRef<HTMLInputElement>(null);
 
+  // Log progress flyout
+  const [logFlyoutId, setLogFlyoutId] = useState<string | null>(null);
+  const [flyoutStage, setFlyoutStage] = useState<number | null>(null);
+  const [flyoutNote, setFlyoutNote] = useState("");
+  const [flyoutPhoto, setFlyoutPhoto] = useState<string | null>(null);
+  const flyoutPhotoRef = useRef<HTMLInputElement>(null);
+
   // Recognition state
   const [dailyMessage, setDailyMessage] = useState<string | null>(null);
   const [weeklyCard, setWeeklyCard] = useState<WeeklyCardData | null>(null);
@@ -213,6 +220,38 @@ function Dashboard() {
       a.id === activityId ? { ...a, status: "active" as const, activatedAt: new Date().toISOString() } : a
     )};
     update(updated);
+  }
+
+  function saveFlyoutProgress() {
+    if (!flyoutStage || !logFlyoutId) return;
+    const entry = {
+      date: new Date().toISOString(),
+      progress: flyoutStage,
+      note: flyoutNote.trim() || undefined,
+      photo: flyoutPhoto ?? undefined,
+    };
+    const updated = {
+      ...profile!,
+      board: (profile!.board ?? []).map(a => {
+        if (a.id !== logFlyoutId) return a;
+        const newLog = [...(a.progressLog ?? []), entry];
+        return { ...a, progress: flyoutStage, progressLog: newLog, status: "active" as const };
+      }),
+    };
+    update(updated);
+    setLogFlyoutId(null);
+    setFlyoutStage(null);
+    setFlyoutNote("");
+    setFlyoutPhoto(null);
+  }
+
+  function handleFlyoutPhoto(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => setFlyoutPhoto(reader.result as string);
+    reader.readAsDataURL(file);
+    e.target.value = "";
   }
 
   function addCaregiver() {
@@ -539,7 +578,7 @@ function Dashboard() {
                     ) : (
                       <div className="mt-3 flex gap-2">
                         <button
-                          onClick={() => router.push(`/activity?profileId=${profile.id}&activityId=${a.id}`)}
+                          onClick={() => { setLogFlyoutId(a.id); setFlyoutStage(null); setFlyoutNote(""); setFlyoutPhoto(null); }}
                           className="flex-1 h-10 flex items-center justify-center rounded-xl bg-[#1F2937] text-white font-bold text-xs hover:bg-[#111111] transition-colors"
                         >
                           Log progress
@@ -868,6 +907,101 @@ function Dashboard() {
         </section>
 
       </main>
+
+      {/* Log Progress Flyout */}
+      {logFlyoutId && (() => {
+        const activity = (profile.board ?? []).find(a => a.id === logFlyoutId);
+        if (!activity) return null;
+        const currentStage = PROGRESS_STAGES.find(s => s.value === activity.progress);
+        return (
+          <div className="fixed inset-0 z-50 flex items-end justify-center">
+            {/* Backdrop */}
+            <div
+              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+              onClick={() => setLogFlyoutId(null)}
+            />
+            {/* Sheet */}
+            <div className="relative w-full max-w-2xl bg-white rounded-t-3xl px-5 pt-5 pb-10 shadow-2xl space-y-4">
+              {/* Handle */}
+              <div className="w-10 h-1 bg-[#D9D9D9] rounded-full mx-auto mb-1" />
+
+              {/* Activity header */}
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-[#F0F0F0] flex items-center justify-center text-xl flex-shrink-0">
+                  {activity.emoji}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-extrabold text-[#111827] text-base leading-tight">{activity.title}</p>
+                  {currentStage && (
+                    <p className="text-xs text-[#94A3B8] mt-0.5">Currently: {currentStage.label}</p>
+                  )}
+                </div>
+                <button
+                  onClick={() => setLogFlyoutId(null)}
+                  className="text-[#94A3B8] hover:text-[#1F2937] text-2xl leading-none flex-shrink-0"
+                >×</button>
+              </div>
+
+              {/* Stage picker */}
+              <div>
+                <p className="text-sm font-bold text-[#111827] mb-2">Where are you right now?</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {PROGRESS_STAGES.map(stage => (
+                    <button
+                      key={stage.value}
+                      onClick={() => setFlyoutStage(stage.value)}
+                      className={`px-3 py-3 rounded-xl border-2 text-left transition-all
+                        ${flyoutStage === stage.value
+                          ? "border-[#1F2937] bg-[#F0F0F0]"
+                          : "border-[#D9D9D9] bg-[#FAFAFA] hover:border-[#AAAAAA]"
+                        }`}
+                    >
+                      <p className="text-sm font-bold text-[#111827]">{stage.label}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Note */}
+              <textarea
+                value={flyoutNote}
+                onChange={e => setFlyoutNote(e.target.value)}
+                placeholder={`Add a note… e.g. ${profile.name} tried for 5 minutes today!`}
+                className="w-full px-4 py-3 rounded-2xl border-2 border-[#D9D9D9] bg-[#FAFAFA] focus:outline-none focus:border-[#1F2937] text-[#111827] placeholder-[#94A3B8] text-sm resize-none h-20 transition-colors"
+              />
+
+              {/* Photo */}
+              {flyoutPhoto ? (
+                <div className="relative w-full h-36 rounded-2xl overflow-hidden bg-[#F5F5F5]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={flyoutPhoto} alt="Progress photo" className="w-full h-full object-cover" />
+                  <button
+                    onClick={() => setFlyoutPhoto(null)}
+                    className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/50 text-white text-sm flex items-center justify-center"
+                  >×</button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => flyoutPhotoRef.current?.click()}
+                  className="w-full py-3 rounded-2xl border-2 border-dashed border-[#D9D9D9] bg-[#FAFAFA] text-[#94A3B8] text-sm font-bold hover:border-[#1F2937] hover:text-[#1F2937] transition-colors flex items-center justify-center gap-2"
+                >
+                  📷 Add a photo
+                </button>
+              )}
+              <input ref={flyoutPhotoRef} type="file" accept="image/*" className="hidden" onChange={handleFlyoutPhoto} />
+
+              {/* Save */}
+              <button
+                onClick={saveFlyoutProgress}
+                disabled={!flyoutStage}
+                className="w-full py-3.5 rounded-2xl bg-[#1F2937] hover:bg-[#111111] disabled:opacity-40 text-white font-bold text-sm transition-colors"
+              >
+                Save update
+              </button>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Add Caregiver Modal */}
       {showAddCaregiver && (
