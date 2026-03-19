@@ -3,6 +3,17 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense, useState, useEffect, useRef } from "react";
 import {
+  MdArrowBack,
+  MdClose,
+  MdCheck,
+  MdExpandMore,
+  MdExpandLess,
+  MdPhoto,
+  MdAutoAwesome,
+  MdPause,
+  MdCheckCircle,
+} from "react-icons/md";
+import {
   getProfile,
   saveProfile,
   getBoard,
@@ -175,7 +186,7 @@ function ActivityDetail() {
             onClick={() => router.back()}
             className="text-sm text-[#007AFF] font-semibold transition-colors flex items-center gap-1"
           >
-            ← Back
+            <MdArrowBack className="inline" size={16} /> Back
           </button>
           <span className="text-base font-extrabold text-[#1F2937]">Growpace</span>
         </div>
@@ -248,7 +259,7 @@ function ActivityDetail() {
             className="w-full px-5 py-4 flex items-center justify-between text-left"
           >
             <span className="text-base font-extrabold text-[#1C1C1E]">Log a progress update</span>
-            <span className="text-[#1F2937] text-lg">{showLogForm ? "▲" : "▾"}</span>
+            <span className="text-[#1F2937]">{showLogForm ? <MdExpandLess size={22} /> : <MdExpandMore size={22} />}</span>
           </button>
           {showLogForm && (
             <div className="px-5 pb-5 space-y-4 border-t border-[#E5E5E5] pt-4">
@@ -285,7 +296,7 @@ function ActivityDetail() {
                       onClick={() => setLogPhoto(null)}
                       className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/50 text-white text-sm flex items-center justify-center hover:bg-black/70"
                     >
-                      ×
+                      <MdClose size={16} />
                     </button>
                   </div>
                 ) : (
@@ -293,7 +304,7 @@ function ActivityDetail() {
                     onClick={() => photoInputRef.current?.click()}
                     className="w-full py-3 rounded-2xl border-2 border-dashed border-[#D9D9D9] bg-[#FAFAFA] text-[#8E8E93] text-sm font-bold hover:border-[#222222] hover:text-[#1F2937] transition-colors flex items-center justify-center gap-2"
                   >
-                    📷 Add a photo
+                    <MdPhoto size={18} /> Add a photo
                   </button>
                 )}
                 <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={handleLogPhoto} />
@@ -320,7 +331,7 @@ function ActivityDetail() {
               <ul className="space-y-2">
                 {benefits.map((b, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-[#1F2937] leading-relaxed">
-                    <span className="text-[#34C759] font-extrabold mt-0.5">✓</span>
+                    <MdCheck className="text-[#34C759] mt-0.5 flex-shrink-0" size={16} />
                     {b}
                   </li>
                 ))}
@@ -394,9 +405,9 @@ function ActivityDetail() {
         {!details && !detailsLoading && (
           <button
             onClick={fetchDetails}
-            className="w-full py-3 rounded-2xl bg-white border border-[#E5E5E5] text-[#1F2937] font-bold text-sm hover:bg-[#F0F0F0] transition-colors"
+            className="w-full py-3 rounded-2xl bg-white border border-[#E5E5E5] text-[#1F2937] font-bold text-sm hover:bg-[#F0F0F0] transition-colors flex items-center justify-center gap-2"
           >
-            ✨ Load benefits, tips & safety info
+            <MdAutoAwesome size={16} /> Load benefits, tips &amp; safety info
           </button>
         )}
 
@@ -443,15 +454,15 @@ function ActivityDetail() {
         <div className="flex gap-3">
           <button
             onClick={markDone}
-            className="flex-1 py-3 rounded-2xl bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm transition-colors"
+            className="flex-1 py-3 rounded-2xl bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2"
           >
-            ✅ Mark as Done
+            <MdCheckCircle size={18} /> Mark as Done
           </button>
           <button
             onClick={saveForLater}
-            className="flex-1 py-3 rounded-2xl bg-white border border-[#E5E5E5] text-[#1F2937] font-bold text-sm hover:bg-[#F0F0F0] transition-colors"
+            className="flex-1 py-3 rounded-2xl bg-white border border-[#E5E5E5] text-[#1F2937] font-bold text-sm hover:bg-[#F0F0F0] transition-colors flex items-center justify-center gap-2"
           >
-            ⏸ Save for Later
+            <MdPause size={18} /> Save for Later
           </button>
         </div>
 

@@ -3,6 +3,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
+import { MdArrowBack, MdCheck } from "react-icons/md";
 import {
   getProfile,
   getMilestonesForOnboarding,
@@ -56,9 +57,9 @@ function Report() {
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <button
             onClick={() => router.back()}
-            className="text-sm text-[#007AFF] font-semibold transition-colors"
+            className="text-sm text-[#007AFF] font-semibold transition-colors flex items-center gap-1"
           >
-            ← Back
+            <MdArrowBack className="inline" size={16} /> Back
           </button>
           <button
             onClick={() => window.print()}
@@ -140,7 +141,7 @@ function Report() {
                   {m.label}
                 </span>
                 {profile.milestones[m.id] && (
-                  <span className="text-[#34C759] text-xs font-bold flex-shrink-0">✓</span>
+                  <MdCheck className="text-[#34C759] flex-shrink-0" size={16} />
                 )}
               </div>
             ))}

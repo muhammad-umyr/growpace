@@ -2,6 +2,7 @@
 
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense, useState, useEffect, useRef } from "react";
+import { MdCheck, MdChevronRight, MdPhoto } from "react-icons/md";
 import Image from "next/image";
 import {
   getProfile,
@@ -116,7 +117,7 @@ function Onboarding() {
               <span>{genderEmoji}</span>
             )}
             <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-full">
-              <span className="text-white text-lg">📷</span>
+              <MdPhoto className="text-white" size={20} />
             </div>
           </button>
           <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
@@ -167,7 +168,7 @@ function Onboarding() {
                     {/* Checkmark badge */}
                     {isChecked && (
                       <div className="absolute top-2.5 right-2.5 w-5 h-5 rounded-full bg-[#007AFF] flex items-center justify-center">
-                        <span className="text-white text-[10px] font-extrabold">✓</span>
+                        <MdCheck className="text-white" size={13} />
                       </div>
                     )}
 
@@ -209,7 +210,7 @@ function Onboarding() {
             onClick={finish}
             className="bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold px-6 py-3 rounded-2xl transition-colors  text-sm"
           >
-            {checkedCount > 0 ? "See what's next →" : "Skip for now →"}
+            <span className="flex items-center gap-1">{checkedCount > 0 ? "See what's next" : "Skip for now"} <MdChevronRight size={18} /></span>
           </button>
         </div>
       </div>

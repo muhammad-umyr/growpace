@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { MdArrowBack, MdClose, MdAdd, MdPhoto } from "react-icons/md";
 import {
   getProfiles,
   saveProfile,
@@ -158,10 +159,10 @@ export default function Home() {
                   ) : (
                     <button
                       onClick={() => setConfirmDelete(p.id)}
-                      className="absolute top-2 right-2 w-6 h-6 rounded-full bg-[#E5E5E5] text-[#8E8E93] hover:bg-red-100 hover:text-red-400 transition-colors text-xs font-bold opacity-0 group-hover:opacity-100 flex items-center justify-center"
+                      className="absolute top-2 right-2 w-6 h-6 rounded-full bg-[#E5E5E5] text-[#8E8E93] hover:bg-red-100 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100 flex items-center justify-center"
                       title="Remove profile"
                     >
-                      ×
+                      <MdClose size={14} />
                     </button>
                   )}
                 </div>
@@ -171,9 +172,9 @@ export default function Home() {
 
           <button
             onClick={() => setShowForm(true)}
-            className="w-full py-3.5 rounded-2xl border-2 border-dashed border-[#007AFF] text-[#007AFF] font-semibold text-sm hover:bg-[#EFF6FF] transition-colors"
+            className="w-full py-3.5 rounded-2xl border-2 border-dashed border-[#007AFF] text-[#007AFF] font-semibold text-sm hover:bg-[#EFF6FF] transition-colors flex items-center justify-center gap-1"
           >
-            + Add another child
+            <MdAdd size={18} /> Add another child
           </button>
         </div>
       )}
@@ -186,7 +187,7 @@ export default function Home() {
               onClick={() => setShowForm(false)}
               className="text-sm text-[#007AFF] font-semibold mb-4 flex items-center gap-1 transition-colors"
             >
-              ← Back
+              <MdArrowBack className="inline" size={16} /> Back
             </button>
           )}
 
@@ -205,7 +206,7 @@ export default function Home() {
                   <Image src={photoUrl} alt="Child photo" fill className="object-cover" unoptimized />
                 ) : (
                   <div className="flex flex-col items-center justify-center h-full text-[#1F2937] gap-1">
-                    <span className="text-2xl">📷</span>
+                    <MdPhoto size={26} />
                     <span className="text-[10px] font-semibold">Add photo</span>
                   </div>
                 )}

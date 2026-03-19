@@ -5,6 +5,16 @@ import { Suspense, useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ActivityBubbles } from "./ActivityBubbles";
 import {
+  MdDescription,
+  MdPersonAdd,
+  MdChildCare,
+  MdEdit,
+  MdAdd,
+  MdChevronRight,
+  MdClose,
+  MdPhoto,
+} from "react-icons/md";
+import {
   getProfile,
   saveProfile,
   getBoard,
@@ -309,21 +319,21 @@ function Dashboard() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => router.push(`/report?id=${profile.id}`)}
-              className="text-sm text-[#007AFF] font-semibold transition-colors"
+              className="text-sm text-[#007AFF] font-semibold transition-colors flex items-center gap-1"
             >
-              📄 Report
+              <MdDescription size={16} /> Report
             </button>
             <button
               onClick={() => setShowAddCaregiver(true)}
-              className="text-sm text-[#007AFF] font-semibold transition-colors"
+              className="text-sm text-[#007AFF] font-semibold transition-colors flex items-center gap-1"
             >
-              👥 Add Partner
+              <MdPersonAdd size={16} /> Add Partner
             </button>
             <button
               onClick={() => router.push("/")}
-              className="text-sm text-[#007AFF] font-semibold transition-colors"
+              className="text-sm text-[#007AFF] font-semibold transition-colors flex items-center gap-1"
             >
-              + Add Child
+              <MdChildCare size={16} /> Add Child
             </button>
           </div>
         </div>
@@ -344,7 +354,7 @@ function Dashboard() {
                 <span className="text-4xl">{genderEmoji}</span>
               )}
               <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-full">
-                <span className="text-white text-xl">📷</span>
+                <MdPhoto className="text-white" size={22} />
               </div>
             </button>
             <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
@@ -391,8 +401,8 @@ function Dashboard() {
                   update(updated);
                   setPendingMilestones([]);
                 }}
-                className="text-[#94A3B8] hover:text-[#1F2937] text-xl leading-none flex-shrink-0"
-              >×</button>
+                className="text-[#94A3B8] hover:text-[#1F2937] leading-none flex-shrink-0"
+              ><MdClose size={20} /></button>
             </div>
           </div>
         )}
@@ -407,8 +417,8 @@ function Dashboard() {
                   update(markWeeklyCardShown(profile, weeklyCard.weekKey));
                   setWeeklyCard(null);
                 }}
-                className="text-[#94A3B8] hover:text-[#1F2937] text-xl leading-none flex-shrink-0"
-              >×</button>
+                className="text-[#94A3B8] hover:text-[#1F2937] leading-none flex-shrink-0"
+              ><MdClose size={20} /></button>
             </div>
             <div className="flex gap-3 mb-3 flex-wrap">
               <span className="text-sm font-bold text-[#111827]">{weeklyCard.activityCount} activities</span>
@@ -446,8 +456,8 @@ function Dashboard() {
                   update(markMonthlyCardShown(profile, monthlyCard.monthKey, entries));
                   setMonthlyCard(null);
                 }}
-                className="text-[#94A3B8] hover:text-[#1F2937] text-xl leading-none flex-shrink-0"
-              >×</button>
+                className="text-[#94A3B8] hover:text-[#1F2937] leading-none flex-shrink-0"
+              ><MdClose size={20} /></button>
             </div>
 
             {/* Simple category bar chart */}
@@ -492,9 +502,9 @@ function Dashboard() {
             <h2 className="text-lg font-bold text-[#1C1C1E] tracking-tight">Current Activities</h2>
             <button
               onClick={() => router.push(`/activities?id=${profile.id}`)}
-              className="text-sm text-[#007AFF] font-semibold hover:opacity-80 transition-opacity"
+              className="text-sm text-[#007AFF] font-semibold hover:opacity-80 transition-opacity flex items-center gap-1"
             >
-              View all →
+              View all <MdChevronRight size={18} />
             </button>
           </div>
 
@@ -567,7 +577,7 @@ function Dashboard() {
                           onClick={() => startActivity(a.id)}
                           className="w-full h-11 flex items-center justify-center rounded-xl bg-[#007AFF] text-white font-semibold text-xs hover:bg-[#0071E3] transition-colors"
                         >
-                          Start this activity →
+                          Start this activity <MdChevronRight size={16} className="inline" />
                         </button>
                         <button
                           onClick={() => router.push(`/activity?profileId=${profile.id}&activityId=${a.id}`)}
@@ -600,9 +610,9 @@ function Dashboard() {
               <div className="snap-start flex-shrink-0 w-[85%] flex items-center justify-center">
                 <button
                   onClick={() => router.push(`/activities?id=${profile.id}`)}
-                  className="w-full py-8 rounded-3xl border-2 border-dashed border-[#D9D9D9] text-[#94A3B8] font-bold text-sm hover:bg-[#F0F0F0] transition-colors"
+                  className="w-full py-8 rounded-3xl border-2 border-dashed border-[#D9D9D9] text-[#94A3B8] font-bold text-sm hover:bg-[#F0F0F0] transition-colors flex items-center justify-center gap-1"
                 >
-                  + Add more activities
+                  <MdAdd size={18} /> Add more activities
                 </button>
               </div>
             </div>
@@ -616,9 +626,9 @@ function Dashboard() {
             <h2 className="text-lg font-bold text-[#1C1C1E] tracking-tight">What&apos;s next for {profile.name}</h2>
             <button
               onClick={() => router.push(`/onboarding?id=${profile.id}`)}
-              className="text-sm text-[#007AFF] font-semibold transition-colors"
+              className="text-sm text-[#007AFF] font-semibold transition-colors flex items-center gap-1"
             >
-              Edit ✏️
+              <MdEdit size={16} /> Edit
             </button>
           </div>
 
@@ -742,9 +752,9 @@ function Dashboard() {
             <h2 className="text-lg font-bold text-[#1C1C1E] tracking-tight">Growth Journal</h2>
             <button
               onClick={() => setShowJournalForm(v => !v)}
-              className="text-sm bg-[#007AFF] text-white font-semibold px-3 py-1.5 rounded-2xl border-b-4 border-[#45A800] hover:bg-[#61D900] active:border-b-0 active:translate-y-[2px] transition-all"
+              className="text-sm bg-[#007AFF] text-white font-semibold px-3 py-1.5 rounded-2xl border-b-4 border-[#45A800] hover:bg-[#61D900] active:border-b-0 active:translate-y-[2px] transition-all flex items-center gap-1"
             >
-              {showJournalForm ? "Cancel" : "+ Add moment"}
+              {showJournalForm ? "Cancel" : <><MdAdd size={16} /> Add moment</>}
             </button>
           </div>
 
@@ -798,10 +808,10 @@ function Dashboard() {
                   </div>
                   <button
                     onClick={() => deleteJournalEntry(entry.id)}
-                    className="text-[#94A3B8] hover:text-red-400 transition-colors text-xl flex-shrink-0 leading-none"
+                    className="text-[#94A3B8] hover:text-red-400 transition-colors flex-shrink-0 leading-none"
                     title="Delete entry"
                   >
-                    ×
+                    <MdClose size={20} />
                   </button>
                 </div>
               ))}
@@ -815,9 +825,9 @@ function Dashboard() {
             <h2 className="text-lg font-bold text-[#1C1C1E] tracking-tight">Care Team</h2>
             <button
               onClick={() => setShowAddCaregiver(true)}
-              className="text-sm text-[#007AFF] font-semibold hover:opacity-80 transition-opacity"
+              className="text-sm text-[#007AFF] font-semibold hover:opacity-80 transition-opacity flex items-center gap-1"
             >
-              + Add person
+              <MdAdd size={16} /> Add person
             </button>
           </div>
 
@@ -843,9 +853,9 @@ function Dashboard() {
                     </div>
                     <button
                       onClick={() => removeCaregiver(c.id)}
-                      className="text-[#D9D9D9] hover:text-red-400 transition-colors text-xl leading-none"
+                      className="text-[#D9D9D9] hover:text-red-400 transition-colors leading-none"
                     >
-                      ×
+                      <MdClose size={20} />
                     </button>
                   </div>
                 );
@@ -940,8 +950,8 @@ function Dashboard() {
                 </div>
                 <button
                   onClick={() => setLogFlyoutId(null)}
-                  className="text-[#94A3B8] hover:text-[#1F2937] text-2xl leading-none flex-shrink-0"
-                >×</button>
+                  className="text-[#94A3B8] hover:text-[#1F2937] leading-none flex-shrink-0"
+                ><MdClose size={22} /></button>
               </div>
 
               {/* Stage picker */}
@@ -980,14 +990,14 @@ function Dashboard() {
                   <button
                     onClick={() => setFlyoutPhoto(null)}
                     className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/50 text-white text-sm flex items-center justify-center"
-                  >×</button>
+                  ><MdClose size={16} /></button>
                 </div>
               ) : (
                 <button
                   onClick={() => flyoutPhotoRef.current?.click()}
                   className="w-full py-3 rounded-2xl border-2 border-dashed border-[#D9D9D9] bg-[#FAFAFA] text-[#94A3B8] text-sm font-bold hover:border-[#1F2937] hover:text-[#1F2937] transition-colors flex items-center justify-center gap-2"
                 >
-                  📷 Add a photo
+                  <MdPhoto size={18} /> Add a photo
                 </button>
               )}
               <input ref={flyoutPhotoRef} type="file" accept="image/*" className="hidden" onChange={handleFlyoutPhoto} />
@@ -1011,7 +1021,7 @@ function Dashboard() {
           <div className="bg-white rounded-3xl w-full max-w-sm p-6 space-y-5 shadow-2xl">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-extrabold text-[#111827]">Who are you adding?</h3>
-              <button onClick={() => setShowAddCaregiver(false)} className="text-[#94A3B8] text-2xl leading-none hover:text-[#1F2937]">×</button>
+              <button onClick={() => setShowAddCaregiver(false)} className="text-[#94A3B8] leading-none hover:text-[#1F2937]"><MdClose size={22} /></button>
             </div>
 
             {/* Role picker */}

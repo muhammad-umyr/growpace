@@ -3,6 +3,21 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense, useState, useEffect, useCallback } from "react";
 import {
+  MdArrowBack,
+  MdClose,
+  MdAdd,
+  MdChevronRight,
+  MdCheckCircle,
+  MdAutoAwesome,
+  MdLibraryBooks,
+  MdDashboard,
+  MdGpsFixed,
+  MdRefresh,
+  MdExpandMore,
+  MdExpandLess,
+  MdPause,
+} from "react-icons/md";
+import {
   getProfile,
   saveProfile,
   getBoard,
@@ -94,10 +109,10 @@ function ActivityCard({
         {howTo?.length ? (
           <button
             onClick={() => setShowTips(v => !v)}
-            className={`text-xs font-bold px-3 py-1.5 rounded-full transition-colors
+            className={`text-xs font-bold px-3 py-1.5 rounded-full transition-colors flex items-center gap-1
               ${showTips ? "bg-[#EDF3F0] text-[#1F2937]" : "bg-[#E5E5E5] text-[#1F2937] hover:text-[#1F2937]"}`}
           >
-            📋 How to {showTips ? "▲" : "▾"}
+            How to {showTips ? <MdExpandLess size={14} /> : <MdExpandMore size={14} />}
           </button>
         ) : null}
         <a
@@ -118,7 +133,7 @@ function ActivityCard({
               : "bg-[#007AFF] text-white hover:bg-[#0071E3] shadow-sm"
             }`}
         >
-          {isAdded ? "✓ Added" : "+ Board"}
+          {isAdded ? <><MdCheckCircle className="inline mb-0.5" size={14} /> Added</> : <><MdAdd className="inline mb-0.5" size={14} /> Board</>}
         </button>
       </div>
 
@@ -169,8 +184,8 @@ function ActiveCard({
           </div>
           <p className="text-[#1F2937] text-sm mt-0.5">{activity.desc}</p>
         </div>
-        <button onClick={onRemove} className="text-[#8E8E93] hover:text-red-400 transition-colors text-xl flex-shrink-0 leading-none">
-          ×
+        <button onClick={onRemove} className="text-[#8E8E93] hover:text-red-400 transition-colors flex-shrink-0 leading-none">
+          <MdClose size={20} />
         </button>
       </div>
 
@@ -199,15 +214,15 @@ function ActiveCard({
         </button>
         <button
           onClick={onDone}
-          className="h-12 px-3 flex items-center justify-center rounded-xl bg-[#EDF3F0] text-[#1F2937] font-bold text-xs hover:bg-[#D9D9D9] transition-colors "
+          className="h-12 px-3 flex items-center justify-center rounded-xl bg-[#EDF3F0] text-[#1F2937] font-bold text-xs hover:bg-[#D9D9D9] transition-colors gap-1"
         >
-          ✅ Done
+          <MdCheckCircle size={16} /> Done
         </button>
         <button
           onClick={onPause}
-          className="h-12 px-3 flex items-center justify-center rounded-xl bg-[#E5E5E5] text-[#1F2937] font-bold text-xs hover:bg-[#D9D9D9] transition-colors"
+          className="h-12 px-3 flex items-center justify-center rounded-xl bg-[#E5E5E5] text-[#1F2937] font-bold text-xs hover:bg-[#D9D9D9] transition-colors gap-1"
         >
-          ⏸ Later
+          <MdPause size={16} /> Later
         </button>
       </div>
     </div>
@@ -235,9 +250,9 @@ function SavedCard({
         <div className="flex gap-2 mt-2">
           <button
             onClick={onActivate}
-            className="text-xs bg-[#007AFF] text-white font-semibold px-3 py-1 rounded-full hover:bg-[#111111] transition-colors"
+            className="text-xs bg-[#007AFF] text-white font-semibold px-3 py-1 rounded-full hover:bg-[#111111] transition-colors flex items-center gap-1"
           >
-            Start This Week →
+            Start This Week <MdChevronRight size={14} />
           </button>
           <button
             onClick={onRemove}
@@ -396,7 +411,7 @@ function Activities() {
             onClick={() => router.push(`/dashboard?id=${profile.id}`)}
             className="text-sm text-[#007AFF] font-semibold transition-colors flex items-center gap-1"
           >
-            ← {profile.name}&apos;s Dashboard
+            <MdArrowBack className="inline" size={16} /> {profile.name}&apos;s Dashboard
           </button>
           <div className="flex items-center gap-1.5">
             <span className="text-lg font-extrabold text-[#1F2937]">Growpace</span>
@@ -415,9 +430,9 @@ function Activities() {
         {/* Tab bar */}
         <div className="bg-white rounded-2xl p-1 border border-[#E5E5E5] flex gap-1">
           {[
-            { key: "suggested", label: "✨ Suggested" },
-            { key: "library",   label: "📚 Library" },
-            { key: "board",     label: `📋 My Board${activeActivities.length > 0 ? ` (${activeActivities.length})` : ""}` },
+            { key: "suggested", label: <><MdAutoAwesome className="inline mb-0.5" size={14} /> Suggested</> },
+            { key: "library",   label: <><MdLibraryBooks className="inline mb-0.5" size={14} /> Library</> },
+            { key: "board",     label: <><MdDashboard className="inline mb-0.5" size={14} /> My Board{activeActivities.length > 0 ? ` (${activeActivities.length})` : ""}</> },
           ].map(t => (
             <button
               key={t.key}
@@ -451,9 +466,9 @@ function Activities() {
               <button
                 onClick={fetchSuggestions}
                 disabled={loading}
-                className="flex-shrink-0 text-xs text-[#1F2937] font-bold hover:underline disabled:opacity-40 transition-opacity"
+                className="flex-shrink-0 text-xs text-[#1F2937] font-bold hover:underline disabled:opacity-40 transition-opacity flex items-center gap-1"
               >
-                ↻ Refresh
+                <MdRefresh size={16} /> Refresh
               </button>
             </div>
 
@@ -555,9 +570,9 @@ function Activities() {
                 </p>
                 <button
                   onClick={() => setTab("suggested")}
-                  className="text-sm bg-[#007AFF] text-white font-semibold px-5 py-2.5 rounded-full hover:bg-[#111111] transition-colors"
+                  className="text-sm bg-[#007AFF] text-white font-semibold px-5 py-2.5 rounded-full hover:bg-[#111111] transition-colors flex items-center gap-1 mx-auto"
                 >
-                  Browse Suggestions ✨
+                  Browse Suggestions <MdAutoAwesome size={16} />
                 </button>
               </div>
             ) : (
@@ -566,7 +581,7 @@ function Activities() {
                 {activeActivities.length > 0 && (
                   <div>
                     <h3 className="text-sm font-extrabold text-[#1F2937] mb-2 flex items-center gap-2">
-                      🎯 Active This Week
+                      <MdGpsFixed size={16} /> Active This Week
                       <span className="bg-[#EDF3F0] text-[#1F2937] text-xs px-2 py-0.5 rounded-full">
                         {activeActivities.length}
                       </span>
@@ -590,7 +605,7 @@ function Activities() {
                 {savedActivities.length > 0 && (
                   <div>
                     <h3 className="text-sm font-extrabold text-[#1F2937] mb-2 flex items-center gap-2">
-                      💾 Saved for Later
+                      Saved for Later
                       <span className="bg-[#E5E5E5] text-[#1F2937] text-xs px-2 py-0.5 rounded-full">
                         {savedActivities.length}
                       </span>
@@ -612,7 +627,7 @@ function Activities() {
                 {doneActivities.length > 0 && (
                   <div>
                     <h3 className="text-sm font-extrabold text-[#1F2937] mb-2 flex items-center gap-2">
-                      ✅ Completed
+                      <MdCheckCircle size={16} /> Completed
                       <span className="bg-[#FDF3EE] text-[#AA6646] text-xs px-2 py-0.5 rounded-full">
                         {doneActivities.length}
                       </span>
@@ -626,13 +641,13 @@ function Activities() {
                           <span className="text-2xl">{a.emoji}</span>
                           <div className="flex-1 min-w-0">
                             <p className="text-base font-bold text-[#1C1C1E] line-through">{a.title}</p>
-                            <p className="text-xs text-[#AA6646] font-semibold mt-0.5">✅ Completed</p>
+                            <p className="text-xs text-[#AA6646] font-semibold mt-0.5 flex items-center gap-1"><MdCheckCircle size={12} /> Completed</p>
                           </div>
                           <button
                             onClick={() => removeFromBoard(a.id)}
-                            className="text-[#8E8E93] hover:text-red-400 transition-colors text-xl leading-none"
+                            className="text-[#8E8E93] hover:text-red-400 transition-colors leading-none"
                           >
-                            ×
+                            <MdClose size={20} />
                           </button>
                         </div>
                       ))}
