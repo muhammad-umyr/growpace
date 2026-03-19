@@ -43,6 +43,30 @@ export interface Caregiver {
   role: CaregiverRole;
 }
 
+// ── Recognition types ────────────────────────────────────────────────────────
+
+export type RecognitionMilestoneId =
+  | "activities_10" | "activities_25" | "activities_50" | "activities_100"
+  | "explorer";
+
+export interface RecognitionHistoryEntry {
+  id: string;
+  type: RecognitionMilestoneId | "active_month" | "well_rounded_month" | "dedicated_month";
+  date: string; // ISO
+  label: string;
+  message?: string; // AI-generated narrative
+}
+
+export interface RecognitionState {
+  shownMilestoneIds: RecognitionMilestoneId[]; // never show again once dismissed
+  lastWeeklyCardWeek: string | null;           // 'YYYY-WW' — week we last showed
+  lastMonthlyCardMonth: string | null;         // 'YYYY-MM' — month we last showed
+  history: RecognitionHistoryEntry[];          // permanent timeline
+  notifyWeekly: boolean;
+  notifyMonthly: boolean;
+  notifyMilestones: boolean;
+}
+
 export interface Profile {
   id: string;
   name: string;
@@ -55,6 +79,7 @@ export interface Profile {
   board: BoardActivity[];
   caregivers: Caregiver[];
   createdAt: string;
+  recognition?: RecognitionState;
 }
 
 // ── Milestone definitions ────────────────────────────────────────────────────
@@ -826,5 +851,305 @@ export function calcProgressPercent(dob: string): number {
   const ageMs = now.getTime() - birth.getTime();
   const maxMs = 7 * 365.25 * 24 * 60 * 60 * 1000;
   return Math.min(Math.round((ageMs / maxMs) * 100), 100);
+}
+
+// ── Recognition system ───────────────────────────────────────────────────────
+
+export function defaultRecognition(): RecognitionState {
+  return {
+    shownMilestoneIds: [],
+    lastWeeklyCardWeek: null,
+    lastMonthlyCardMonth: null,
+    history: [],
+    notifyWeekly: true,
+    notifyMonthly: true,
+    notifyMilestones: true,
+  };
+}
+
+function isoWeek(date: Date): string {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const day = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - day);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const week = Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+  return `${d.getUTCFullYear()}-W${String(week).padStart(2, "0")}`;
+}
+
+function isoMonth(date: Date): string {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+}
+
+/** All log entries across board activities + journal, each with a date and category */
+export interface ActivityLogEntry {
+  date: string;       // YYYY-MM-DD
+  category: string;   // tag e.g. "Physical", "Language"
+  activityTitle: string;
+}
+
+export function getAllLogEntries(profile: Profile): ActivityLogEntry[] {
+  const entries: ActivityLogEntry[] = [];
+  for (const a of profile.board ?? []) {
+    for (const e of a.progressLog ?? []) {
+      entries.push({ date: e.date.slice(0, 10), category: a.tag, activityTitle: a.title });
+    }
+    if (a.status === "done") {
+      const doneDate = (a.progressLog?.slice(-1)[0]?.date ?? a.activatedAt ?? a.addedAt).slice(0, 10);
+      // only add if not already covered by a log entry on that date
+      if (!entries.some(e => e.activityTitle === a.title && e.date === doneDate)) {
+        entries.push({ date: doneDate, category: a.tag, activityTitle: a.title });
+      }
+    }
+  }
+  return entries;
+}
+
+/** Total unique activity interactions (for milestone thresholds) */
+export function getTotalActivityCount(profile: Profile): number {
+  return getAllLogEntries(profile).length;
+}
+
+/** DAILY: entries logged today */
+export function getDailyEntries(profile: Profile): ActivityLogEntry[] {
+  const today = new Date().toISOString().slice(0, 10);
+  return getAllLogEntries(profile).filter(e => e.date === today);
+}
+
+/** WEEKLY: entries logged in the current Mon–Sun week */
+export function getWeeklyEntries(profile: Profile): ActivityLogEntry[] {
+  const today = new Date();
+  const dow = today.getDay();
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - ((dow + 6) % 7));
+  monday.setHours(0, 0, 0, 0);
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+  const start = monday.toISOString().slice(0, 10);
+  const end = sunday.toISOString().slice(0, 10);
+  return getAllLogEntries(profile).filter(e => e.date >= start && e.date <= end);
+}
+
+/** Previous week entries (Mon–Sun) */
+export function getPrevWeekEntries(profile: Profile): ActivityLogEntry[] {
+  const today = new Date();
+  const dow = today.getDay();
+  const thisMonday = new Date(today);
+  thisMonday.setDate(today.getDate() - ((dow + 6) % 7));
+  thisMonday.setHours(0, 0, 0, 0);
+  const prevMonday = new Date(thisMonday);
+  prevMonday.setDate(thisMonday.getDate() - 7);
+  const prevSunday = new Date(prevMonday);
+  prevSunday.setDate(prevMonday.getDate() + 6);
+  const start = prevMonday.toISOString().slice(0, 10);
+  const end = prevSunday.toISOString().slice(0, 10);
+  return getAllLogEntries(profile).filter(e => e.date >= start && e.date <= end);
+}
+
+/** MONTHLY: distinct weeks in a given month that had at least one entry */
+function activeWeeksInMonth(entries: ActivityLogEntry[], yearMonth: string): number {
+  const weeks = new Set(
+    entries
+      .filter(e => e.date.startsWith(yearMonth))
+      .map(e => isoWeek(new Date(e.date)))
+  );
+  return weeks.size;
+}
+
+/** MONTHLY: entries for a given YYYY-MM */
+export function getMonthlyEntries(profile: Profile, yearMonth: string): ActivityLogEntry[] {
+  return getAllLogEntries(profile).filter(e => e.date.startsWith(yearMonth));
+}
+
+// ── Milestone checks ─────────────────────────────────────────────────────────
+
+interface MilestoneCheck {
+  id: RecognitionMilestoneId;
+  label: string;
+  reached: (total: number, categories: Set<string>) => boolean;
+}
+
+const MILESTONE_DEFS: MilestoneCheck[] = [
+  { id: "activities_10",  label: "10 activities logged",  reached: (n) => n >= 10 },
+  { id: "activities_25",  label: "25 activities logged",  reached: (n) => n >= 25 },
+  { id: "activities_50",  label: "50 activities logged",  reached: (n) => n >= 50 },
+  { id: "activities_100", label: "100 activities logged", reached: (n) => n >= 100 },
+  { id: "explorer",       label: "All 5 categories explored",
+    reached: (_n, cats) => ["Physical","Language","Cognitive","Social","Creative"].every(c => cats.has(c)) },
+];
+
+/**
+ * Returns any milestone that has just been reached but not yet shown.
+ * Call after any activity log action.
+ */
+export function getNewMilestones(profile: Profile): RecognitionMilestoneId[] {
+  const r = profile.recognition ?? defaultRecognition();
+  if (!r.notifyMilestones) return [];
+  const entries = getAllLogEntries(profile);
+  const total = entries.length;
+  const categories = new Set(entries.map(e => e.category));
+  return MILESTONE_DEFS
+    .filter(m => m.reached(total, categories) && !r.shownMilestoneIds.includes(m.id))
+    .map(m => m.id);
+}
+
+export function getMilestoneLabel(id: RecognitionMilestoneId): string {
+  return MILESTONE_DEFS.find(m => m.id === id)?.label ?? id;
+}
+
+// ── Weekly card logic ─────────────────────────────────────────────────────────
+
+export interface WeeklyCardData {
+  weekLabel: string;       // e.g. "This week"
+  activityCount: number;
+  categories: string[];
+  twoWeeksInARow: boolean; // true if prev week also had activity
+  weekKey: string;         // YYYY-WW
+}
+
+/**
+ * Returns weekly card data if the parent was active this week AND
+ * the card hasn't been shown yet for this week.
+ * Show window: Sunday evening + Monday (so either Sun or Mon)
+ */
+export function getWeeklyCardData(profile: Profile): WeeklyCardData | null {
+  const r = profile.recognition ?? defaultRecognition();
+  if (!r.notifyWeekly) return null;
+
+  const today = new Date();
+  const dow = today.getDay(); // 0=Sun, 1=Mon
+  const isShowWindow = dow === 0 || dow === 1;
+  if (!isShowWindow) return null;
+
+  const weekKey = isoWeek(today);
+  if (r.lastWeeklyCardWeek === weekKey) return null;
+
+  // Use prev week's entries (the completed week) on Sun/Mon
+  const entries = getPrevWeekEntries(profile);
+  if (entries.length === 0) return null;
+
+  const categories = [...new Set(entries.map(e => e.category))];
+  const prevPrevEntries = (() => {
+    const d = new Date(today);
+    d.setDate(today.getDate() - 14);
+    const dow2 = d.getDay();
+    const mon = new Date(d);
+    mon.setDate(d.getDate() - ((dow2 + 6) % 7));
+    mon.setHours(0, 0, 0, 0);
+    const sun = new Date(mon);
+    sun.setDate(mon.getDate() + 6);
+    return getAllLogEntries(profile).filter(
+      e => e.date >= mon.toISOString().slice(0, 10) && e.date <= sun.toISOString().slice(0, 10)
+    );
+  })();
+
+  return {
+    weekLabel: "Last week",
+    activityCount: entries.length,
+    categories,
+    twoWeeksInARow: prevPrevEntries.length > 0,
+    weekKey,
+  };
+}
+
+// ── Monthly card logic ─────────────────────────────────────────────────────────
+
+export interface MonthlyCardData {
+  monthLabel: string;       // e.g. "March"
+  activityCount: number;
+  categories: string[];
+  categoryBreakdown: Record<string, number>; // category → count (for radar)
+  activeWeeks: number;      // 1–4
+  badges: ("active_month" | "well_rounded_month" | "dedicated_month")[];
+  monthKey: string;         // YYYY-MM
+}
+
+/**
+ * Returns monthly card data on the 1st of each month for the previous month,
+ * if parent was active in 2+ weeks and card hasn't been shown yet.
+ */
+export function getMonthlyCardData(profile: Profile): MonthlyCardData | null {
+  const r = profile.recognition ?? defaultRecognition();
+  if (!r.notifyMonthly) return null;
+
+  const today = new Date();
+  if (today.getDate() > 3) return null; // only show 1st–3rd to catch people who don't open daily
+
+  const prevMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+  const monthKey = isoMonth(prevMonth);
+  if (r.lastMonthlyCardMonth === monthKey) return null;
+
+  const entries = getMonthlyEntries(profile, monthKey);
+  const activeWeeks = activeWeeksInMonth(entries, monthKey);
+  if (activeWeeks < 2) return null;
+
+  const categories = [...new Set(entries.map(e => e.category))];
+  const breakdown: Record<string, number> = {};
+  for (const e of entries) breakdown[e.category] = (breakdown[e.category] ?? 0) + 1;
+
+  const badges: MonthlyCardData["badges"] = [];
+  if (activeWeeks >= 2) badges.push("active_month");
+  if (categories.length >= 3) badges.push("well_rounded_month");
+  if (activeWeeks >= 4) badges.push("dedicated_month");
+
+  const monthLabel = prevMonth.toLocaleString("en-US", { month: "long" });
+
+  return {
+    monthLabel,
+    activityCount: entries.length,
+    categories,
+    categoryBreakdown: breakdown,
+    activeWeeks,
+    badges,
+    monthKey,
+  };
+}
+
+export const MONTHLY_BADGE_LABELS: Record<string, string> = {
+  active_month:       "Active Month",
+  well_rounded_month: "Well-Rounded Month",
+  dedicated_month:    "Dedicated Month",
+};
+
+// ── Persist recognition state changes ─────────────────────────────────────────
+
+export function markMilestonesShown(
+  profile: Profile,
+  ids: RecognitionMilestoneId[],
+  historyEntries: RecognitionHistoryEntry[]
+): Profile {
+  const r = profile.recognition ?? defaultRecognition();
+  return {
+    ...profile,
+    recognition: {
+      ...r,
+      shownMilestoneIds: [...r.shownMilestoneIds, ...ids],
+      history: [...r.history, ...historyEntries],
+    },
+  };
+}
+
+export function markWeeklyCardShown(profile: Profile, weekKey: string): Profile {
+  const r = profile.recognition ?? defaultRecognition();
+  return { ...profile, recognition: { ...r, lastWeeklyCardWeek: weekKey } };
+}
+
+export function markMonthlyCardShown(profile: Profile, monthKey: string, historyEntries: RecognitionHistoryEntry[]): Profile {
+  const r = profile.recognition ?? defaultRecognition();
+  return {
+    ...profile,
+    recognition: {
+      ...r,
+      lastMonthlyCardMonth: monthKey,
+      history: [...r.history, ...historyEntries],
+    },
+  };
+}
+
+export function updateNotificationSettings(
+  profile: Profile,
+  settings: Partial<Pick<RecognitionState, "notifyWeekly" | "notifyMonthly" | "notifyMilestones">>
+): Profile {
+  const r = profile.recognition ?? defaultRecognition();
+  return { ...profile, recognition: { ...r, ...settings } };
 }
 

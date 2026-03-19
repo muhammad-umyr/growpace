@@ -19,6 +19,20 @@ import {
   BoardActivity,
   Caregiver,
   CaregiverRole,
+  getDailyEntries,
+  getWeeklyCardData,
+  getMonthlyCardData,
+  getNewMilestones,
+  getMilestoneLabel,
+  markMilestonesShown,
+  markWeeklyCardShown,
+  markMonthlyCardShown,
+  updateNotificationSettings,
+  defaultRecognition,
+  MONTHLY_BADGE_LABELS,
+  RecognitionMilestoneId,
+  WeeklyCardData,
+  MonthlyCardData,
 } from "@/lib/store";
 
 const TAG_COLORS: Record<string, string> = {
@@ -49,8 +63,87 @@ function Dashboard() {
   const [caregiverRole, setCaregiverRole] = useState<CaregiverRole>("nanny");
   const photoInputRef = useRef<HTMLInputElement>(null);
 
+  // Recognition state
+  const [dailyMessage, setDailyMessage] = useState<string | null>(null);
+  const [weeklyCard, setWeeklyCard] = useState<WeeklyCardData | null>(null);
+  const [weeklyMessage, setWeeklyMessage] = useState<string | null>(null);
+  const [monthlyCard, setMonthlyCard] = useState<MonthlyCardData | null>(null);
+  const [monthlyMessage, setMonthlyMessage] = useState<string | null>(null);
+  const [pendingMilestones, setPendingMilestones] = useState<RecognitionMilestoneId[]>([]);
+  const [milestoneMessage, setMilestoneMessage] = useState<string | null>(null);
+  const [showNotifSettings, setShowNotifSettings] = useState(false);
+
   useEffect(() => {
-    if (id) setProfile(getProfile(id));
+    if (!id) { setMounted(true); return; }
+    const p = getProfile(id);
+    if (!p) { setMounted(true); return; }
+    setProfile(p);
+
+    // ── Daily acknowledgment ──────────────────────────────────────────────────
+    const dailyEntries = getDailyEntries(p);
+    if (dailyEntries.length > 0) {
+      const cats = [...new Set(dailyEntries.map(e => e.category))];
+      fetch("/api/recognition-message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ childName: p.name, period: "daily", categories: cats, activityCount: dailyEntries.length }),
+      })
+        .then(r => r.json())
+        .then(d => { if (d.message) setDailyMessage(d.message); })
+        .catch(() => {});
+    }
+
+    // ── Weekly card ───────────────────────────────────────────────────────────
+    const wc = getWeeklyCardData(p);
+    if (wc) {
+      setWeeklyCard(wc);
+      fetch("/api/recognition-message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          childName: p.name, period: "weekly",
+          categories: wc.categories, activityCount: wc.activityCount,
+          twoWeeksInARow: wc.twoWeeksInARow,
+        }),
+      })
+        .then(r => r.json())
+        .then(d => { if (d.message) setWeeklyMessage(d.message); })
+        .catch(() => {});
+    }
+
+    // ── Monthly card ──────────────────────────────────────────────────────────
+    const mc = getMonthlyCardData(p);
+    if (mc) {
+      setMonthlyCard(mc);
+      fetch("/api/recognition-message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          childName: p.name, period: "monthly",
+          categories: mc.categories, activityCount: mc.activityCount,
+          monthLabel: mc.monthLabel, activeWeeks: mc.activeWeeks,
+        }),
+      })
+        .then(r => r.json())
+        .then(d => { if (d.message) setMonthlyMessage(d.message); })
+        .catch(() => {});
+    }
+
+    // ── Milestones ────────────────────────────────────────────────────────────
+    const newMs = getNewMilestones(p);
+    if (newMs.length > 0) {
+      setPendingMilestones(newMs);
+      const total = (p.board ?? []).flatMap(a => a.progressLog ?? []).length;
+      fetch("/api/recognition-message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ childName: p.name, period: "milestone", activityCount: total, categories: [] }),
+      })
+        .then(r => r.json())
+        .then(d => { if (d.message) setMilestoneMessage(d.message); })
+        .catch(() => {});
+    }
+
     setMounted(true);
   }, [id]);
 
@@ -241,6 +334,132 @@ function Dashboard() {
             </div>
           </div>
         </div>
+
+        {/* ── Daily acknowledgment ── quiet one-liner, only if logged today */}
+        {dailyMessage && (
+          <p className="text-sm text-[#4B5563] italic px-1">{dailyMessage}</p>
+        )}
+
+        {/* ── Milestone celebration ── */}
+        {pendingMilestones.length > 0 && (
+          <div className="bg-white rounded-2xl border border-[#E5E5E5] p-5">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1">
+                <p className="text-xs font-bold text-[#94A3B8] uppercase tracking-wide mb-1">A moment worth noting</p>
+                <p className="font-extrabold text-[#111827] text-base">
+                  {getMilestoneLabel(pendingMilestones[0])}
+                </p>
+                {milestoneMessage
+                  ? <p className="text-sm text-[#4B5563] mt-2 leading-relaxed">{milestoneMessage}</p>
+                  : <p className="text-sm text-[#94A3B8] mt-2">Loading…</p>
+                }
+              </div>
+              <button
+                onClick={() => {
+                  const updated = markMilestonesShown(profile, pendingMilestones, pendingMilestones.map(id => ({
+                    id: crypto.randomUUID(),
+                    type: id as RecognitionMilestoneId,
+                    date: new Date().toISOString(),
+                    label: getMilestoneLabel(id),
+                    message: milestoneMessage ?? undefined,
+                  })));
+                  update(updated);
+                  setPendingMilestones([]);
+                }}
+                className="text-[#94A3B8] hover:text-[#1F2937] text-xl leading-none flex-shrink-0"
+              >×</button>
+            </div>
+          </div>
+        )}
+
+        {/* ── Weekly summary card ── shown Sun/Mon if active last week */}
+        {weeklyCard && (
+          <div className="bg-white rounded-2xl border border-[#E5E5E5] p-5">
+            <div className="flex items-start justify-between gap-3 mb-3">
+              <p className="text-xs font-bold text-[#94A3B8] uppercase tracking-wide">Last week</p>
+              <button
+                onClick={() => {
+                  update(markWeeklyCardShown(profile, weeklyCard.weekKey));
+                  setWeeklyCard(null);
+                }}
+                className="text-[#94A3B8] hover:text-[#1F2937] text-xl leading-none flex-shrink-0"
+              >×</button>
+            </div>
+            <div className="flex gap-3 mb-3 flex-wrap">
+              <span className="text-sm font-bold text-[#111827]">{weeklyCard.activityCount} activities</span>
+              {weeklyCard.categories.map(c => (
+                <span key={c} className="text-xs bg-[#F0F0F0] text-[#4B5563] px-2 py-0.5 rounded-full font-semibold">{c}</span>
+              ))}
+            </div>
+            {weeklyMessage
+              ? <p className="text-sm text-[#4B5563] leading-relaxed">{weeklyMessage}</p>
+              : <p className="text-sm text-[#94A3B8]">Loading…</p>
+            }
+            {weeklyCard.twoWeeksInARow && (
+              <p className="text-xs text-[#94A3B8] mt-3 italic">Active two weeks in a row.</p>
+            )}
+          </div>
+        )}
+
+        {/* ── Monthly snapshot card ── shown 1st–3rd of month */}
+        {monthlyCard && (
+          <div className="bg-white rounded-2xl border border-[#E5E5E5] p-5">
+            <div className="flex items-start justify-between gap-3 mb-3">
+              <div>
+                <p className="text-xs font-bold text-[#94A3B8] uppercase tracking-wide mb-0.5">{monthlyCard.monthLabel}</p>
+                <p className="font-extrabold text-[#111827] text-base">{monthlyCard.activityCount} activities across {monthlyCard.categories.length} areas</p>
+              </div>
+              <button
+                onClick={() => {
+                  const entries = monthlyCard.badges.map(b => ({
+                    id: crypto.randomUUID(),
+                    type: b as "active_month" | "well_rounded_month" | "dedicated_month",
+                    date: new Date().toISOString(),
+                    label: MONTHLY_BADGE_LABELS[b],
+                    message: monthlyMessage ?? undefined,
+                  }));
+                  update(markMonthlyCardShown(profile, monthlyCard.monthKey, entries));
+                  setMonthlyCard(null);
+                }}
+                className="text-[#94A3B8] hover:text-[#1F2937] text-xl leading-none flex-shrink-0"
+              >×</button>
+            </div>
+
+            {/* Simple category bar chart */}
+            <div className="space-y-2 mb-4">
+              {Object.entries(monthlyCard.categoryBreakdown).sort((a, b) => b[1] - a[1]).map(([cat, count]) => {
+                const max = Math.max(...Object.values(monthlyCard.categoryBreakdown));
+                return (
+                  <div key={cat} className="flex items-center gap-3">
+                    <span className="text-xs text-[#94A3B8] w-20 flex-shrink-0">{cat}</span>
+                    <div className="flex-1 h-2 bg-[#F0F0F0] rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-[#1F2937] rounded-full transition-all duration-700"
+                        style={{ width: `${(count / max) * 100}%` }}
+                      />
+                    </div>
+                    <span className="text-xs font-bold text-[#111827] w-4 text-right">{count}</span>
+                  </div>
+                );
+              })}
+            </div>
+
+            {monthlyMessage
+              ? <p className="text-sm text-[#4B5563] leading-relaxed mb-3">{monthlyMessage}</p>
+              : <p className="text-sm text-[#94A3B8] mb-3">Loading…</p>
+            }
+
+            {monthlyCard.badges.length > 0 && (
+              <div className="flex gap-2 flex-wrap pt-3 border-t border-[#E5E5E5]">
+                {monthlyCard.badges.map(b => (
+                  <span key={b} className="text-xs bg-[#F5F5F5] border border-[#E5E5E5] text-[#4B5563] px-3 py-1 rounded-full font-semibold">
+                    {MONTHLY_BADGE_LABELS[b]}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Current Activities */}
         <section>
@@ -573,6 +792,60 @@ function Dashboard() {
                       className="text-[#D9D9D9] hover:text-red-400 transition-colors text-xl leading-none"
                     >
                       ×
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </section>
+
+        {/* Recognition history */}
+        {(profile.recognition?.history ?? []).length > 0 && (
+          <section className="pb-8">
+            <h2 className="text-lg font-extrabold text-[#111827] mb-3">✨ Highlights</h2>
+            <div className="space-y-2">
+              {[...(profile.recognition?.history ?? [])].reverse().map(entry => (
+                <div key={entry.id} className="bg-white rounded-2xl border border-[#E5E5E5] px-4 py-3">
+                  <p className="text-sm font-bold text-[#111827]">{entry.label}</p>
+                  {entry.message && <p className="text-sm text-[#4B5563] mt-1 leading-relaxed">{entry.message}</p>}
+                  <p className="text-xs text-[#94A3B8] mt-1">
+                    {new Date(entry.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Recognition settings */}
+        <section className="pb-8">
+          <button
+            onClick={() => setShowNotifSettings(v => !v)}
+            className="text-xs text-[#94A3B8] hover:text-[#4B5563] font-semibold transition-colors w-full text-center"
+          >
+            {showNotifSettings ? "Hide" : "Recognition settings"}
+          </button>
+          {showNotifSettings && (
+            <div className="mt-3 bg-white rounded-2xl border border-[#E5E5E5] divide-y divide-[#F0F0F0]">
+              {([
+                { key: "notifyWeekly",    label: "Weekly summary", desc: "Shown Sunday/Monday if you were active last week" },
+                { key: "notifyMonthly",   label: "Monthly snapshot", desc: "Shown on the 1st if you were active 2+ weeks" },
+                { key: "notifyMilestones",label: "Milestone moments", desc: "Shown when you hit 10, 25, 50, or 100 activities" },
+              ] as { key: "notifyWeekly" | "notifyMonthly" | "notifyMilestones"; label: string; desc: string }[]).map(item => {
+                const r = profile.recognition ?? defaultRecognition();
+                const on = r[item.key];
+                return (
+                  <div key={item.key} className="px-4 py-3 flex items-center justify-between gap-4">
+                    <div>
+                      <p className="text-sm font-bold text-[#111827]">{item.label}</p>
+                      <p className="text-xs text-[#94A3B8] mt-0.5">{item.desc}</p>
+                    </div>
+                    <button
+                      onClick={() => update(updateNotificationSettings(profile, { [item.key]: !on }))}
+                      className={`w-11 h-6 rounded-full transition-colors flex-shrink-0 relative ${on ? "bg-[#1F2937]" : "bg-[#D9D9D9]"}`}
+                    >
+                      <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-all ${on ? "left-5" : "left-0.5"}`} />
                     </button>
                   </div>
                 );
