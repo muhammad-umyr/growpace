@@ -19,14 +19,6 @@ import {
   BoardActivity,
   Caregiver,
   CaregiverRole,
-  getBadges,
-  getNewBadges,
-  getNextBadge,
-  getActiveDays,
-  getCurrentStreak,
-  getWeekActiveDays,
-  getWeekDates,
-  Badge,
 } from "@/lib/store";
 
 const TAG_COLORS: Record<string, string> = {
@@ -55,25 +47,10 @@ function Dashboard() {
   const [showAddCaregiver, setShowAddCaregiver] = useState(false);
   const [caregiverName, setCaregiverName] = useState("");
   const [caregiverRole, setCaregiverRole] = useState<CaregiverRole>("nanny");
-  const [newBadgeToast, setNewBadgeToast] = useState<Badge | null>(null);
   const photoInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (id) {
-      const p = getProfile(id);
-      setProfile(p);
-      // Check for newly earned badges and show toast
-      if (p) {
-        const newBadges = getNewBadges(p);
-        if (newBadges.length > 0) {
-          setNewBadgeToast(newBadges[0]);
-          // Mark all new badges as seen
-          const updated = { ...p, seenBadgeIds: getBadges(p).filter(b => b.earned).map(b => b.id) };
-          saveProfile(updated);
-          setProfile(updated);
-        }
-      }
-    }
+    if (id) setProfile(getProfile(id));
     setMounted(true);
   }, [id]);
 
@@ -604,154 +581,7 @@ function Dashboard() {
           )}
         </section>
 
-        {/* Achievements */}
-        {(() => {
-          const activeDays = getActiveDays(profile);
-          const streak = getCurrentStreak(activeDays);
-          const weekDates = getWeekDates();
-          const weekActive = getWeekActiveDays(activeDays);
-          const todayStr = new Date().toISOString().slice(0, 10);
-          const completedCount = (profile.board ?? []).filter(a => a.status === "done").length;
-          const badges = getBadges(profile);
-          const nextBadge = getNextBadge(profile);
-          const DAY_LABELS = ["M", "T", "W", "T", "F", "S", "S"];
-          const TIER_COLORS: Record<string, string> = {
-            bronze: "bg-[#FFF4ED] border-[#F4C9A4] text-[#AA6646]",
-            silver: "bg-[#F5F5F5] border-[#D9D9D9] text-[#4B5563]",
-            gold:   "bg-[#FFFBEB] border-[#FDE68A] text-[#92400E]",
-          };
-
-          return (
-            <section className="pb-8 space-y-4">
-              <h2 className="text-lg font-extrabold text-[#111827]">🏅 Achievements</h2>
-
-              {/* Weekly ring + stats */}
-              <div className="bg-white rounded-2xl border border-[#E5E5E5] p-5">
-                <div className="flex items-center justify-between mb-4">
-                  <p className="text-sm font-extrabold text-[#111827]">This Week</p>
-                  <p className="text-xs text-[#94A3B8] font-semibold">{weekActive.length}/7 days active</p>
-                </div>
-
-                {/* 7-dot week ring */}
-                <div className="flex gap-2 mb-4">
-                  {weekDates.map((date, i) => {
-                    const isActive = weekActive.includes(date);
-                    const isFuture = date > todayStr;
-                    const isToday = date === todayStr;
-                    return (
-                      <div key={date} className="flex-1 flex flex-col items-center gap-1.5">
-                        <div className={`w-full aspect-square rounded-full transition-all ${
-                          isFuture
-                            ? "bg-[#F5F5F5] border border-[#E5E5E5]"
-                            : isActive
-                            ? "bg-[#111827]"
-                            : "bg-[#E5E5E5]"
-                        } ${isToday ? "ring-2 ring-offset-1 ring-[#111827]" : ""}`} />
-                        <span className={`text-[10px] font-bold ${isToday ? "text-[#111827]" : "text-[#94A3B8]"}`}>
-                          {DAY_LABELS[i]}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Stats row */}
-                <div className="grid grid-cols-3 gap-2 pt-3 border-t border-[#E5E5E5]">
-                  <div className="text-center">
-                    <p className="text-xl font-extrabold text-[#111827]">{streak}</p>
-                    <p className="text-[10px] font-semibold text-[#94A3B8] leading-tight">day streak 🔥</p>
-                  </div>
-                  <div className="text-center border-x border-[#E5E5E5]">
-                    <p className="text-xl font-extrabold text-[#111827]">{weekActive.length}</p>
-                    <p className="text-[10px] font-semibold text-[#94A3B8] leading-tight">days this week</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-xl font-extrabold text-[#111827]">{completedCount}</p>
-                    <p className="text-[10px] font-semibold text-[#94A3B8] leading-tight">completed ✅</p>
-                  </div>
-                </div>
-
-                {/* Urgency nudge */}
-                {nextBadge && nextBadge.progress && (
-                  <div className="mt-4 bg-[#F5F5F5] rounded-xl px-4 py-3">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <p className="text-xs font-bold text-[#111827]">
-                        {nextBadge.emoji} {nextBadge.name} — {nextBadge.progress.total - nextBadge.progress.current} more to go
-                      </p>
-                      <p className="text-[10px] text-[#94A3B8] font-semibold">
-                        {nextBadge.progress.current}/{nextBadge.progress.total}
-                      </p>
-                    </div>
-                    <div className="h-2 bg-[#E5E5E5] rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-[#1F2937] rounded-full transition-all duration-700"
-                        style={{ width: `${(nextBadge.progress.current / nextBadge.progress.total) * 100}%` }}
-                      />
-                    </div>
-                    <p className="text-[10px] text-[#94A3B8] mt-1.5">{nextBadge.desc}</p>
-                  </div>
-                )}
-              </div>
-
-              {/* Badge grid */}
-              <div className="grid grid-cols-2 gap-3">
-                {badges.map(badge => (
-                  <div
-                    key={badge.id}
-                    className={`rounded-2xl border p-4 flex items-start gap-3 transition-all ${
-                      badge.earned
-                        ? TIER_COLORS[badge.tier]
-                        : "bg-[#F5F5F5] border-[#E5E5E5] opacity-50"
-                    }`}
-                  >
-                    <span className={`text-2xl flex-shrink-0 ${!badge.earned ? "grayscale" : ""}`}>
-                      {badge.emoji}
-                    </span>
-                    <div className="min-w-0">
-                      <p className="text-xs font-extrabold leading-tight truncate">
-                        {badge.name}
-                      </p>
-                      <p className="text-[10px] mt-0.5 opacity-70 leading-tight">{badge.desc}</p>
-                      {!badge.earned && badge.progress && (
-                        <div className="mt-1.5 h-1 bg-[#D9D9D9] rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-[#94A3B8] rounded-full"
-                            style={{ width: `${(badge.progress.current / badge.progress.total) * 100}%` }}
-                          />
-                        </div>
-                      )}
-                      {badge.earned && (
-                        <span className="inline-block mt-1 text-[10px] font-bold opacity-60">Earned ✓</span>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-          );
-        })()}
-
       </main>
-
-      {/* New badge toast */}
-      {newBadgeToast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-sm">
-          <div className="bg-[#111827] text-white rounded-2xl px-5 py-4 flex items-center gap-4 shadow-2xl">
-            <span className="text-4xl flex-shrink-0">{newBadgeToast.emoji}</span>
-            <div className="flex-1 min-w-0">
-              <p className="text-[10px] font-bold text-[#94A3B8] uppercase tracking-wide">Badge Unlocked!</p>
-              <p className="font-extrabold text-base leading-tight">{newBadgeToast.name}</p>
-              <p className="text-xs text-[#94A3B8] mt-0.5">{newBadgeToast.desc}</p>
-            </div>
-            <button
-              onClick={() => setNewBadgeToast(null)}
-              className="text-[#94A3B8] hover:text-white text-xl leading-none flex-shrink-0"
-            >
-              ×
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* Add Caregiver Modal */}
       {showAddCaregiver && (
