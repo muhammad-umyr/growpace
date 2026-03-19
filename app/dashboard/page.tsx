@@ -298,30 +298,30 @@ function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F7F7F7]">
+    <div className="min-h-screen bg-[#F2F2F7]">
 
       {/* Nav */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-[#D9D9D9] sticky top-0 z-10">
+      <header className="bg-white/90 backdrop-blur-md border-b border-[#E5E5EA] sticky top-0 z-10">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <button onClick={() => router.push("/")} className="flex items-center gap-2">
-            <span className="text-xl font-extrabold text-[#1F2937]">Growpace</span>
+            <span className="text-xl font-bold text-[#1C1C1E] tracking-tight">Growpace</span>
           </button>
           <div className="flex items-center gap-4">
             <button
               onClick={() => router.push(`/report?id=${profile.id}`)}
-              className="text-sm text-[#1F2937] hover:text-[#1F2937] font-semibold transition-colors"
+              className="text-sm text-[#007AFF] font-semibold transition-colors"
             >
               📄 Report
             </button>
             <button
               onClick={() => setShowAddCaregiver(true)}
-              className="text-sm text-[#1F2937] hover:text-[#1F2937] font-semibold transition-colors"
+              className="text-sm text-[#007AFF] font-semibold transition-colors"
             >
               👥 Add Partner
             </button>
             <button
               onClick={() => router.push("/")}
-              className="text-sm text-[#1F2937] hover:text-[#1F2937] font-semibold transition-colors"
+              className="text-sm text-[#007AFF] font-semibold transition-colors"
             >
               + Add Child
             </button>
@@ -332,7 +332,7 @@ function Dashboard() {
       <main className="max-w-2xl mx-auto px-4 py-8 space-y-6">
 
         {/* Profile card */}
-        <div className="bg-white rounded-3xl p-6 shadow-sm">
+        <div className="bg-white rounded-2xl p-6">
           <div className="flex items-center gap-5">
             <button
               onClick={() => photoInputRef.current?.click()}
@@ -349,9 +349,9 @@ function Dashboard() {
             </button>
             <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
             <div className="flex-1 min-w-0">
-              <h1 className="text-2xl font-extrabold text-[#111827] truncate">{profile.name}</h1>
-              <p className="text-[#1F2937] font-semibold text-base mt-0.5">{age}</p>
-              <p className="text-[#94A3B8] text-sm mt-0.5">
+              <h1 className="text-2xl font-bold text-[#1C1C1E] tracking-tight truncate">{profile.name}</h1>
+              <p className="text-[#3A3A3C] font-semibold text-base mt-0.5">{age}</p>
+              <p className="text-[#8E8E93] text-sm mt-0.5">
                 Born {new Date(profile.dob).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
               </p>
             </div>
@@ -367,7 +367,7 @@ function Dashboard() {
 
         {/* ── Milestone celebration ── */}
         {pendingMilestones.length > 0 && (
-          <div className="bg-white rounded-3xl shadow-sm p-5">
+          <div className="bg-white rounded-2xl p-5">
             <div className="flex items-start justify-between gap-3">
               <div className="flex-1">
                 <p className="text-xs font-bold text-[#94A3B8] uppercase tracking-wide mb-1">A moment worth noting</p>
@@ -399,7 +399,7 @@ function Dashboard() {
 
         {/* ── Weekly summary card ── shown Sun/Mon if active last week */}
         {weeklyCard && (
-          <div className="bg-white rounded-3xl shadow-sm p-5">
+          <div className="bg-white rounded-2xl p-5">
             <div className="flex items-start justify-between gap-3 mb-3">
               <p className="text-xs font-bold text-[#94A3B8] uppercase tracking-wide">Last week</p>
               <button
@@ -428,7 +428,7 @@ function Dashboard() {
 
         {/* ── Monthly snapshot card ── shown 1st–3rd of month */}
         {monthlyCard && (
-          <div className="bg-white rounded-3xl shadow-sm p-5">
+          <div className="bg-white rounded-2xl p-5">
             <div className="flex items-start justify-between gap-3 mb-3">
               <div>
                 <p className="text-xs font-bold text-[#94A3B8] uppercase tracking-wide mb-0.5">{monthlyCard.monthLabel}</p>
@@ -459,7 +459,7 @@ function Dashboard() {
                     <span className="text-xs text-[#94A3B8] w-20 flex-shrink-0">{cat}</span>
                     <div className="flex-1 h-2 bg-[#F0F0F0] rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-[#58CC02] rounded-full transition-all duration-700"
+                        className="h-full bg-[#34C759] rounded-full transition-all duration-700"
                         style={{ width: `${(count / max) * 100}%` }}
                       />
                     </div>
@@ -489,17 +489,17 @@ function Dashboard() {
         {/* Current Activities */}
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-extrabold text-[#111827]">🎯 Current Activities</h2>
+            <h2 className="text-lg font-bold text-[#1C1C1E] tracking-tight">Current Activities</h2>
             <button
               onClick={() => router.push(`/activities?id=${profile.id}`)}
-              className="text-sm text-[#1F2937] font-bold hover:underline transition-colors"
+              className="text-sm text-[#007AFF] font-semibold hover:opacity-80 transition-opacity"
             >
               View all →
             </button>
           </div>
 
           {boardActivities.length === 0 ? (
-            <div className="bg-white rounded-3xl shadow-sm p-6 text-center">
+            <div className="bg-white rounded-2xl p-6 text-center">
               <p className="text-3xl mb-2">🎯</p>
               <p className="text-[#111827] font-bold text-base">No activities yet</p>
               <p className="text-[#1F2937] text-sm mt-1 mb-3">
@@ -507,7 +507,7 @@ function Dashboard() {
               </p>
               <button
                 onClick={() => router.push(`/activities?id=${profile.id}`)}
-                className="text-sm bg-[#58CC02] text-white font-extrabold px-5 py-2.5 rounded-2xl border-b-4 border-[#45A800] hover:bg-[#61D900] active:border-b-0 active:translate-y-[3px] transition-all"
+                className="text-sm bg-[#007AFF] text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-[#0071E3] transition-colors"
               >
                 Explore Activities ✨
               </button>
@@ -534,12 +534,12 @@ function Dashboard() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <p className="font-bold text-[#111827] text-sm">{a.title}</p>
+                          <p className="font-semibold text-[#1C1C1E] text-sm">{a.title}</p>
                           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[a.tag] ?? "bg-gray-100 text-gray-500"}`}>
                             {a.tag}
                           </span>
                         </div>
-                        <p className="text-[#1F2937] text-xs mt-0.5 line-clamp-2">{a.desc}</p>
+                        <p className="text-[#8E8E93] text-xs mt-0.5 line-clamp-2">{a.desc}</p>
                       </div>
                     </div>
 
@@ -565,13 +565,13 @@ function Dashboard() {
                       <div className="mt-3 flex flex-col gap-2">
                         <button
                           onClick={() => startActivity(a.id)}
-                          className="w-full h-11 flex items-center justify-center rounded-2xl bg-[#58CC02] text-white font-extrabold text-xs border-b-4 border-[#45A800] hover:bg-[#61D900] active:border-b-0 active:translate-y-[3px] transition-all"
+                          className="w-full h-11 flex items-center justify-center rounded-xl bg-[#007AFF] text-white font-semibold text-xs hover:bg-[#0071E3] transition-colors"
                         >
                           Start this activity →
                         </button>
                         <button
                           onClick={() => router.push(`/activity?profileId=${profile.id}&activityId=${a.id}`)}
-                          className="w-full h-11 flex items-center justify-center rounded-2xl bg-white text-[#4B5563] font-extrabold text-xs border-2 border-[#E5E5E5] border-b-4 border-b-[#D0D0D0] hover:bg-[#F5F5F5] transition-colors"
+                          className="w-full h-11 flex items-center justify-center rounded-xl bg-[#F2F2F7] text-[#1C1C1E] font-semibold text-xs hover:bg-[#E5E5EA] transition-colors"
                         >
                           Tips &amp; Tricks
                         </button>
@@ -580,13 +580,13 @@ function Dashboard() {
                       <div className="mt-3 flex gap-2">
                         <button
                           onClick={() => { setLogFlyoutId(a.id); setFlyoutStage(null); setFlyoutNote(""); setFlyoutPhoto(null); }}
-                          className="flex-1 h-11 flex items-center justify-center rounded-2xl bg-[#58CC02] text-white font-extrabold text-xs border-b-4 border-[#45A800] hover:bg-[#61D900] active:border-b-0 active:translate-y-[3px] transition-all"
+                          className="flex-1 h-11 flex items-center justify-center rounded-xl bg-[#007AFF] text-white font-semibold text-xs hover:bg-[#0071E3] transition-colors"
                         >
                           Log progress
                         </button>
                         <button
                           onClick={() => router.push(`/activity?profileId=${profile.id}&activityId=${a.id}`)}
-                          className="flex-1 h-11 flex items-center justify-center rounded-2xl bg-white text-[#4B5563] font-extrabold text-xs border-2 border-[#E5E5E5] border-b-4 border-b-[#D0D0D0] hover:bg-[#F5F5F5] transition-colors"
+                          className="flex-1 h-11 flex items-center justify-center rounded-xl bg-[#F2F2F7] text-[#1C1C1E] font-semibold text-xs hover:bg-[#E5E5EA] transition-colors"
                         >
                           Tips &amp; Tricks
                         </button>
@@ -613,17 +613,17 @@ function Dashboard() {
         {/* What's next */}
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-extrabold text-[#111827]">🎯 What&apos;s next for {profile.name}</h2>
+            <h2 className="text-lg font-bold text-[#1C1C1E] tracking-tight">What&apos;s next for {profile.name}</h2>
             <button
               onClick={() => router.push(`/onboarding?id=${profile.id}`)}
-              className="text-sm text-[#1F2937] hover:text-[#1F2937] font-semibold transition-colors"
+              className="text-sm text-[#007AFF] font-semibold transition-colors"
             >
               Edit ✏️
             </button>
           </div>
 
           {nextMilestones.length === 0 ? (
-            <div className="bg-white rounded-3xl shadow-sm p-6 text-center">
+            <div className="bg-white rounded-2xl p-6 text-center">
               <p className="text-4xl mb-2">🏆</p>
               <p className="text-[#111827] font-extrabold">All milestones reached!</p>
               <p className="text-[#1F2937] text-sm mt-1">
@@ -640,7 +640,7 @@ function Dashboard() {
                 return (
                   <div
                     key={m.id}
-                    className="bg-white rounded-3xl shadow-sm overflow-hidden"
+                    className="bg-white rounded-2xl overflow-hidden"
                   >
                     {m.image && (
                       <div className="w-full h-40 bg-[#F5F5F5] overflow-hidden">
@@ -739,17 +739,17 @@ function Dashboard() {
         {/* Growth Journal */}
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-extrabold text-[#111827]">📔 Growth Journal</h2>
+            <h2 className="text-lg font-bold text-[#1C1C1E] tracking-tight">Growth Journal</h2>
             <button
               onClick={() => setShowJournalForm(v => !v)}
-              className="text-sm bg-[#58CC02] text-white font-extrabold px-3 py-1.5 rounded-2xl border-b-4 border-[#45A800] hover:bg-[#61D900] active:border-b-0 active:translate-y-[2px] transition-all"
+              className="text-sm bg-[#007AFF] text-white font-semibold px-3 py-1.5 rounded-2xl border-b-4 border-[#45A800] hover:bg-[#61D900] active:border-b-0 active:translate-y-[2px] transition-all"
             >
               {showJournalForm ? "Cancel" : "+ Add moment"}
             </button>
           </div>
 
           {showJournalForm && (
-            <div className="bg-white rounded-3xl shadow-sm p-4 mb-3 space-y-3">
+            <div className="bg-white rounded-2xl p-4 mb-3 space-y-3">
               {/* Emoji picker */}
               <div className="flex gap-2 flex-wrap">
                 {JOURNAL_EMOJIS.map(e => (
@@ -772,7 +772,7 @@ function Dashboard() {
               <button
                 onClick={addJournalEntry}
                 disabled={!journalText.trim()}
-                className="w-full py-2.5 rounded-2xl bg-[#58CC02] hover:bg-[#61D900] disabled:opacity-40 text-white font-extrabold text-base border-b-4 border-[#45A800] active:border-b-0 active:translate-y-[3px] transition-all"
+                className="w-full py-2.5 rounded-2xl bg-[#007AFF] hover:bg-[#0071E3] disabled:opacity-40 text-white font-extrabold text-base hover:bg-[#0071E3] transition-colors"
               >
                 Save moment
               </button>
@@ -780,7 +780,7 @@ function Dashboard() {
           )}
 
           {profile.journal.length === 0 && !showJournalForm ? (
-            <div className="bg-white rounded-3xl shadow-sm p-6 text-center">
+            <div className="bg-white rounded-2xl p-6 text-center">
               <p className="text-4xl mb-2">📝</p>
               <p className="text-[#1F2937] text-base font-semibold">No moments logged yet.</p>
               <p className="text-[#94A3B8] text-sm mt-1">Start capturing {profile.name}&apos;s journey!</p>
@@ -788,7 +788,7 @@ function Dashboard() {
           ) : (
             <div className="space-y-2">
               {profile.journal.map(entry => (
-                <div key={entry.id} className="bg-white rounded-3xl shadow-sm p-4 flex items-start gap-3">
+                <div key={entry.id} className="bg-white rounded-2xl p-4 flex items-start gap-3">
                   <span className="text-2xl mt-0.5 flex-shrink-0">{entry.emoji}</span>
                   <div className="flex-1 min-w-0">
                     <p className="text-[#111827] text-base font-medium leading-relaxed">{entry.text}</p>
@@ -812,17 +812,17 @@ function Dashboard() {
         {/* Care Team */}
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-extrabold text-[#111827]">👥 Care Team</h2>
+            <h2 className="text-lg font-bold text-[#1C1C1E] tracking-tight">Care Team</h2>
             <button
               onClick={() => setShowAddCaregiver(true)}
-              className="text-sm text-[#1F2937] font-bold hover:underline transition-colors"
+              className="text-sm text-[#007AFF] font-semibold hover:opacity-80 transition-opacity"
             >
               + Add person
             </button>
           </div>
 
           {(profile.caregivers ?? []).length === 0 ? (
-            <div className="bg-white rounded-3xl shadow-sm p-5 text-center border-2 border-dashed border-[#D9D9D9]">
+            <div className="bg-white rounded-2xl p-5 text-center border-2 border-dashed border-[#D9D9D9]">
               <p className="text-2xl mb-1">🤝</p>
               <p className="text-[#111827] font-bold text-sm">No one added yet</p>
               <p className="text-[#94A3B8] text-xs mt-1">Add a nanny, teacher, trainer, or partner</p>
@@ -833,7 +833,7 @@ function Dashboard() {
                 const roleIcon: Record<CaregiverRole, string> = { nanny: "🧑‍🍼", teacher: "📚", trainer: "🏋️", partner: "❤️" };
                 const roleLabel: Record<CaregiverRole, string> = { nanny: "Nanny", teacher: "Teacher", trainer: "Trainer", partner: "Partner" };
                 return (
-                  <div key={c.id} className="bg-white rounded-3xl shadow-sm px-4 py-3 flex items-center gap-3">
+                  <div key={c.id} className="bg-white rounded-2xl px-4 py-3 flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-[#F0F0F0] flex items-center justify-center text-xl flex-shrink-0">
                       {roleIcon[c.role]}
                     </div>
@@ -857,10 +857,10 @@ function Dashboard() {
         {/* Recognition history */}
         {(profile.recognition?.history ?? []).length > 0 && (
           <section className="pb-8">
-            <h2 className="text-lg font-extrabold text-[#111827] mb-3">✨ Highlights</h2>
+            <h2 className="text-lg font-bold text-[#1C1C1E] tracking-tight mb-3">Highlights</h2>
             <div className="space-y-2">
               {[...(profile.recognition?.history ?? [])].reverse().map(entry => (
-                <div key={entry.id} className="bg-white rounded-3xl shadow-sm px-4 py-3">
+                <div key={entry.id} className="bg-white rounded-2xl px-4 py-3">
                   <p className="text-sm font-bold text-[#111827]">{entry.label}</p>
                   {entry.message && <p className="text-sm text-[#4B5563] mt-1 leading-relaxed">{entry.message}</p>}
                   <p className="text-xs text-[#94A3B8] mt-1">
@@ -881,7 +881,7 @@ function Dashboard() {
             {showNotifSettings ? "Hide" : "Recognition settings"}
           </button>
           {showNotifSettings && (
-            <div className="mt-3 bg-white rounded-3xl shadow-sm divide-y divide-[#F0F0F0]">
+            <div className="mt-3 bg-white rounded-2xl divide-y divide-[#F0F0F0]">
               {([
                 { key: "notifyWeekly",    label: "Weekly summary", desc: "Shown Sunday/Monday if you were active last week" },
                 { key: "notifyMonthly",   label: "Monthly snapshot", desc: "Shown on the 1st if you were active 2+ weeks" },
@@ -954,8 +954,8 @@ function Dashboard() {
                       onClick={() => setFlyoutStage(stage.value)}
                       className={`px-3 py-3 rounded-xl border-2 text-left transition-all
                         ${flyoutStage === stage.value
-                          ? "border-[#58CC02] bg-[#F0FFF0]"
-                          : "border-[#D9D9D9] bg-[#FAFAFA] hover:border-[#58CC02]"
+                          ? "border-[#007AFF] bg-[#EFF6FF]"
+                          : "border-[#D9D9D9] bg-[#FAFAFA] hover:border-[#007AFF]"
                         }`}
                     >
                       <p className="text-sm font-bold text-[#111827]">{stage.label}</p>
@@ -996,7 +996,7 @@ function Dashboard() {
               <button
                 onClick={saveFlyoutProgress}
                 disabled={!flyoutStage}
-                className="w-full py-3.5 rounded-2xl bg-[#58CC02] hover:bg-[#61D900] disabled:opacity-40 text-white font-extrabold text-sm border-b-4 border-[#45A800] active:border-b-0 active:translate-y-[3px] transition-all"
+                className="w-full py-3.5 rounded-2xl bg-[#007AFF] hover:bg-[#0071E3] disabled:opacity-40 text-white font-extrabold text-sm hover:bg-[#0071E3] transition-colors"
               >
                 Save update
               </button>
