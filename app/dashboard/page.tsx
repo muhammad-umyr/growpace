@@ -474,70 +474,97 @@ function Dashboard() {
               </button>
             </div>
           ) : (
-            <div className="space-y-3">
+            /* Horizontal snap scroll — one card visible, peek of next */
+            <div
+              className="flex gap-3 overflow-x-auto snap-x snap-mandatory -mx-4 px-4 pb-2"
+              style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
+            >
               {boardActivities.map(a => {
                 const currentStage = PROGRESS_STAGES.find(s => s.value === a.progress);
                 const isSaved = a.status === "saved";
                 return (
-                  <div key={a.id} className={`bg-white rounded-2xl p-4 border ${isSaved ? "border-dashed border-[#D9D9D9] opacity-80" : "border-[#E5E5E5]"}`}>
-                    <div className="flex items-start gap-4">
-                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 ${isSaved ? "bg-[#F5F5F5]" : "bg-[#F0F0F0]"}`}>
+                  <div
+                    key={a.id}
+                    className={`snap-start flex-shrink-0 w-[85%] bg-white rounded-2xl p-4 border ${isSaved ? "border-dashed border-[#D9D9D9] opacity-80" : "border-[#E5E5E5]"}`}
+                  >
+                    {/* Header row */}
+                    <div className="flex items-start gap-3">
+                      <div className={`w-11 h-11 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 ${isSaved ? "bg-[#F5F5F5]" : "bg-[#F0F0F0]"}`}>
                         {a.emoji}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <p className="font-bold text-[#111827] text-base">{a.title}</p>
+                          <p className="font-bold text-[#111827] text-sm">{a.title}</p>
                           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[a.tag] ?? "bg-gray-100 text-gray-500"}`}>
                             {a.tag}
                           </span>
-                          {isSaved && (
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#F5F5F5] text-[#94A3B8]">
-                              Saved
-                            </span>
-                          )}
                         </div>
-                        <p className="text-[#1F2937] text-sm mt-0.5">{a.desc}</p>
-                        {!isSaved && (
-                          <div className="flex items-center gap-2 mt-2">
-                            <div className="flex gap-1 flex-1">
-                              {PROGRESS_STAGES.map(stage => (
-                                <div
-                                  key={stage.value}
-                                  className={`flex-1 h-1.5 rounded-full ${a.progress >= stage.value ? "bg-[#222222]" : "bg-[#E5E5E5]"}`}
-                                />
-                              ))}
-                            </div>
-                            <span className="text-[10px] font-bold text-[#1F2937] whitespace-nowrap">
-                              {currentStage ? currentStage.short : "Not started"}
-                            </span>
-                          </div>
-                        )}
+                        <p className="text-[#1F2937] text-xs mt-0.5 line-clamp-2">{a.desc}</p>
                       </div>
                     </div>
+
+                    {/* Progress bar (active only) */}
+                    {!isSaved && (
+                      <div className="flex items-center gap-2 mt-3">
+                        <div className="flex gap-1 flex-1">
+                          {PROGRESS_STAGES.map(stage => (
+                            <div
+                              key={stage.value}
+                              className={`flex-1 h-1.5 rounded-full ${a.progress >= stage.value ? "bg-[#222222]" : "bg-[#E5E5E5]"}`}
+                            />
+                          ))}
+                        </div>
+                        <span className="text-[10px] font-bold text-[#94A3B8] whitespace-nowrap">
+                          {currentStage ? currentStage.short : "Not started"}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* CTAs */}
                     {isSaved ? (
-                      <button
-                        onClick={() => startActivity(a.id)}
-                        className="mt-3 w-full h-10 flex items-center justify-center rounded-xl bg-[#1F2937] text-white font-bold text-xs hover:bg-[#111111] transition-colors"
-                      >
-                        Start this activity →
-                      </button>
+                      <div className="mt-3 flex flex-col gap-2">
+                        <button
+                          onClick={() => startActivity(a.id)}
+                          className="w-full h-10 flex items-center justify-center rounded-xl bg-[#1F2937] text-white font-bold text-xs hover:bg-[#111111] transition-colors"
+                        >
+                          Start this activity →
+                        </button>
+                        <button
+                          onClick={() => router.push(`/activity?profileId=${profile.id}&activityId=${a.id}`)}
+                          className="w-full h-10 flex items-center justify-center rounded-xl bg-[#F5F5F5] text-[#4B5563] font-bold text-xs hover:bg-[#E5E5E5] transition-colors border border-[#E5E5E5]"
+                        >
+                          Tips &amp; Tricks
+                        </button>
+                      </div>
                     ) : (
-                      <button
-                        onClick={() => router.push(`/activity?profileId=${profile.id}&activityId=${a.id}`)}
-                        className="mt-3 w-full h-12 flex items-center justify-center rounded-xl bg-[#F0F0F0] text-[#1F2937] font-bold text-xs hover:bg-[#E5E5E5] transition-colors border border-[#D9D9D9]"
-                      >
-                        Log a progress update
-                      </button>
+                      <div className="mt-3 flex gap-2">
+                        <button
+                          onClick={() => router.push(`/activity?profileId=${profile.id}&activityId=${a.id}`)}
+                          className="flex-1 h-10 flex items-center justify-center rounded-xl bg-[#1F2937] text-white font-bold text-xs hover:bg-[#111111] transition-colors"
+                        >
+                          Log progress
+                        </button>
+                        <button
+                          onClick={() => router.push(`/activity?profileId=${profile.id}&activityId=${a.id}`)}
+                          className="flex-1 h-10 flex items-center justify-center rounded-xl bg-[#F5F5F5] text-[#4B5563] font-bold text-xs hover:bg-[#E5E5E5] transition-colors border border-[#E5E5E5]"
+                        >
+                          Tips &amp; Tricks
+                        </button>
+                      </div>
                     )}
                   </div>
                 );
               })}
-              <button
-                onClick={() => router.push(`/activities?id=${profile.id}`)}
-                className="w-full py-2.5 rounded-2xl border-2 border-dashed border-[#AAAAAA] text-[#1F2937] font-bold text-sm hover:bg-[#F0F0F0] transition-colors"
-              >
-                + Add more activities
-              </button>
+
+              {/* Add more — last card in the scroll */}
+              <div className="snap-start flex-shrink-0 w-[85%] flex items-center justify-center">
+                <button
+                  onClick={() => router.push(`/activities?id=${profile.id}`)}
+                  className="w-full py-8 rounded-2xl border-2 border-dashed border-[#D9D9D9] text-[#94A3B8] font-bold text-sm hover:bg-[#F5F5F5] transition-colors"
+                >
+                  + Add more activities
+                </button>
+              </div>
             </div>
           )}
         </section>
