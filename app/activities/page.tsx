@@ -53,7 +53,7 @@ function ActivityCard({
   )}`;
 
   return (
-    <div className="bg-white rounded-2xl border border-[#E5E5E5] overflow-hidden">
+    <div className="bg-white rounded-2xl overflow-hidden">
 
       {/* Body */}
       <div className="p-4 flex gap-4 items-start">
@@ -79,7 +79,7 @@ function ActivityCard({
           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[tag] ?? "bg-gray-100 text-gray-500"}`}>
             {tag}
           </span>
-          <h3 className="font-extrabold text-[#111827] text-base leading-tight mt-1">{title}</h3>
+          <h3 className="font-extrabold text-[#1C1C1E] text-base leading-tight mt-1">{title}</h3>
           <p className="text-[#1F2937] text-sm mt-0.5 leading-relaxed">{desc}</p>
           {reason && (
             <span className="inline-flex items-center gap-1 mt-2 bg-gradient-to-r from-[#F5F5F5] to-[#F0F0F0] border border-[#D9D9D9] text-[#1F2937] text-[10px] font-bold px-2.5 py-1 rounded-full">
@@ -114,8 +114,8 @@ function ActivityCard({
           disabled={isAdded}
           className={`text-xs font-bold px-4 py-1.5 rounded-full transition-all
             ${isAdded
-              ? "bg-[#E5E5E5] text-[#94A3B8] cursor-default"
-              : "bg-[#1F2937] text-white hover:bg-[#111111] shadow-sm"
+              ? "bg-[#E5E5E5] text-[#8E8E93] cursor-default"
+              : "bg-[#007AFF] text-white hover:bg-[#0071E3] shadow-sm"
             }`}
         >
           {isAdded ? "✓ Added" : "+ Board"}
@@ -155,21 +155,21 @@ function ActiveCard({
   const currentStage = PROGRESS_STAGES.find(s => s.value === activity.progress);
 
   return (
-    <div className="bg-white rounded-2xl border border-[#D9D9D9] p-4 space-y-3">
+    <div className="bg-white rounded-2xl p-4 space-y-3">
       <div className="flex items-start gap-3">
         <div className="w-11 h-11 rounded-2xl bg-[#F0F0F0] flex items-center justify-center text-2xl flex-shrink-0">
           {activity.emoji}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <p className="font-bold text-[#111827] text-base">{activity.title}</p>
+            <p className="font-bold text-[#1C1C1E] text-base">{activity.title}</p>
             <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[activity.tag] ?? "bg-gray-100 text-gray-500"}`}>
               {activity.tag}
             </span>
           </div>
           <p className="text-[#1F2937] text-sm mt-0.5">{activity.desc}</p>
         </div>
-        <button onClick={onRemove} className="text-[#94A3B8] hover:text-red-400 transition-colors text-xl flex-shrink-0 leading-none">
+        <button onClick={onRemove} className="text-[#8E8E93] hover:text-red-400 transition-colors text-xl flex-shrink-0 leading-none">
           ×
         </button>
       </div>
@@ -180,7 +180,7 @@ function ActiveCard({
           {PROGRESS_STAGES.map(stage => (
             <div
               key={stage.value}
-              className={`flex-1 h-1.5 rounded-full transition-colors ${activity.progress >= stage.value ? "bg-[#222222]" : "bg-[#E5E5E5]"}`}
+              className={`flex-1 h-1.5 rounded-full transition-colors ${activity.progress >= stage.value ? "bg-[#34C759]" : "bg-[#E5E5E5]"}`}
             />
           ))}
         </div>
@@ -193,13 +193,13 @@ function ActiveCard({
       <div className="flex gap-2">
         <button
           onClick={() => router.push(`/activity?profileId=${profileId}&activityId=${activity.id}`)}
-          className="flex-1 h-12 flex items-center justify-center rounded-xl bg-[#F0F0F0] text-[#1F2937] font-bold text-xs hover:bg-[#E5E5E5] transition-colors border border-[#D9D9D9]"
+          className="flex-1 h-12 flex items-center justify-center rounded-xl bg-[#F0F0F0] text-[#1F2937] font-bold text-xs hover:bg-[#E5E5E5] transition-colors "
         >
           Log a progress update
         </button>
         <button
           onClick={onDone}
-          className="h-12 px-3 flex items-center justify-center rounded-xl bg-[#EDF3F0] text-[#1F2937] font-bold text-xs hover:bg-[#D9D9D9] transition-colors border border-[#D9D9D9]"
+          className="h-12 px-3 flex items-center justify-center rounded-xl bg-[#EDF3F0] text-[#1F2937] font-bold text-xs hover:bg-[#D9D9D9] transition-colors "
         >
           ✅ Done
         </button>
@@ -220,7 +220,7 @@ function SavedCard({
   activity: BoardActivity; onActivate: () => void; onRemove: () => void;
 }) {
   return (
-    <div className="bg-white rounded-2xl border border-[#E5E5E5] p-4 flex items-start gap-3">
+    <div className="bg-white rounded-2xl p-4 flex items-start gap-3">
       <div className="w-11 h-11 rounded-2xl bg-[#f5f5f5] flex items-center justify-center text-2xl flex-shrink-0 opacity-70">
         {activity.emoji}
       </div>
@@ -231,17 +231,17 @@ function SavedCard({
             {activity.tag}
           </span>
         </div>
-        <p className="text-[#94A3B8] text-sm mt-0.5">{activity.desc}</p>
+        <p className="text-[#8E8E93] text-sm mt-0.5">{activity.desc}</p>
         <div className="flex gap-2 mt-2">
           <button
             onClick={onActivate}
-            className="text-xs bg-[#1F2937] text-white font-bold px-3 py-1 rounded-full hover:bg-[#111111] transition-colors"
+            className="text-xs bg-[#007AFF] text-white font-semibold px-3 py-1 rounded-full hover:bg-[#111111] transition-colors"
           >
             Start This Week →
           </button>
           <button
             onClick={onRemove}
-            className="text-xs text-[#94A3B8] hover:text-red-400 transition-colors font-semibold"
+            className="text-xs text-[#8E8E93] hover:text-red-400 transition-colors font-semibold"
           >
             Remove
           </button>
@@ -330,7 +330,7 @@ function Activities() {
 
   if (!profile) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F0F0F0] gap-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F2F2F7] gap-4">
         <span className="text-5xl">🌱</span>
         <p className="text-[#1F2937] font-semibold">Profile not found.</p>
         <button onClick={() => router.push("/")} className="text-[#1F2937] font-bold hover:underline">
@@ -387,14 +387,14 @@ function Activities() {
   // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#F5F5F5] to-[#EBEBEB]">
+    <div className="min-h-screen bg-[#F2F2F7]">
 
       {/* Nav */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-[#D9D9D9] sticky top-0 z-10">
+      <header className="bg-white/90 backdrop-blur-md border-b border-[#E5E5EA] sticky top-0 z-10">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <button
             onClick={() => router.push(`/dashboard?id=${profile.id}`)}
-            className="text-sm text-[#1F2937] hover:text-[#1F2937] font-semibold transition-colors flex items-center gap-1"
+            className="text-sm text-[#007AFF] font-semibold transition-colors flex items-center gap-1"
           >
             ← {profile.name}&apos;s Dashboard
           </button>
@@ -408,7 +408,7 @@ function Activities() {
 
         {/* Title */}
         <div>
-          <h1 className="text-2xl font-extrabold text-[#111827]">Activities</h1>
+          <h1 className="text-2xl font-extrabold text-[#1C1C1E]">Activities</h1>
           <p className="text-[#1F2937] text-base mt-0.5">For {profile.name} · {calcAge(profile.dob)}</p>
         </div>
 
@@ -423,7 +423,7 @@ function Activities() {
               key={t.key}
               onClick={() => setTab(t.key as typeof tab)}
               className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all
-                ${tab === t.key ? "bg-[#1F2937] text-white shadow-sm" : "text-[#1F2937] hover:text-[#1F2937]"}`}
+                ${tab === t.key ? "bg-[#007AFF] text-white shadow-sm" : "text-[#1F2937] hover:text-[#1F2937]"}`}
             >
               {t.label}
             </button>
@@ -441,7 +441,7 @@ function Activities() {
                 {profile.gender === "boy" ? "👦" : profile.gender === "girl" ? "👧" : "🌈"}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-extrabold text-[#111827]">
+                <p className="text-sm font-extrabold text-[#1C1C1E]">
                   Just for {profile.name} ✨
                 </p>
                 <p className="text-sm text-[#1F2937] mt-0.5">
@@ -472,7 +472,7 @@ function Activities() {
                 <p className="text-3xl mb-2">😕</p>
                 <p className="text-[#1F2937] text-base font-semibold">Couldn&apos;t load suggestions.</p>
                 {aiError !== "failed" && (
-                  <p className="text-[10px] text-[#94A3B8] mt-1 font-mono break-all">{aiError}</p>
+                  <p className="text-[10px] text-[#8E8E93] mt-1 font-mono break-all">{aiError}</p>
                 )}
                 <button onClick={fetchSuggestions} className="mt-2 text-xs text-[#1F2937] font-bold hover:underline">
                   Try again
@@ -515,8 +515,8 @@ function Activities() {
                   onClick={() => setFilterTag(tag)}
                   className={`text-xs font-bold px-3 py-1.5 rounded-full transition-all
                     ${filterTag === tag
-                      ? "bg-[#1F2937] text-white"
-                      : "bg-white text-[#1F2937] border border-[#D9D9D9] hover:border-[#1F2937]"
+                      ? "bg-[#007AFF] text-white"
+                      : "bg-white text-[#1F2937] border border-[#D9D9D9] hover:border-[#007AFF]"
                     }`}
                 >
                   {tag}
@@ -547,15 +547,15 @@ function Activities() {
         {tab === "board" && (
           <div className="space-y-5">
             {board.length === 0 ? (
-              <div className="bg-white rounded-2xl border border-[#E5E5E5] p-8 text-center">
+              <div className="bg-white rounded-2xl p-8 text-center">
                 <p className="text-4xl mb-3">📋</p>
-                <p className="text-[#111827] font-bold">Your board is empty</p>
+                <p className="text-[#1C1C1E] font-bold">Your board is empty</p>
                 <p className="text-[#1F2937] text-base mt-1 mb-4">
                   Browse suggestions or the library to add activities
                 </p>
                 <button
                   onClick={() => setTab("suggested")}
-                  className="text-sm bg-[#1F2937] text-white font-bold px-5 py-2.5 rounded-full hover:bg-[#111111] transition-colors"
+                  className="text-sm bg-[#007AFF] text-white font-semibold px-5 py-2.5 rounded-full hover:bg-[#111111] transition-colors"
                 >
                   Browse Suggestions ✨
                 </button>
@@ -625,12 +625,12 @@ function Activities() {
                         >
                           <span className="text-2xl">{a.emoji}</span>
                           <div className="flex-1 min-w-0">
-                            <p className="text-base font-bold text-[#111827] line-through">{a.title}</p>
+                            <p className="text-base font-bold text-[#1C1C1E] line-through">{a.title}</p>
                             <p className="text-xs text-[#AA6646] font-semibold mt-0.5">✅ Completed</p>
                           </div>
                           <button
                             onClick={() => removeFromBoard(a.id)}
-                            className="text-[#94A3B8] hover:text-red-400 transition-colors text-xl leading-none"
+                            className="text-[#8E8E93] hover:text-red-400 transition-colors text-xl leading-none"
                           >
                             ×
                           </button>
@@ -652,7 +652,7 @@ function Activities() {
 export default function ActivitiesPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-[#F0F0F0]">
+      <div className="min-h-screen flex items-center justify-center bg-[#F2F2F7]">
         <div className="text-4xl animate-bounce">🌱</div>
       </div>
     }>

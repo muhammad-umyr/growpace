@@ -101,7 +101,7 @@ export default function Home() {
   const showCreateForm = !hasProfiles || showForm;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#F5F5F5] to-[#EBEBEB] flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-[#F2F2F7] flex flex-col items-center justify-center px-4 py-12">
 
       {/* Logo */}
       <div className="mb-8 text-center">
@@ -114,7 +114,7 @@ export default function Home() {
       {/* ── Profiles list ── */}
       {showProfiles && (
         <div className="w-full max-w-md space-y-4">
-          <h2 className="text-lg font-extrabold text-[#111827]">Your children</h2>
+          <h2 className="text-lg font-extrabold text-[#1C1C1E]">Your children</h2>
 
           <div className="grid grid-cols-2 gap-3">
             {profiles.map(p => {
@@ -123,7 +123,7 @@ export default function Home() {
                 <div key={p.id} className="relative group">
                   <button
                     onClick={() => router.push(`/dashboard?id=${p.id}`)}
-                    className="w-full bg-white rounded-2xl p-4 flex flex-col items-center gap-2 hover:scale-[1.02] transition-all border border-[#E5E5E5]"
+                    className="w-full bg-white rounded-2xl p-4 flex flex-col items-center gap-2 hover:scale-[1.02] transition-all "
                   >
                     <div className="relative w-16 h-16 rounded-full bg-[#F0F0F0] border-4 border-[#222222] overflow-hidden flex items-center justify-center">
                       {p.photo ? (
@@ -132,14 +132,14 @@ export default function Home() {
                         <span className="text-3xl">{genderEmoji}</span>
                       )}
                     </div>
-                    <p className="font-extrabold text-[#111827] text-base">{p.name}</p>
+                    <p className="font-extrabold text-[#1C1C1E] text-base">{p.name}</p>
                     <p className="text-[#1F2937] text-sm font-semibold">{calcAge(p.dob)}</p>
                   </button>
 
                   {/* Delete button */}
                   {confirmDelete === p.id ? (
                     <div className="absolute inset-0 bg-white/95 rounded-2xl flex flex-col items-center justify-center gap-2 border border-red-100">
-                      <p className="text-sm font-bold text-[#111827] text-center px-2">Remove {p.name}?</p>
+                      <p className="text-sm font-bold text-[#1C1C1E] text-center px-2">Remove {p.name}?</p>
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleDelete(p.id)}
@@ -158,7 +158,7 @@ export default function Home() {
                   ) : (
                     <button
                       onClick={() => setConfirmDelete(p.id)}
-                      className="absolute top-2 right-2 w-6 h-6 rounded-full bg-[#E5E5E5] text-[#94A3B8] hover:bg-red-100 hover:text-red-400 transition-colors text-xs font-bold opacity-0 group-hover:opacity-100 flex items-center justify-center"
+                      className="absolute top-2 right-2 w-6 h-6 rounded-full bg-[#E5E5E5] text-[#8E8E93] hover:bg-red-100 hover:text-red-400 transition-colors text-xs font-bold opacity-0 group-hover:opacity-100 flex items-center justify-center"
                       title="Remove profile"
                     >
                       ×
@@ -171,7 +171,7 @@ export default function Home() {
 
           <button
             onClick={() => setShowForm(true)}
-            className="w-full py-3.5 rounded-2xl border-2 border-dashed border-[#222222] text-[#1F2937] font-bold text-sm hover:bg-[#F0F0F0] transition-colors"
+            className="w-full py-3.5 rounded-2xl border-2 border-dashed border-[#007AFF] text-[#007AFF] font-semibold text-sm hover:bg-[#EFF6FF] transition-colors"
           >
             + Add another child
           </button>
@@ -184,13 +184,13 @@ export default function Home() {
           {showForm && hasProfiles && (
             <button
               onClick={() => setShowForm(false)}
-              className="text-sm text-[#1F2937] hover:text-[#1F2937] font-semibold mb-4 flex items-center gap-1 transition-colors"
+              className="text-sm text-[#007AFF] font-semibold mb-4 flex items-center gap-1 transition-colors"
             >
               ← Back
             </button>
           )}
 
-          <h1 className="text-2xl font-extrabold text-[#111827] mb-1">Create a child profile</h1>
+          <h1 className="text-2xl font-extrabold text-[#1C1C1E] mb-1">Create a child profile</h1>
           <p className="text-[#1F2937] text-base mb-7">Let&apos;s get to know your little one 🐣</p>
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -199,7 +199,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => fileRef.current?.click()}
-                className="relative w-24 h-24 rounded-full bg-[#F0F0F0] border-4 border-dashed border-[#222222] hover:border-[#1F2937] transition-colors overflow-hidden"
+                className="relative w-24 h-24 rounded-full bg-[#F0F0F0] border-4 border-dashed border-[#222222] hover:border-[#007AFF] transition-colors overflow-hidden"
               >
                 {photoUrl ? (
                   <Image src={photoUrl} alt="Child photo" fill className="object-cover" unoptimized />
@@ -224,7 +224,7 @@ export default function Home() {
 
             {/* Name */}
             <div>
-              <label className="block text-sm font-bold text-[#111827] mb-1.5">
+              <label className="block text-sm font-bold text-[#1C1C1E] mb-1.5">
                 Child&apos;s name <span className="text-[#1F2937]">*</span>
               </label>
               <input
@@ -232,14 +232,14 @@ export default function Home() {
                 value={name}
                 onChange={e => { setName(e.target.value); setErrors(p => ({ ...p, name: "" })); }}
                 placeholder="e.g. Aisha, Liam, Noah…"
-                className="w-full px-4 py-3 rounded-2xl border-2 border-[#D9D9D9] bg-[#FAFAFA] focus:outline-none focus:border-[#1F2937] text-[#111827] placeholder-[#94A3B8] transition-colors"
+                className="w-full px-4 py-3 rounded-2xl border-2 border-[#D9D9D9] bg-[#FAFAFA] focus:outline-none focus:border-[#007AFF] text-[#1C1C1E] placeholder-[#8E8E93] transition-colors"
               />
               {errors.name && <p className="mt-1 text-sm text-red-400">{errors.name}</p>}
             </div>
 
             {/* Date of birth */}
             <div>
-              <label className="block text-sm font-bold text-[#111827] mb-1.5">
+              <label className="block text-sm font-bold text-[#1C1C1E] mb-1.5">
                 Date of birth <span className="text-[#1F2937]">*</span>
               </label>
               <input
@@ -247,14 +247,14 @@ export default function Home() {
                 value={dob}
                 max={new Date().toISOString().split("T")[0]}
                 onChange={e => { setDob(e.target.value); setErrors(p => ({ ...p, dob: "" })); }}
-                className="w-full px-4 py-3 rounded-2xl border-2 border-[#D9D9D9] bg-[#FAFAFA] focus:outline-none focus:border-[#1F2937] text-[#111827] transition-colors"
+                className="w-full px-4 py-3 rounded-2xl border-2 border-[#D9D9D9] bg-[#FAFAFA] focus:outline-none focus:border-[#007AFF] text-[#1C1C1E] transition-colors"
               />
               {errors.dob && <p className="mt-1 text-sm text-red-400">{errors.dob}</p>}
             </div>
 
             {/* Gender */}
             <div>
-              <label className="block text-sm font-bold text-[#111827] mb-2">
+              <label className="block text-sm font-bold text-[#1C1C1E] mb-2">
                 Gender <span className="text-[#1F2937]">*</span>
               </label>
               <div className="grid grid-cols-2 gap-3">
@@ -265,8 +265,8 @@ export default function Home() {
                     onClick={() => { setGender(g.value); setErrors(p => ({ ...p, gender: "" })); }}
                     className={`flex flex-col items-center gap-1 py-3 rounded-2xl border-2 transition-all font-semibold text-sm
                       ${gender === g.value
-                        ? "border-[#222222] bg-[#EBEBEB] text-[#4B5563] scale-105 shadow-sm"
-                        : "border-[#D9D9D9] bg-[#FAFAFA] text-[#1F2937] hover:border-[#1F2937]"
+                        ? "border-[#007AFF] bg-[#EFF6FF] text-[#4B5563] scale-105 shadow-sm"
+                        : "border-[#D9D9D9] bg-[#FAFAFA] text-[#1F2937] hover:border-[#007AFF]"
                       }`}
                   >
                     <span className="text-2xl">{g.emoji}</span>
@@ -280,7 +280,7 @@ export default function Home() {
             {/* Submit */}
             <button
               type="submit"
-              className="w-full py-3.5 rounded-2xl bg-[#1F2937] hover:bg-[#111111] text-white font-extrabold text-base transition-colors shadow-md shadow-[#222222]/30 mt-2 cursor-pointer"
+              className="w-full py-3.5 rounded-2xl bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-base transition-colors  mt-2 cursor-pointer"
             >
               Create Profile 🌟
             </button>
@@ -288,7 +288,7 @@ export default function Home() {
         </div>
       )}
 
-      <p className="mt-6 text-sm text-[#94A3B8] text-center">
+      <p className="mt-6 text-sm text-[#8E8E93] text-center">
         Your data stays on your device. No account needed to get started.
       </p>
     </div>

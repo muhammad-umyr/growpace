@@ -60,7 +60,7 @@ function ActivityDetail() {
 
   if (!profile) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F0F0F0] gap-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F2F2F7] gap-4">
         <p className="text-[#1F2937] font-semibold">Profile not found.</p>
         <button onClick={() => router.push("/")} className="text-[#1F2937] font-bold hover:underline">Go home</button>
       </div>
@@ -72,7 +72,7 @@ function ActivityDetail() {
 
   if (!activity) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F0F0F0] gap-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F2F2F7] gap-4">
         <p className="text-[#1F2937] font-semibold">Activity not found.</p>
         <button onClick={() => router.back()} className="text-[#1F2937] font-bold hover:underline">← Go back</button>
       </div>
@@ -166,14 +166,14 @@ function ActivityDetail() {
   const risks = details?.risks;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#F5F5F5] to-[#EBEBEB]">
+    <div className="min-h-screen bg-[#F2F2F7]">
 
       {/* Nav */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-[#D9D9D9] sticky top-0 z-10">
+      <header className="bg-white/90 backdrop-blur-md border-b border-[#E5E5EA] sticky top-0 z-10">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <button
             onClick={() => router.back()}
-            className="text-sm text-[#1F2937] font-semibold hover:text-[#111827] transition-colors flex items-center gap-1"
+            className="text-sm text-[#007AFF] font-semibold transition-colors flex items-center gap-1"
           >
             ← Back
           </button>
@@ -184,7 +184,7 @@ function ActivityDetail() {
       <main className="max-w-2xl mx-auto px-4 py-6 space-y-5 pb-16">
 
         {/* Activity header */}
-        <div className="bg-white rounded-2xl border border-[#E5E5E5] overflow-hidden">
+        <div className="bg-white rounded-2xl overflow-hidden">
           {activityDef?.image && (
             <div className="w-full h-44 bg-[#F5F5F5] overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -207,7 +207,7 @@ function ActivityDetail() {
                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[activity.tag] ?? "bg-gray-100 text-gray-500"}`}>
                   {activity.tag}
                 </span>
-                <h1 className="font-extrabold text-[#111827] text-xl leading-tight mt-1">{activity.title}</h1>
+                <h1 className="font-extrabold text-[#1C1C1E] text-xl leading-tight mt-1">{activity.title}</h1>
                 <p className="text-[#1F2937] text-sm mt-1 leading-relaxed">{activity.desc}</p>
               </div>
             </div>
@@ -215,16 +215,16 @@ function ActivityDetail() {
         </div>
 
         {/* Current progress */}
-        <div className="bg-white rounded-2xl border border-[#E5E5E5] p-5">
-          <h2 className="text-base font-extrabold text-[#111827] mb-4">Progress</h2>
+        <div className="bg-white rounded-2xl p-5">
+          <h2 className="text-base font-extrabold text-[#1C1C1E] mb-4">Progress</h2>
           <div className="flex gap-2">
             {PROGRESS_STAGES.map(stage => {
               const reached = activity.progress >= stage.value;
               const isCurrent = activity.progress === stage.value;
               return (
                 <div key={stage.value} className="flex-1 flex flex-col items-center gap-1.5">
-                  <div className={`w-full h-2 rounded-full transition-colors ${reached ? "bg-[#1F2937]" : "bg-[#E5E5E5]"}`} />
-                  <span className={`text-[10px] font-bold text-center leading-tight ${isCurrent ? "text-[#111827]" : reached ? "text-[#AAAAAA]" : "text-[#D9D9D9]"}`}>
+                  <div className={`w-full h-2 rounded-full transition-colors ${reached ? "bg-[#34C759]" : "bg-[#E5E5E5]"}`} />
+                  <span className={`text-[10px] font-bold text-center leading-tight ${isCurrent ? "text-[#1C1C1E]" : reached ? "text-[#AAAAAA]" : "text-[#D9D9D9]"}`}>
                     {stage.short}
                   </span>
                 </div>
@@ -233,26 +233,26 @@ function ActivityDetail() {
           </div>
           {currentStage && (
             <p className="mt-3 text-sm font-semibold text-[#1F2937]">
-              Currently: <span className="text-[#111827] font-extrabold">{currentStage.label}</span>
+              Currently: <span className="text-[#1C1C1E] font-extrabold">{currentStage.label}</span>
             </p>
           )}
           {!activity.progress && (
-            <p className="mt-3 text-sm text-[#94A3B8]">No progress logged yet — tap below to get started.</p>
+            <p className="mt-3 text-sm text-[#8E8E93]">No progress logged yet — tap below to get started.</p>
           )}
         </div>
 
         {/* Log progress update */}
-        <div className="bg-white rounded-2xl border border-[#E5E5E5] overflow-hidden">
+        <div className="bg-white rounded-2xl overflow-hidden">
           <button
             onClick={() => setShowLogForm(v => !v)}
             className="w-full px-5 py-4 flex items-center justify-between text-left"
           >
-            <span className="text-base font-extrabold text-[#111827]">Log a progress update</span>
+            <span className="text-base font-extrabold text-[#1C1C1E]">Log a progress update</span>
             <span className="text-[#1F2937] text-lg">{showLogForm ? "▲" : "▾"}</span>
           </button>
           {showLogForm && (
             <div className="px-5 pb-5 space-y-4 border-t border-[#E5E5E5] pt-4">
-              <p className="text-sm font-bold text-[#111827]">Where are you right now?</p>
+              <p className="text-sm font-bold text-[#1C1C1E]">Where are you right now?</p>
               <div className="grid grid-cols-2 gap-2">
                 {PROGRESS_STAGES.map(stage => (
                   <button
@@ -260,11 +260,11 @@ function ActivityDetail() {
                     onClick={() => setSelectedStage(stage.value)}
                     className={`px-3 py-3 rounded-xl border-2 text-left transition-all
                       ${selectedStage === stage.value
-                        ? "border-[#1F2937] bg-[#F0F0F0]"
-                        : "border-[#D9D9D9] bg-[#FAFAFA] hover:border-[#AAAAAA]"
+                        ? "border-[#007AFF] bg-[#EFF6FF]"
+                        : "border-[#D9D9D9] bg-[#FAFAFA] hover:border-[#007AFF]"
                       }`}
                   >
-                    <p className="text-sm font-bold text-[#111827]">{stage.label}</p>
+                    <p className="text-sm font-bold text-[#1C1C1E]">{stage.label}</p>
                   </button>
                 ))}
               </div>
@@ -272,7 +272,7 @@ function ActivityDetail() {
                 value={note}
                 onChange={e => setNote(e.target.value)}
                 placeholder="Add a note… (optional) e.g. She tried for 5 minutes today!"
-                className="w-full px-4 py-3 rounded-2xl border-2 border-[#D9D9D9] bg-[#FAFAFA] focus:outline-none focus:border-[#1F2937] text-[#111827] placeholder-[#94A3B8] text-sm resize-none h-20 transition-colors"
+                className="w-full px-4 py-3 rounded-2xl border-2 border-[#D9D9D9] bg-[#FAFAFA] focus:outline-none focus:border-[#007AFF] text-[#1C1C1E] placeholder-[#8E8E93] text-sm resize-none h-20 transition-colors"
               />
 
               {/* Photo upload */}
@@ -291,7 +291,7 @@ function ActivityDetail() {
                 ) : (
                   <button
                     onClick={() => photoInputRef.current?.click()}
-                    className="w-full py-3 rounded-2xl border-2 border-dashed border-[#D9D9D9] bg-[#FAFAFA] text-[#94A3B8] text-sm font-bold hover:border-[#222222] hover:text-[#1F2937] transition-colors flex items-center justify-center gap-2"
+                    className="w-full py-3 rounded-2xl border-2 border-dashed border-[#D9D9D9] bg-[#FAFAFA] text-[#8E8E93] text-sm font-bold hover:border-[#222222] hover:text-[#1F2937] transition-colors flex items-center justify-center gap-2"
                   >
                     📷 Add a photo
                   </button>
@@ -312,15 +312,15 @@ function ActivityDetail() {
 
         {/* Benefits */}
         {(benefits.length > 0 || detailsLoading) && (
-          <div className="bg-white rounded-2xl border border-[#E5E5E5] p-5">
-            <h2 className="text-base font-extrabold text-[#111827] mb-3">🌱 Why this activity helps</h2>
+          <div className="bg-white rounded-2xl p-5">
+            <h2 className="text-base font-extrabold text-[#1C1C1E] mb-3">🌱 Why this activity helps</h2>
             {detailsLoading && benefits.length === 0 ? (
-              <p className="text-sm text-[#94A3B8]">Loading…</p>
+              <p className="text-sm text-[#8E8E93]">Loading…</p>
             ) : (
               <ul className="space-y-2">
                 {benefits.map((b, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-[#1F2937] leading-relaxed">
-                    <span className="text-[#222222] font-extrabold mt-0.5">✓</span>
+                    <span className="text-[#34C759] font-extrabold mt-0.5">✓</span>
                     {b}
                   </li>
                 ))}
@@ -331,9 +331,9 @@ function ActivityDetail() {
 
         {/* How to */}
         {(howToSteps.length > 0 || detailsLoading) && (
-          <div className="bg-white rounded-2xl border border-[#E5E5E5] p-5">
+          <div className="bg-white rounded-2xl p-5">
             <div className="flex items-center justify-between mb-3">
-              <h2 className="text-base font-extrabold text-[#111827]">📋 How to do it</h2>
+              <h2 className="text-base font-extrabold text-[#1C1C1E]">📋 How to do it</h2>
               <a
                 href={watchUrl}
                 target="_blank"
@@ -344,7 +344,7 @@ function ActivityDetail() {
               </a>
             </div>
             {detailsLoading && howToSteps.length === 0 ? (
-              <p className="text-sm text-[#94A3B8]">Loading…</p>
+              <p className="text-sm text-[#8E8E93]">Loading…</p>
             ) : (
               <ol className="space-y-3">
                 {howToSteps.map((step, i) => (
@@ -363,9 +363,9 @@ function ActivityDetail() {
         {/* General tips */}
         {(generalTips.length > 0 || detailsLoading) && (
           <div className="bg-[#F0F0F0] rounded-2xl border border-[#D9D9D9] p-5">
-            <h2 className="text-base font-extrabold text-[#111827] mb-3">💡 General tips</h2>
+            <h2 className="text-base font-extrabold text-[#1C1C1E] mb-3">💡 General tips</h2>
             {detailsLoading && generalTips.length === 0 ? (
-              <p className="text-sm text-[#94A3B8]">Loading…</p>
+              <p className="text-sm text-[#8E8E93]">Loading…</p>
             ) : (
               <ul className="space-y-2">
                 {generalTips.map((t, i) => (
@@ -403,24 +403,24 @@ function ActivityDetail() {
         {detailsLoading && !details && (
           <div className="text-center py-4">
             <div className="text-3xl animate-bounce mb-2">🌱</div>
-            <p className="text-sm text-[#94A3B8] font-semibold">Fetching activity details…</p>
+            <p className="text-sm text-[#8E8E93] font-semibold">Fetching activity details…</p>
           </div>
         )}
 
         {/* Timeline */}
         {timeline.length > 0 && (
-          <div className="bg-white rounded-2xl border border-[#E5E5E5] p-5">
-            <h2 className="text-base font-extrabold text-[#111827] mb-4">Timeline</h2>
+          <div className="bg-white rounded-2xl p-5">
+            <h2 className="text-base font-extrabold text-[#1C1C1E] mb-4">Timeline</h2>
             <div className="space-y-0">
               {timeline.map((item, idx) => (
                 <div key={idx} className="flex gap-3">
                   <div className="flex flex-col items-center">
-                    <div className={`w-3 h-3 rounded-full flex-shrink-0 mt-0.5 ${item.isKey ? "bg-[#1F2937]" : "bg-[#222222]"}`} />
+                    <div className={`w-3 h-3 rounded-full flex-shrink-0 mt-0.5 ${item.isKey ? "bg-[#34C759]" : "bg-[#34C759]"}`} />
                     {idx < timeline.length - 1 && <div className="w-0.5 bg-[#E5E5E5] flex-1 my-1" />}
                   </div>
                   <div className="pb-4 flex-1 min-w-0">
-                    <p className="text-sm font-bold text-[#111827]">{item.label}</p>
-                    <p className="text-xs text-[#94A3B8] mt-0.5">{formatDate(item.date)}</p>
+                    <p className="text-sm font-bold text-[#1C1C1E]">{item.label}</p>
+                    <p className="text-xs text-[#8E8E93] mt-0.5">{formatDate(item.date)}</p>
                     {item.note && (
                       <p className="mt-1.5 text-sm text-[#1F2937] bg-[#FAFAFA] rounded-xl px-3 py-2 leading-relaxed">
                         &quot;{item.note}&quot;
@@ -443,7 +443,7 @@ function ActivityDetail() {
         <div className="flex gap-3">
           <button
             onClick={markDone}
-            className="flex-1 py-3 rounded-2xl bg-[#1F2937] hover:bg-[#111111] text-white font-bold text-sm transition-colors"
+            className="flex-1 py-3 rounded-2xl bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm transition-colors"
           >
             ✅ Mark as Done
           </button>
@@ -463,7 +463,7 @@ function ActivityDetail() {
 export default function ActivityPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-[#F0F0F0]">
+      <div className="min-h-screen flex items-center justify-center bg-[#F2F2F7]">
         <div className="text-4xl animate-bounce">🌱</div>
       </div>
     }>
