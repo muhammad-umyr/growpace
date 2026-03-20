@@ -74,7 +74,7 @@ function ActivityCard({
       <div className="p-4 flex gap-4 items-start">
         {/* Thumbnail */}
         {image ? (
-          <div className="w-28 h-28 rounded-2xl overflow-hidden flex-shrink-0 shadow-sm bg-[#F5F5F5]">
+          <div className="w-28 h-28 rounded-2xl overflow-hidden flex-shrink-0 bg-[#F5F5F5]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={image}
@@ -84,7 +84,7 @@ function ActivityCard({
             />
           </div>
         ) : (
-          <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-[#F5F5F5] to-[#D9D9D9] flex items-center justify-center text-5xl flex-shrink-0 shadow-sm">
+          <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-[#F5F5F5] to-[#D9D9D9] flex items-center justify-center text-5xl flex-shrink-0">
             {emoji}
           </div>
         )}
@@ -176,13 +176,13 @@ function ActiveCard({
       {/* Header row — matches Library card layout */}
       <div className="p-4 flex gap-4 items-start">
         {activityDef?.image ? (
-          <div className="w-28 h-28 rounded-2xl overflow-hidden flex-shrink-0 shadow-sm bg-[#F5F5F5]">
+          <div className="w-28 h-28 rounded-2xl overflow-hidden flex-shrink-0 bg-[#F5F5F5]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={activityDef.image} alt={activity.title} className="w-full h-full object-cover"
               onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
           </div>
         ) : (
-          <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-[#F5F5F5] to-[#D9D9D9] flex items-center justify-center text-5xl flex-shrink-0 shadow-sm">
+          <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-[#F5F5F5] to-[#D9D9D9] flex items-center justify-center text-5xl flex-shrink-0">
             {activity.emoji}
           </div>
         )}
@@ -254,13 +254,13 @@ function SavedCard({
     <div className="bg-white rounded-2xl overflow-hidden opacity-80">
       <div className="p-4 flex gap-4 items-start">
         {activityDef?.image ? (
-          <div className="w-28 h-28 rounded-2xl overflow-hidden flex-shrink-0 shadow-sm bg-[#F5F5F5]">
+          <div className="w-28 h-28 rounded-2xl overflow-hidden flex-shrink-0 bg-[#F5F5F5]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={activityDef.image} alt={activity.title} className="w-full h-full object-cover"
               onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
           </div>
         ) : (
-          <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-[#F5F5F5] to-[#D9D9D9] flex items-center justify-center text-5xl flex-shrink-0 shadow-sm">
+          <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-[#F5F5F5] to-[#D9D9D9] flex items-center justify-center text-5xl flex-shrink-0">
             {activity.emoji}
           </div>
         )}
