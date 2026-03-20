@@ -713,24 +713,24 @@ function Dashboard() {
                     <div className="border-t border-[#E5E5E5] px-3 py-2.5 grid grid-cols-3 gap-1.5">
                       <button
                         onClick={() => setExpandedMilestone(isExpanded ? null : m.id)}
-                        className="flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl bg-[#EBEBEB] hover:bg-[#E0E0E0] transition-colors text-center"
+                        className="flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl bg-[#F2F2F7] hover:bg-[#E5E5EA] transition-colors text-center"
                       >
-                        <span className="text-[10px] font-bold text-[#4B5563] leading-tight">In progress</span>
+                        <span className="text-[10px] font-bold text-[#1C1C1E] leading-tight">In progress</span>
                       </button>
                       <button
                         onClick={() => addMilestoneToBoard(m)}
                         className={`flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl transition-colors text-center
-                          ${onBoard ? "bg-[#F0F0F0] opacity-60 cursor-default" : "bg-[#F0F0F0] hover:bg-[#E0E0E0]"}`}
+                          ${onBoard ? "bg-[#F2F2F7] opacity-60 cursor-default" : "bg-[#F2F2F7] hover:bg-[#E5E5EA]"}`}
                       >
-                        <span className="text-[10px] font-bold text-[#1F2937] leading-tight">
+                        <span className="text-[10px] font-bold text-[#1C1C1E] leading-tight">
                           {onBoard ? "On board" : "Add to board"}
                         </span>
                       </button>
                       <button
                         onClick={() => markMilestoneAccomplished(m.id)}
-                        className="flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl bg-[#FDF3EE] hover:bg-[#F5E5D5] transition-colors text-center"
+                        className="flex flex-col items-center gap-0.5 py-2 px-1 rounded-xl bg-[#F2F2F7] hover:bg-[#E5E5EA] transition-colors text-center"
                       >
-                        <span className="text-[10px] font-bold text-[#AA6646] leading-tight">Accomplished!</span>
+                        <span className="text-[10px] font-bold text-[#1C1C1E] leading-tight">Accomplished!</span>
                       </button>
                     </div>
                   </div>
