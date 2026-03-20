@@ -318,13 +318,13 @@ function Dashboard() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => router.push(`/report?id=${profile.id}`)}
-              className="text-sm text-[#261F5B] font-semibold transition-colors flex items-center gap-1"
+              className="text-sm text-[#1C1C1E] font-semibold bg-[#E5E5EA] hover:bg-[#D1D1D6] transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-xl"
             >
               <MdDescription size={16} /> Report
             </button>
             <button
               onClick={() => setShowAddCaregiver(true)}
-              className="text-sm text-[#261F5B] font-semibold transition-colors flex items-center gap-1"
+              className="text-sm text-[#1C1C1E] font-semibold bg-[#E5E5EA] hover:bg-[#D1D1D6] transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-xl"
             >
               <MdPersonAdd size={16} /> Add Partner
             </button>
