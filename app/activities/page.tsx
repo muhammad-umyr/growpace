@@ -56,6 +56,15 @@ const FUN_TAG_CLASS = "bg-[#FFF3CD] text-[#B45309]";
 
 const ALL_TAGS = ["All", "Physical", "Language", "Cognitive", "Creative", "Social", "Sensory", "Motor"];
 
+const AGE_FILTERS: { label: string; min: number; max: number }[] = [
+  { label: "All ages", min: 0,  max: 83 },
+  { label: "0–6 mo",  min: 0,  max: 5  },
+  { label: "6–12 mo", min: 6,  max: 11 },
+  { label: "1–2 yr",  min: 12, max: 23 },
+  { label: "2–4 yr",  min: 24, max: 47 },
+  { label: "4–7 yr",  min: 48, max: 83 },
+];
+
 // ── Sub-components ────────────────────────────────────────────────────────────
 
 function ActivityCard({
@@ -330,8 +339,9 @@ function Activities() {
   const [loading, setLoading] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
 
-  // Library filter
+  // Library filters
   const [filterTag, setFilterTag] = useState("All");
+  const [filterAgeIdx, setFilterAgeIdx] = useState(0);
 
   // Track titles already on board for instant UI feedback
   const [addedTitles, setAddedTitles] = useState<Set<string>>(new Set());
@@ -408,9 +418,12 @@ function Activities() {
   const savedActivities   = board.filter(a => a.status === "saved");
   const doneActivities    = board.filter(a => a.status === "done");
 
-  const libraryActivities = ALL_ACTIVITIES.filter(
-    a => filterTag === "All" || a.tag === filterTag
-  );
+  const ageFilter = AGE_FILTERS[filterAgeIdx];
+  const libraryActivities = ALL_ACTIVITIES.filter(a => {
+    const tagMatch = filterTag === "All" || a.tag === filterTag;
+    const ageMatch = a.minMonths <= ageFilter.max && a.maxMonths >= ageFilter.min;
+    return tagMatch && ageMatch;
+  });
 
   // ── Mutations ──────────────────────────────────────────────────────────────
 
@@ -588,22 +601,51 @@ function Activities() {
         {/* ── LIBRARY TAB ── */}
         {tab === "library" && (
           <div className="space-y-4">
-            {/* Filter pills */}
-            <div className="flex gap-2 flex-wrap">
-              {ALL_TAGS.map(tag => (
-                <button
-                  key={tag}
-                  onClick={() => setFilterTag(tag)}
-                  className={`text-xs font-bold px-3 py-1.5 rounded-full transition-all
-                    ${filterTag === tag
-                      ? "bg-[#261F5B] text-white"
-                      : "bg-white text-[#1F2937] border border-[#D9D9D9] hover:border-[#261F5B]"
-                    }`}
-                >
-                  {tag}
-                </button>
-              ))}
+            {/* Age filter */}
+            <div>
+              <p className="text-[10px] font-bold text-[#94A3B8] uppercase tracking-wide mb-2">Age</p>
+              <div className="flex gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
+                {AGE_FILTERS.map((af, i) => (
+                  <button
+                    key={af.label}
+                    onClick={() => setFilterAgeIdx(i)}
+                    className={`text-xs font-bold px-3 py-1.5 rounded-full whitespace-nowrap transition-all flex-shrink-0
+                      ${filterAgeIdx === i
+                        ? "bg-[#261F5B] text-white"
+                        : "bg-white text-[#1F2937] border border-[#D9D9D9] hover:border-[#261F5B]"
+                      }`}
+                  >
+                    {af.label}
+                  </button>
+                ))}
+              </div>
             </div>
+
+            {/* Type filter */}
+            <div>
+              <p className="text-[10px] font-bold text-[#94A3B8] uppercase tracking-wide mb-2">Type</p>
+              <div className="flex gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
+                {ALL_TAGS.map(tag => (
+                  <button
+                    key={tag}
+                    onClick={() => setFilterTag(tag)}
+                    className={`text-xs font-bold px-3 py-1.5 rounded-full whitespace-nowrap transition-all flex-shrink-0
+                      ${filterTag === tag
+                        ? "bg-[#261F5B] text-white"
+                        : "bg-white text-[#1F2937] border border-[#D9D9D9] hover:border-[#261F5B]"
+                      }`}
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {libraryActivities.length === 0 && (
+              <p className="text-sm text-[#8E8E93] text-center py-8">
+                No activities match these filters.
+              </p>
+            )}
 
             <div className="space-y-3">
               {libraryActivities.map((a, i) => (
