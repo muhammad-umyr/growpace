@@ -530,7 +530,7 @@ function Dashboard() {
                 return (
                   <div
                     key={a.id}
-                    className={`snap-start flex-shrink-0 w-[85%] bg-white rounded-3xl p-4 shadow-sm ${isSaved ? "opacity-80" : ""}`}
+                    className={`snap-start flex-shrink-0 w-[85%] bg-white rounded-3xl p-3 shadow-sm ${isSaved ? "opacity-80" : ""}`}
                   >
                     {/* Header row */}
                     <div className="flex items-start gap-3">
@@ -562,7 +562,7 @@ function Dashboard() {
 
                     {/* Progress bar (active only) */}
                     {!isSaved && (
-                      <div className="flex items-center gap-2 mt-3">
+                      <div className="flex items-center gap-2 mt-2">
                         <div className="flex gap-1 flex-1">
                           {PROGRESS_STAGES.map(stage => (
                             <div
@@ -580,7 +580,7 @@ function Dashboard() {
 
                     {/* CTAs */}
                     {isSaved ? (
-                      <div className="mt-3 flex flex-col gap-2">
+                      <div className="mt-2 flex flex-col gap-2">
                         <button
                           onClick={() => startActivity(a.id)}
                           className="w-full h-11 flex items-center justify-center rounded-xl bg-[#261F5B] text-white font-semibold text-xs hover:bg-[#1a1540] transition-colors"
@@ -595,7 +595,7 @@ function Dashboard() {
                         </button>
                       </div>
                     ) : (
-                      <div className="mt-3 flex gap-2">
+                      <div className="mt-2 flex gap-2">
                         <button
                           onClick={() => { setLogFlyoutId(a.id); setFlyoutStage(null); setFlyoutNote(""); setFlyoutPhoto(null); }}
                           className="flex-1 h-11 flex items-center justify-center rounded-xl bg-[#261F5B] text-white font-semibold text-xs hover:bg-[#1a1540] transition-colors"
