@@ -17,6 +17,7 @@ import {
   MdExpandLess,
   MdPause,
 } from "react-icons/md";
+import { FaYoutube } from "react-icons/fa";
 import {
   getProfile,
   saveProfile,
@@ -121,7 +122,7 @@ function ActivityCard({
           rel="noopener noreferrer"
           className="text-xs bg-red-50 text-red-500 font-bold px-3 py-1.5 rounded-full hover:bg-red-100 transition-colors flex items-center gap-1"
         >
-          ▶ Watch
+          <FaYoutube size={15} /> Watch
         </a>
         <div className="flex-1" />
         <button
