@@ -560,7 +560,7 @@ function Dashboard() {
                           {PROGRESS_STAGES.map(stage => (
                             <div
                               key={stage.value}
-                              className={`flex-1 h-3 rounded-full ${a.progress >= stage.value ? "bg-[#58CC02]" : "bg-[#E5E5E5]"}`}
+                              className={`flex-1 h-3 rounded-full ${a.progress >= stage.value ? "bg-[#1FD177]" : "bg-[#E5E5E5]"}`}
                             />
                           ))}
                         </div>
@@ -752,7 +752,7 @@ function Dashboard() {
             <h2 className="text-lg font-bold text-[#1C1C1E] tracking-tight">Growth Journal</h2>
             <button
               onClick={() => setShowJournalForm(v => !v)}
-              className="text-sm bg-[#261F5B] text-white font-semibold px-3 py-1.5 rounded-2xl border-b-4 border-[#45A800] hover:bg-[#61D900] active:border-b-0 active:translate-y-[2px] transition-all flex items-center gap-1"
+              className="text-sm bg-[#261F5B] text-white font-semibold px-3 py-1.5 rounded-2xl border-b-4 border-[#17A85E] hover:bg-[#1FD177] active:border-b-0 active:translate-y-[2px] transition-all flex items-center gap-1"
             >
               {showJournalForm ? "Cancel" : <><MdAdd size={16} /> Add moment</>}
             </button>
@@ -907,7 +907,7 @@ function Dashboard() {
                     </div>
                     <button
                       onClick={() => update(updateNotificationSettings(profile, { [item.key]: !on }))}
-                      className={`w-11 h-6 rounded-full transition-colors flex-shrink-0 relative ${on ? "bg-[#58CC02]" : "bg-[#D9D9D9]"}`}
+                      className={`w-11 h-6 rounded-full transition-colors flex-shrink-0 relative ${on ? "bg-[#1FD177]" : "bg-[#D9D9D9]"}`}
                     >
                       <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-all ${on ? "left-5" : "left-0.5"}`} />
                     </button>
