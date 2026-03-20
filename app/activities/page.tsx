@@ -492,7 +492,7 @@ function Activities() {
               />
               <div className="relative grid grid-cols-3">
                 {[
-                  { key: "suggested", label: <span className="flex items-center gap-0.5"><MdAutoAwesome size={14} /><span>Suggested</span></span> },
+                  { key: "suggested", label: <span className="flex items-center gap-0.5"><MdAutoAwesome size={14} /><span>For {profile.name}</span></span> },
                   { key: "library",   label: <span className="flex items-center gap-0.5"><MdLibraryBooks size={14} /><span>Library</span></span> },
                   { key: "board",     label: <span className="flex items-center gap-0.5"><MdDashboard size={14} /><span>My Board{activeActivities.length > 0 ? ` (${activeActivities.length})` : ""}</span></span> },
                 ].map(t => (
