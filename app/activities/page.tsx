@@ -168,13 +168,23 @@ function ActiveCard({
 }) {
   const router = useRouter();
   const currentStage = PROGRESS_STAGES.find(s => s.value === activity.progress);
+  const activityDef = ALL_ACTIVITIES.find(a => a.title === activity.title);
 
   return (
-    <div className="bg-white rounded-2xl p-4 space-y-3">
-      <div className="flex items-start gap-3">
-        <div className="w-11 h-11 rounded-2xl bg-[#F0F0F0] flex items-center justify-center text-2xl flex-shrink-0">
-          {activity.emoji}
+    <div className="bg-white rounded-2xl overflow-hidden space-y-3">
+      {activityDef?.image && (
+        <div className="w-full h-36 bg-[#F5F5F5] overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={activityDef.image} alt={activity.title} className="w-full h-full object-cover"
+            onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
         </div>
+      )}
+      <div className="flex items-start gap-3 px-4 pt-1">
+        {!activityDef?.image && (
+          <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#F5F5F5] to-[#D9D9D9] flex items-center justify-center text-2xl flex-shrink-0">
+            {activity.emoji}
+          </div>
+        )}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <p className="font-bold text-[#1C1C1E] text-base">{activity.title}</p>
@@ -190,7 +200,7 @@ function ActiveCard({
       </div>
 
       {/* Contextual progress */}
-      <div className="bg-[#FAFAFA] rounded-xl px-3 py-2.5 flex items-center justify-between gap-3">
+      <div className="bg-[#FAFAFA] rounded-xl px-3 py-2.5 flex items-center justify-between gap-3 mx-4">
         <div className="flex gap-1.5 flex-1">
           {PROGRESS_STAGES.map(stage => (
             <div
@@ -205,7 +215,7 @@ function ActiveCard({
       </div>
 
       {/* Actions */}
-      <div className="flex gap-2">
+      <div className="flex gap-2 px-4 pb-4">
         <button
           onClick={() => router.push(`/activity?profileId=${profileId}&activityId=${activity.id}`)}
           className="flex-1 h-12 flex items-center justify-center rounded-xl bg-[#261F5B] text-white font-bold text-xs hover:bg-[#1a1540] transition-colors"
@@ -240,11 +250,22 @@ function SavedCard({
 }: {
   activity: BoardActivity; onActivate: () => void; onRemove: () => void;
 }) {
+  const activityDef = ALL_ACTIVITIES.find(a => a.title === activity.title);
   return (
-    <div className="bg-white rounded-2xl p-4 flex items-start gap-3">
-      <div className="w-11 h-11 rounded-2xl bg-[#f5f5f5] flex items-center justify-center text-2xl flex-shrink-0 opacity-70">
-        {activity.emoji}
-      </div>
+    <div className="bg-white rounded-2xl overflow-hidden opacity-80">
+      {activityDef?.image && (
+        <div className="w-full h-28 bg-[#F5F5F5] overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={activityDef.image} alt={activity.title} className="w-full h-full object-cover"
+            onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
+        </div>
+      )}
+      <div className="p-4 flex items-start gap-3">
+      {!activityDef?.image && (
+        <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#F5F5F5] to-[#D9D9D9] flex items-center justify-center text-2xl flex-shrink-0">
+          {activity.emoji}
+        </div>
+      )}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
           <p className="font-bold text-[#1F2937] text-base">{activity.title}</p>
@@ -267,6 +288,7 @@ function SavedCard({
             Remove
           </button>
         </div>
+      </div>
       </div>
     </div>
   );
