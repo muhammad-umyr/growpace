@@ -428,22 +428,39 @@ function Activities() {
         </div>
 
         {/* Tab bar */}
-        <div className="bg-white rounded-2xl p-1 border border-[#E5E5E5] flex gap-1">
-          {[
-            { key: "suggested", label: <><MdAutoAwesome className="inline mb-0.5" size={14} /> Suggested</> },
-            { key: "library",   label: <><MdLibraryBooks className="inline mb-0.5" size={14} /> Library</> },
-            { key: "board",     label: <><MdDashboard className="inline mb-0.5" size={14} /> My Board{activeActivities.length > 0 ? ` (${activeActivities.length})` : ""}</> },
-          ].map(t => (
-            <button
-              key={t.key}
-              onClick={() => setTab(t.key as typeof tab)}
-              className={`flex-1 h-12 flex items-center justify-center rounded-xl text-xs font-bold transition-all
-                ${tab === t.key ? "bg-[#261F5B] text-white shadow-sm" : "text-[#1F2937] hover:text-[#1F2937]"}`}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
+        {(() => {
+          const tabKeys = ["suggested", "library", "board"] as const;
+          const activeIndex = tabKeys.indexOf(tab);
+          return (
+            <div className="bg-white rounded-2xl p-1 relative overflow-hidden">
+              {/* Sliding pill */}
+              <div
+                className="absolute top-1 bottom-1 rounded-xl bg-[#261F5B] shadow-sm"
+                style={{
+                  width: "calc((100% - 8px) / 3)",
+                  left: `calc(4px + ${activeIndex} * (100% - 8px) / 3)`,
+                  transition: "left 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
+                }}
+              />
+              <div className="relative grid grid-cols-3">
+                {[
+                  { key: "suggested", label: <><MdAutoAwesome className="inline mb-0.5" size={14} /> Suggested</> },
+                  { key: "library",   label: <><MdLibraryBooks className="inline mb-0.5" size={14} /> Library</> },
+                  { key: "board",     label: <><MdDashboard className="inline mb-0.5" size={14} /> My Board{activeActivities.length > 0 ? ` (${activeActivities.length})` : ""}</> },
+                ].map(t => (
+                  <button
+                    key={t.key}
+                    onClick={() => setTab(t.key as typeof tab)}
+                    className={`h-12 flex items-center justify-center text-xs font-bold transition-colors duration-200 rounded-xl
+                      ${tab === t.key ? "text-white" : "text-[#8E8E93] hover:text-[#3A3A3C]"}`}
+                  >
+                    {t.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
 
         {/* ── SUGGESTED TAB ── */}
         {tab === "suggested" && (
