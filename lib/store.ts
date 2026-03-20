@@ -367,6 +367,7 @@ export interface ActivityDef {
   title: string;
   desc: string;
   tag: string;
+  isFun?: boolean;       // true for play-first, entertainment-driven activities
   minMonths: number;
   maxMonths: number;
   howTo?: string[];      // step-by-step tips shown inline
@@ -434,7 +435,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🙈", title: "Peek-a-boo",
     image: "https://images.pexels.com/photos/7105553/pexels-photo-7105553.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Teaches object permanence",
-    tag: "Cognitive", minMonths: 5, maxMonths: 17,
+    tag: "Cognitive", isFun: true, minMonths: 5, maxMonths: 17,
     videoQuery: "peek a boo baby game how to play",
     howTo: [
       "Cover your face with both hands, pause for a second to build anticipation — then reveal with a big 'Peek-a-boo!'",
@@ -445,7 +446,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🧱", title: "Stacking blocks",
     image: "https://images.pexels.com/photos/7269688/pexels-photo-7269688.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Develops hand-eye coordination",
-    tag: "Motor", minMonths: 8, maxMonths: 29,
+    tag: "Motor", isFun: true, minMonths: 8, maxMonths: 29,
     videoQuery: "stacking blocks baby toddler activity",
     howTo: [
       "Start with 2–3 large, lightweight blocks on a stable surface. Demonstrate stacking slowly.",
@@ -467,7 +468,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🫧", title: "Bubble play",
     image: "https://images.pexels.com/photos/6299287/pexels-photo-6299287.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Blow and chase bubbles together",
-    tag: "Sensory", minMonths: 6, maxMonths: 48,
+    tag: "Sensory", isFun: true, minMonths: 6, maxMonths: 48,
     videoQuery: "bubble play baby toddler activity benefits",
     howTo: [
       "For babies: blow bubbles slowly so they can track them with their eyes — great for visual development.",
@@ -478,7 +479,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🌊", title: "Water exploration",
     image: "https://images.pexels.com/photos/8887569/pexels-photo-8887569.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Pouring, splashing, sink & float",
-    tag: "Sensory", minMonths: 8, maxMonths: 48,
+    tag: "Sensory", isFun: true, minMonths: 8, maxMonths: 48,
     videoQuery: "water play activity baby toddler sensory",
     howTo: [
       "Set up a shallow tub of water (just a few centimetres) with cups, funnels, and spoons. Always supervise.",
@@ -490,7 +491,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🏃", title: "Outdoor play",
     image: "https://images.pexels.com/photos/4885131/pexels-photo-4885131.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "30 min of active movement",
-    tag: "Physical", minMonths: 12, maxMonths: 83,
+    tag: "Physical", isFun: true, minMonths: 12, maxMonths: 83,
     videoQuery: "outdoor play ideas toddler child development",
     howTo: [
       "Aim for at least 30 minutes of active outdoor time daily. Even a garden or small park works.",
@@ -501,7 +502,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🌿", title: "Nature walk",
     image: "https://images.pexels.com/photos/2936722/pexels-photo-2936722.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Explore the outdoors together",
-    tag: "Sensory", minMonths: 12, maxMonths: 83,
+    tag: "Sensory", isFun: true, minMonths: 12, maxMonths: 83,
     videoQuery: "nature walk toddler activity ideas",
     howTo: [
       "Bring a small bag to collect interesting things: leaves, smooth stones, feathers, fallen petals.",
@@ -512,7 +513,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🧸", title: "Toy storytelling",
     image: "https://images.pexels.com/photos/5471946/pexels-photo-5471946.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Act out stories with stuffed animals",
-    tag: "Social", minMonths: 18, maxMonths: 60,
+    tag: "Social", isFun: true, minMonths: 18, maxMonths: 60,
     videoQuery: "pretend play stuffed animals toddler storytelling",
     howTo: [
       "Set the scene: 'Teddy is hungry — what shall we feed him?' Let the story grow naturally.",
@@ -523,7 +524,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🎨", title: "Finger painting",
     image: "https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Great for fine motor skills",
-    tag: "Creative", minMonths: 18, maxMonths: 83,
+    tag: "Creative", isFun: true, minMonths: 18, maxMonths: 83,
     videoQuery: "finger painting toddler activity how to",
     howTo: [
       "Cover the surface with a plastic sheet or use a high-chair tray. Use non-toxic, washable paints only.",
@@ -534,7 +535,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🧪", title: "Sand & water play",
     image: "https://images.pexels.com/photos/8422174/pexels-photo-8422174.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Sensory exploration",
-    tag: "Sensory", minMonths: 18, maxMonths: 59,
+    tag: "Sensory", isFun: true, minMonths: 18, maxMonths: 59,
     videoQuery: "sand water play toddler sensory activity",
     howTo: [
       "Set up a tray of sand or a shallow water tub with scoops, cups, and small toys.",
@@ -545,7 +546,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🎭", title: "Pretend play",
     image: "https://images.pexels.com/photos/14881426/pexels-photo-14881426.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Boosts imagination & social skills",
-    tag: "Social", minMonths: 18, maxMonths: 83,
+    tag: "Social", isFun: true, minMonths: 18, maxMonths: 83,
     videoQuery: "pretend play toddler ideas imaginative play",
     howTo: [
       "Set up a simple scene: a toy kitchen, a dolls' tea party, a cardboard-box car or rocket.",
@@ -556,7 +557,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🖐️", title: "Playdough",
     image: "https://images.pexels.com/photos/8422148/pexels-photo-8422148.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Squish, roll, and shape dough",
-    tag: "Motor", minMonths: 18, maxMonths: 72,
+    tag: "Motor", isFun: true, minMonths: 18, maxMonths: 72,
     videoQuery: "playdough activity toddler fine motor skills",
     howTo: [
       "Show the basic moves first: roll into a ball, flatten into a pancake, roll into a snake.",
@@ -567,7 +568,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🎠", title: "Obstacle course",
     image: "https://images.pexels.com/photos/4894738/pexels-photo-4894738.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Crawl under, climb over, jump!",
-    tag: "Physical", minMonths: 18, maxMonths: 72,
+    tag: "Physical", isFun: true, minMonths: 18, maxMonths: 72,
     videoQuery: "obstacle course toddler indoor outdoor ideas",
     howTo: [
       "Use what you have: sofa cushions to crawl over, a tunnel made from a blanket over chairs, hula hoops to step in.",
@@ -579,7 +580,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "✏️", title: "Drawing & coloring",
     image: "https://images.pexels.com/photos/5094665/pexels-photo-5094665.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Develops creativity & fine motor",
-    tag: "Creative", minMonths: 24, maxMonths: 83,
+    tag: "Creative", isFun: true, minMonths: 24, maxMonths: 83,
     videoQuery: "drawing colouring activity toddler child development",
     howTo: [
       "Start with chunky crayons or triangular pencils — easier for small hands to grip.",
@@ -590,7 +591,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🚴", title: "Balance bike",
     image: "https://images.pexels.com/photos/3932888/pexels-photo-3932888.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Build coordination & confidence",
-    tag: "Physical", minMonths: 24, maxMonths: 60,
+    tag: "Physical", isFun: true, minMonths: 24, maxMonths: 60,
     videoQuery: "balance bike toddler how to teach learn",
     howTo: [
       "Adjust the seat so both feet rest flat on the ground — they should be able to walk the bike easily.",
@@ -612,7 +613,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🎸", title: "Music & movement",
     image: "https://images.pexels.com/photos/13652338/pexels-photo-13652338.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Dance and play with instruments",
-    tag: "Creative", minMonths: 12, maxMonths: 83,
+    tag: "Creative", isFun: true, minMonths: 12, maxMonths: 83,
     videoQuery: "music movement activity baby toddler dance",
     howTo: [
       "Put on upbeat music and model simple moves: clapping, stomping, spinning, waving arms.",
@@ -624,7 +625,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🔢", title: "Counting games",
     image: "https://images.pexels.com/photos/8923557/pexels-photo-8923557.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Fun number recognition",
-    tag: "Cognitive", minMonths: 30, maxMonths: 83,
+    tag: "Cognitive", isFun: true, minMonths: 30, maxMonths: 83,
     videoQuery: "counting games toddler preschool maths activity",
     howTo: [
       "Count everyday objects together: stairs as you climb them, grapes at snack time, toys during tidy-up.",
@@ -635,7 +636,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🍳", title: "Kitchen helper",
     image: "https://images.pexels.com/photos/4259140/pexels-photo-4259140.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Simple tasks like stirring & pouring",
-    tag: "Motor", minMonths: 30, maxMonths: 83,
+    tag: "Motor", isFun: true, minMonths: 30, maxMonths: 83,
     videoQuery: "cooking with toddler preschooler kitchen activity",
     howTo: [
       "Give them a real, simple job: stirring batter, pouring measured water, or tearing lettuce.",
@@ -658,7 +659,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🎲", title: "Simple board games",
     image: "https://images.pexels.com/photos/8213255/pexels-photo-8213255.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Teaches turn-taking & patience",
-    tag: "Social", minMonths: 36, maxMonths: 83,
+    tag: "Social", isFun: true, minMonths: 36, maxMonths: 83,
     videoQuery: "board games for toddlers preschoolers turn taking",
     howTo: [
       "Choose games with 1 simple rule: Snakes & Ladders, Pairs (memory), or simple lotto cards.",
@@ -680,7 +681,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🔍", title: "I spy outdoors",
     image: "https://images.pexels.com/photos/4453147/pexels-photo-4453147.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Find colours, shapes & animals outside",
-    tag: "Cognitive", minMonths: 24, maxMonths: 72,
+    tag: "Cognitive", isFun: true, minMonths: 24, maxMonths: 72,
     videoQuery: "I spy outdoor activity children observation",
     howTo: [
       "Start with colours for younger children: 'I spy something red.' Move to shapes and letters as they grow.",
@@ -691,7 +692,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🎯", title: "Target practice",
     image: "https://images.pexels.com/photos/8034021/pexels-photo-8034021.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",     desc: "Bean bags, hoops, or ring toss",
-    tag: "Physical", minMonths: 36, maxMonths: 83,
+    tag: "Physical", isFun: true, minMonths: 36, maxMonths: 83,
     videoQuery: "target games kids gross motor skills activity",
     howTo: [
       "Start close to the target and move back as their aim improves — success builds motivation.",
@@ -747,7 +748,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🎬", title: "Make a mini movie",
     image: "https://images.pexels.com/photos/8382387/pexels-photo-8382387.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Act out & film a short story",
-    tag: "Creative", minMonths: 54, maxMonths: 83,
+    tag: "Creative", isFun: true, minMonths: 54, maxMonths: 83,
     videoQuery: "make a movie with kids creative activity storytelling",
     howTo: [
       "Let them write (or dictate) a simple 3-scene story: beginning, problem, solution.",
@@ -758,7 +759,7 @@ export const ALL_ACTIVITIES: ActivityDef[] = [
   {
     emoji: "🤸", title: "Yoga for kids",
     image: "https://images.pexels.com/photos/6715556/pexels-photo-6715556.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop", desc: "Simple poses with animal names",
-    tag: "Physical", minMonths: 36, maxMonths: 83,
+    tag: "Physical", isFun: true, minMonths: 36, maxMonths: 83,
     videoQuery: "kids yoga poses animals preschool toddler",
     howTo: [
       "Pick 4–5 animal poses: Cat (arch the back), Cobra (lift the chest), Downward Dog, Tree (balance on one foot).",

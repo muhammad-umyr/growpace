@@ -52,14 +52,16 @@ const TAG_COLORS: Record<string, string> = {
   Motor:     "bg-[#F0F0F0] text-[#1F2937]",
 };
 
+const FUN_TAG_CLASS = "bg-[#FFF3CD] text-[#B45309]";
+
 const ALL_TAGS = ["All", "Physical", "Language", "Cognitive", "Creative", "Social", "Sensory", "Motor"];
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 
 function ActivityCard({
-  emoji, image, title, desc, tag, reason, isAdded, onAdd, howTo, videoQuery,
+  emoji, image, title, desc, tag, isFun, reason, isAdded, onAdd, howTo, videoQuery,
 }: {
-  emoji: string; image?: string; title: string; desc: string; tag: string;
+  emoji: string; image?: string; title: string; desc: string; tag: string; isFun?: boolean;
   reason?: string; isAdded: boolean; onAdd: () => void;
   howTo?: string[]; videoQuery?: string;
 }) {
@@ -92,9 +94,16 @@ function ActivityCard({
 
         {/* Content */}
         <div className="flex-1 min-w-0">
-          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[tag] ?? "bg-gray-100 text-gray-500"}`}>
-            {tag}
-          </span>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[tag] ?? "bg-gray-100 text-gray-500"}`}>
+              {tag}
+            </span>
+            {isFun && (
+              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${FUN_TAG_CLASS}`}>
+                Fun
+              </span>
+            )}
+          </div>
           <h3 className="font-extrabold text-[#1C1C1E] text-base leading-tight mt-1">{title}</h3>
           <p className="text-[#1F2937] text-sm mt-0.5 leading-relaxed">{desc}</p>
           {reason && (
@@ -188,9 +197,16 @@ function ActiveCard({
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[activity.tag] ?? "bg-gray-100 text-gray-500"}`}>
-            {activity.tag}
-          </span>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[activity.tag] ?? "bg-gray-100 text-gray-500"}`}>
+              {activity.tag}
+            </span>
+            {activityDef?.isFun && (
+              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${FUN_TAG_CLASS}`}>
+                Fun
+              </span>
+            )}
+          </div>
           <p className="font-extrabold text-[#1C1C1E] text-base leading-tight mt-1">{activity.title}</p>
           <p className="text-[#1F2937] text-sm mt-0.5 leading-relaxed">{activity.desc}</p>
         </div>
@@ -266,9 +282,16 @@ function SavedCard({
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full opacity-60 ${TAG_COLORS[activity.tag] ?? "bg-gray-100 text-gray-500"}`}>
-            {activity.tag}
-          </span>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full opacity-60 ${TAG_COLORS[activity.tag] ?? "bg-gray-100 text-gray-500"}`}>
+              {activity.tag}
+            </span>
+            {activityDef?.isFun && (
+              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full opacity-60 ${FUN_TAG_CLASS}`}>
+                Fun
+              </span>
+            )}
+          </div>
           <p className="font-extrabold text-[#1C1C1E] text-base leading-tight mt-1">{activity.title}</p>
           <p className="text-[#8E8E93] text-sm mt-0.5 leading-relaxed">{activity.desc}</p>
           <div className="flex gap-2 mt-3">
@@ -553,6 +576,7 @@ function Activities() {
                 title={s.title}
                 desc={s.desc}
                 tag={s.tag}
+                isFun={ALL_ACTIVITIES.find(a => a.title === s.title)?.isFun}
                 reason={s.reason}
                 isAdded={addedTitles.has(s.title)}
                 onAdd={() => addToBoard(s.title, s.emoji, s.desc, s.tag, "ai")}
@@ -590,6 +614,7 @@ function Activities() {
                   title={a.title}
                   desc={a.desc}
                   tag={a.tag}
+                  isFun={a.isFun}
                   howTo={a.howTo}
                   videoQuery={a.videoQuery}
                   isAdded={addedTitles.has(a.title)}
