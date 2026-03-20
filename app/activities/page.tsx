@@ -437,7 +437,7 @@ function Activities() {
             <button
               key={t.key}
               onClick={() => setTab(t.key as typeof tab)}
-              className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all
+              className={`flex-1 h-12 flex items-center justify-center rounded-xl text-xs font-bold transition-all
                 ${tab === t.key ? "bg-[#261F5B] text-white shadow-sm" : "text-[#1F2937] hover:text-[#1F2937]"}`}
             >
               {t.label}
