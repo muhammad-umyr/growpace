@@ -560,7 +560,8 @@ function Dashboard() {
                           {PROGRESS_STAGES.map(stage => (
                             <div
                               key={stage.value}
-                              className={`flex-1 h-3 rounded-full ${a.progress >= stage.value ? "bg-[#1FD177]" : "bg-[#E5E5E5]"}`}
+                              className="flex-1 h-3 rounded-full"
+                              style={{ backgroundColor: a.progress >= stage.value ? "#1FD177" : "#E5E5E5" }}
                             />
                           ))}
                         </div>
