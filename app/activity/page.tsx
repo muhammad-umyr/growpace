@@ -234,7 +234,7 @@ function ActivityDetail() {
               const isCurrent = activity.progress === stage.value;
               return (
                 <div key={stage.value} className="flex-1 flex flex-col items-center gap-1.5">
-                  <div className={`w-full h-2 rounded-full transition-colors ${reached ? "bg-[#34C759]" : "bg-[#E5E5E5]"}`} />
+                  <div className={`w-full h-2 rounded-full transition-colors ${reached ? "bg-[#1FD177]" : "bg-[#E5E5E5]"}`} />
                   <span className={`text-[10px] font-bold text-center leading-tight ${isCurrent ? "text-[#1C1C1E]" : reached ? "text-[#AAAAAA]" : "text-[#D9D9D9]"}`}>
                     {stage.short}
                   </span>
@@ -331,7 +331,7 @@ function ActivityDetail() {
               <ul className="space-y-2">
                 {benefits.map((b, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-[#1F2937] leading-relaxed">
-                    <MdCheck className="text-[#34C759] mt-0.5 flex-shrink-0" size={16} />
+                    <MdCheck className="text-[#1FD177] mt-0.5 flex-shrink-0" size={16} />
                     {b}
                   </li>
                 ))}
@@ -426,7 +426,7 @@ function ActivityDetail() {
               {timeline.map((item, idx) => (
                 <div key={idx} className="flex gap-3">
                   <div className="flex flex-col items-center">
-                    <div className={`w-3 h-3 rounded-full flex-shrink-0 mt-0.5 ${item.isKey ? "bg-[#34C759]" : "bg-[#34C759]"}`} />
+                    <div className={`w-3 h-3 rounded-full flex-shrink-0 mt-0.5 ${item.isKey ? "bg-[#1FD177]" : "bg-[#1FD177]"}`} />
                     {idx < timeline.length - 1 && <div className="w-0.5 bg-[#E5E5E5] flex-1 my-1" />}
                   </div>
                   <div className="pb-4 flex-1 min-w-0">

@@ -195,7 +195,7 @@ function ActiveCard({
           {PROGRESS_STAGES.map(stage => (
             <div
               key={stage.value}
-              className={`flex-1 h-1.5 rounded-full transition-colors ${activity.progress >= stage.value ? "bg-[#34C759]" : "bg-[#E5E5E5]"}`}
+              className={`flex-1 h-1.5 rounded-full transition-colors ${activity.progress >= stage.value ? "bg-[#1FD177]" : "bg-[#E5E5E5]"}`}
             />
           ))}
         </div>

@@ -107,7 +107,7 @@ function Report() {
           </div>
           <div className="h-4 bg-[#E5E5E5] rounded-full overflow-hidden">
             <div
-              className="h-full bg-[#34C759] rounded-full"
+              className="h-full bg-[#1FD177] rounded-full"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -123,7 +123,7 @@ function Report() {
           {/* Milestone progress bar */}
           <div className="h-2 bg-[#E5E5E5] rounded-full overflow-hidden mb-4">
             <div
-              className="h-full bg-[#34C759] rounded-full"
+              className="h-full bg-[#1FD177] rounded-full"
               style={{ width: `${milestonePercent}%` }}
             />
           </div>
@@ -141,7 +141,7 @@ function Report() {
                   {m.label}
                 </span>
                 {profile.milestones[m.id] && (
-                  <MdCheck className="text-[#34C759] flex-shrink-0" size={16} />
+                  <MdCheck className="text-[#1FD177] flex-shrink-0" size={16} />
                 )}
               </div>
             ))}

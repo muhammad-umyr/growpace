@@ -469,7 +469,7 @@ function Dashboard() {
                     <span className="text-xs text-[#94A3B8] w-20 flex-shrink-0">{cat}</span>
                     <div className="flex-1 h-2 bg-[#F0F0F0] rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-[#34C759] rounded-full transition-all duration-700"
+                        className="h-full bg-[#1FD177] rounded-full transition-all duration-700"
                         style={{ width: `${(count / max) * 100}%` }}
                       />
                     </div>
