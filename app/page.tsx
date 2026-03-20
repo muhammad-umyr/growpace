@@ -172,7 +172,7 @@ export default function Home() {
 
           <button
             onClick={() => setShowForm(true)}
-            className="w-full py-3.5 rounded-2xl border-2 border-dashed border-[#007AFF] text-[#007AFF] font-semibold text-sm hover:bg-[#EFF6FF] transition-colors flex items-center justify-center gap-1"
+            className="w-full py-3.5 rounded-2xl border-2 border-dashed border-[#261F5B] text-[#261F5B] font-semibold text-sm hover:bg-[#EDEAF5] transition-colors flex items-center justify-center gap-1"
           >
             <MdAdd size={18} /> Add another child
           </button>
@@ -185,7 +185,7 @@ export default function Home() {
           {showForm && hasProfiles && (
             <button
               onClick={() => setShowForm(false)}
-              className="text-sm text-[#007AFF] font-semibold mb-4 flex items-center gap-1 transition-colors"
+              className="text-sm text-[#261F5B] font-semibold mb-4 flex items-center gap-1 transition-colors"
             >
               <MdArrowBack className="inline" size={16} /> Back
             </button>
@@ -200,7 +200,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => fileRef.current?.click()}
-                className="relative w-24 h-24 rounded-full bg-[#F0F0F0] border-4 border-dashed border-[#222222] hover:border-[#007AFF] transition-colors overflow-hidden"
+                className="relative w-24 h-24 rounded-full bg-[#F0F0F0] border-4 border-dashed border-[#222222] hover:border-[#261F5B] transition-colors overflow-hidden"
               >
                 {photoUrl ? (
                   <Image src={photoUrl} alt="Child photo" fill className="object-cover" unoptimized />
@@ -233,7 +233,7 @@ export default function Home() {
                 value={name}
                 onChange={e => { setName(e.target.value); setErrors(p => ({ ...p, name: "" })); }}
                 placeholder="e.g. Aisha, Liam, Noah…"
-                className="w-full px-4 py-3 rounded-2xl border-2 border-[#D9D9D9] bg-[#FAFAFA] focus:outline-none focus:border-[#007AFF] text-[#1C1C1E] placeholder-[#8E8E93] transition-colors"
+                className="w-full px-4 py-3 rounded-2xl border-2 border-[#D9D9D9] bg-[#FAFAFA] focus:outline-none focus:border-[#261F5B] text-[#1C1C1E] placeholder-[#8E8E93] transition-colors"
               />
               {errors.name && <p className="mt-1 text-sm text-red-400">{errors.name}</p>}
             </div>
@@ -248,7 +248,7 @@ export default function Home() {
                 value={dob}
                 max={new Date().toISOString().split("T")[0]}
                 onChange={e => { setDob(e.target.value); setErrors(p => ({ ...p, dob: "" })); }}
-                className="w-full px-4 py-3 rounded-2xl border-2 border-[#D9D9D9] bg-[#FAFAFA] focus:outline-none focus:border-[#007AFF] text-[#1C1C1E] transition-colors"
+                className="w-full px-4 py-3 rounded-2xl border-2 border-[#D9D9D9] bg-[#FAFAFA] focus:outline-none focus:border-[#261F5B] text-[#1C1C1E] transition-colors"
               />
               {errors.dob && <p className="mt-1 text-sm text-red-400">{errors.dob}</p>}
             </div>
@@ -266,8 +266,8 @@ export default function Home() {
                     onClick={() => { setGender(g.value); setErrors(p => ({ ...p, gender: "" })); }}
                     className={`flex flex-col items-center gap-1 py-3 rounded-2xl border-2 transition-all font-semibold text-sm
                       ${gender === g.value
-                        ? "border-[#007AFF] bg-[#EFF6FF] text-[#4B5563] scale-105 shadow-sm"
-                        : "border-[#D9D9D9] bg-[#FAFAFA] text-[#1F2937] hover:border-[#007AFF]"
+                        ? "border-[#261F5B] bg-[#EDEAF5] text-[#4B5563] scale-105 shadow-sm"
+                        : "border-[#D9D9D9] bg-[#FAFAFA] text-[#1F2937] hover:border-[#261F5B]"
                       }`}
                   >
                     <span className="text-2xl">{g.emoji}</span>
@@ -281,7 +281,7 @@ export default function Home() {
             {/* Submit */}
             <button
               type="submit"
-              className="w-full py-3.5 rounded-2xl bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-base transition-colors  mt-2 cursor-pointer"
+              className="w-full py-3.5 rounded-2xl bg-[#261F5B] hover:bg-[#1a1540] text-white font-semibold text-base transition-colors  mt-2 cursor-pointer"
             >
               Create Profile 🌟
             </button>

@@ -319,19 +319,19 @@ function Dashboard() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => router.push(`/report?id=${profile.id}`)}
-              className="text-sm text-[#007AFF] font-semibold transition-colors flex items-center gap-1"
+              className="text-sm text-[#261F5B] font-semibold transition-colors flex items-center gap-1"
             >
               <MdDescription size={16} /> Report
             </button>
             <button
               onClick={() => setShowAddCaregiver(true)}
-              className="text-sm text-[#007AFF] font-semibold transition-colors flex items-center gap-1"
+              className="text-sm text-[#261F5B] font-semibold transition-colors flex items-center gap-1"
             >
               <MdPersonAdd size={16} /> Add Partner
             </button>
             <button
               onClick={() => router.push("/")}
-              className="text-sm text-[#007AFF] font-semibold transition-colors flex items-center gap-1"
+              className="text-sm text-[#261F5B] font-semibold transition-colors flex items-center gap-1"
             >
               <MdChildCare size={16} /> Add Child
             </button>
@@ -502,7 +502,7 @@ function Dashboard() {
             <h2 className="text-lg font-bold text-[#1C1C1E] tracking-tight">Current Activities</h2>
             <button
               onClick={() => router.push(`/activities?id=${profile.id}`)}
-              className="text-sm text-[#007AFF] font-semibold hover:opacity-80 transition-opacity flex items-center gap-1"
+              className="text-sm text-[#261F5B] font-semibold hover:opacity-80 transition-opacity flex items-center gap-1"
             >
               View all <MdChevronRight size={18} />
             </button>
@@ -517,7 +517,7 @@ function Dashboard() {
               </p>
               <button
                 onClick={() => router.push(`/activities?id=${profile.id}`)}
-                className="text-sm bg-[#007AFF] text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-[#0071E3] transition-colors"
+                className="text-sm bg-[#261F5B] text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-[#1a1540] transition-colors"
               >
                 Explore Activities ✨
               </button>
@@ -575,7 +575,7 @@ function Dashboard() {
                       <div className="mt-3 flex flex-col gap-2">
                         <button
                           onClick={() => startActivity(a.id)}
-                          className="w-full h-11 flex items-center justify-center rounded-xl bg-[#007AFF] text-white font-semibold text-xs hover:bg-[#0071E3] transition-colors"
+                          className="w-full h-11 flex items-center justify-center rounded-xl bg-[#261F5B] text-white font-semibold text-xs hover:bg-[#1a1540] transition-colors"
                         >
                           Start this activity <MdChevronRight size={16} className="inline" />
                         </button>
@@ -590,7 +590,7 @@ function Dashboard() {
                       <div className="mt-3 flex gap-2">
                         <button
                           onClick={() => { setLogFlyoutId(a.id); setFlyoutStage(null); setFlyoutNote(""); setFlyoutPhoto(null); }}
-                          className="flex-1 h-11 flex items-center justify-center rounded-xl bg-[#007AFF] text-white font-semibold text-xs hover:bg-[#0071E3] transition-colors"
+                          className="flex-1 h-11 flex items-center justify-center rounded-xl bg-[#261F5B] text-white font-semibold text-xs hover:bg-[#1a1540] transition-colors"
                         >
                           Log progress
                         </button>
@@ -626,7 +626,7 @@ function Dashboard() {
             <h2 className="text-lg font-bold text-[#1C1C1E] tracking-tight">What&apos;s next for {profile.name}</h2>
             <button
               onClick={() => router.push(`/onboarding?id=${profile.id}`)}
-              className="text-sm text-[#007AFF] font-semibold transition-colors flex items-center gap-1"
+              className="text-sm text-[#261F5B] font-semibold transition-colors flex items-center gap-1"
             >
               <MdEdit size={16} /> Edit
             </button>
@@ -752,7 +752,7 @@ function Dashboard() {
             <h2 className="text-lg font-bold text-[#1C1C1E] tracking-tight">Growth Journal</h2>
             <button
               onClick={() => setShowJournalForm(v => !v)}
-              className="text-sm bg-[#007AFF] text-white font-semibold px-3 py-1.5 rounded-2xl border-b-4 border-[#45A800] hover:bg-[#61D900] active:border-b-0 active:translate-y-[2px] transition-all flex items-center gap-1"
+              className="text-sm bg-[#261F5B] text-white font-semibold px-3 py-1.5 rounded-2xl border-b-4 border-[#45A800] hover:bg-[#61D900] active:border-b-0 active:translate-y-[2px] transition-all flex items-center gap-1"
             >
               {showJournalForm ? "Cancel" : <><MdAdd size={16} /> Add moment</>}
             </button>
@@ -782,7 +782,7 @@ function Dashboard() {
               <button
                 onClick={addJournalEntry}
                 disabled={!journalText.trim()}
-                className="w-full py-2.5 rounded-2xl bg-[#007AFF] hover:bg-[#0071E3] disabled:opacity-40 text-white font-extrabold text-base hover:bg-[#0071E3] transition-colors"
+                className="w-full py-2.5 rounded-2xl bg-[#261F5B] hover:bg-[#1a1540] disabled:opacity-40 text-white font-extrabold text-base hover:bg-[#1a1540] transition-colors"
               >
                 Save moment
               </button>
@@ -825,7 +825,7 @@ function Dashboard() {
             <h2 className="text-lg font-bold text-[#1C1C1E] tracking-tight">Care Team</h2>
             <button
               onClick={() => setShowAddCaregiver(true)}
-              className="text-sm text-[#007AFF] font-semibold hover:opacity-80 transition-opacity flex items-center gap-1"
+              className="text-sm text-[#261F5B] font-semibold hover:opacity-80 transition-opacity flex items-center gap-1"
             >
               <MdAdd size={16} /> Add person
             </button>
@@ -964,8 +964,8 @@ function Dashboard() {
                       onClick={() => setFlyoutStage(stage.value)}
                       className={`px-3 py-3 rounded-xl border-2 text-left transition-all
                         ${flyoutStage === stage.value
-                          ? "border-[#007AFF] bg-[#EFF6FF]"
-                          : "border-[#D9D9D9] bg-[#FAFAFA] hover:border-[#007AFF]"
+                          ? "border-[#261F5B] bg-[#EDEAF5]"
+                          : "border-[#D9D9D9] bg-[#FAFAFA] hover:border-[#261F5B]"
                         }`}
                     >
                       <p className="text-sm font-bold text-[#111827]">{stage.label}</p>
@@ -1006,7 +1006,7 @@ function Dashboard() {
               <button
                 onClick={saveFlyoutProgress}
                 disabled={!flyoutStage}
-                className="w-full py-3.5 rounded-2xl bg-[#007AFF] hover:bg-[#0071E3] disabled:opacity-40 text-white font-extrabold text-sm hover:bg-[#0071E3] transition-colors"
+                className="w-full py-3.5 rounded-2xl bg-[#261F5B] hover:bg-[#1a1540] disabled:opacity-40 text-white font-extrabold text-sm hover:bg-[#1a1540] transition-colors"
               >
                 Save update
               </button>

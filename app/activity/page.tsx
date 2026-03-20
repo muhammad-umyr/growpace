@@ -184,7 +184,7 @@ function ActivityDetail() {
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <button
             onClick={() => router.back()}
-            className="text-sm text-[#007AFF] font-semibold transition-colors flex items-center gap-1"
+            className="text-sm text-[#261F5B] font-semibold transition-colors flex items-center gap-1"
           >
             <MdArrowBack className="inline" size={16} /> Back
           </button>
@@ -271,8 +271,8 @@ function ActivityDetail() {
                     onClick={() => setSelectedStage(stage.value)}
                     className={`px-3 py-3 rounded-xl border-2 text-left transition-all
                       ${selectedStage === stage.value
-                        ? "border-[#007AFF] bg-[#EFF6FF]"
-                        : "border-[#D9D9D9] bg-[#FAFAFA] hover:border-[#007AFF]"
+                        ? "border-[#261F5B] bg-[#EDEAF5]"
+                        : "border-[#D9D9D9] bg-[#FAFAFA] hover:border-[#261F5B]"
                       }`}
                   >
                     <p className="text-sm font-bold text-[#1C1C1E]">{stage.label}</p>
@@ -283,7 +283,7 @@ function ActivityDetail() {
                 value={note}
                 onChange={e => setNote(e.target.value)}
                 placeholder="Add a note… (optional) e.g. She tried for 5 minutes today!"
-                className="w-full px-4 py-3 rounded-2xl border-2 border-[#D9D9D9] bg-[#FAFAFA] focus:outline-none focus:border-[#007AFF] text-[#1C1C1E] placeholder-[#8E8E93] text-sm resize-none h-20 transition-colors"
+                className="w-full px-4 py-3 rounded-2xl border-2 border-[#D9D9D9] bg-[#FAFAFA] focus:outline-none focus:border-[#261F5B] text-[#1C1C1E] placeholder-[#8E8E93] text-sm resize-none h-20 transition-colors"
               />
 
               {/* Photo upload */}
@@ -454,7 +454,7 @@ function ActivityDetail() {
         <div className="flex gap-3">
           <button
             onClick={markDone}
-            className="flex-1 py-3 rounded-2xl bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2"
+            className="flex-1 py-3 rounded-2xl bg-[#261F5B] hover:bg-[#1a1540] text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2"
           >
             <MdCheckCircle size={18} /> Mark as Done
           </button>

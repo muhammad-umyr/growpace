@@ -132,7 +132,7 @@ function Onboarding() {
 
         {/* Progress summary */}
         {checkedCount > 0 && (
-          <div className="inline-flex items-center gap-2 bg-[#EFF6FF] border border-[#007AFF] text-[#007AFF] font-bold text-base px-4 py-2 rounded-full">
+          <div className="inline-flex items-center gap-2 bg-[#EDEAF5] border border-[#261F5B] text-[#261F5B] font-bold text-base px-4 py-2 rounded-full">
             🎉 {checkedCount} milestone{checkedCount !== 1 ? "s" : ""} reached so far!
           </div>
         )}
@@ -161,13 +161,13 @@ function Onboarding() {
                     onClick={() => toggle(m)}
                     className={`relative flex flex-col items-center gap-2 p-4 rounded-2xl border-2 transition-all duration-150 text-center
                       ${isChecked
-                        ? "bg-gradient-to-br from-[#F5F5F5] to-[#D9D9D9] border-[#007AFF] bg-[#EFF6FF] scale-[1.02]"
-                        : "bg-white border-[#D9D9D9] hover:border-[#007AFF]"
+                        ? "bg-gradient-to-br from-[#F5F5F5] to-[#D9D9D9] border-[#261F5B] bg-[#EDEAF5] scale-[1.02]"
+                        : "bg-white border-[#D9D9D9] hover:border-[#261F5B]"
                       }`}
                   >
                     {/* Checkmark badge */}
                     {isChecked && (
-                      <div className="absolute top-2.5 right-2.5 w-5 h-5 rounded-full bg-[#007AFF] flex items-center justify-center">
+                      <div className="absolute top-2.5 right-2.5 w-5 h-5 rounded-full bg-[#261F5B] flex items-center justify-center">
                         <MdCheck className="text-white" size={13} />
                       </div>
                     )}
@@ -208,7 +208,7 @@ function Onboarding() {
           </div>
           <button
             onClick={finish}
-            className="bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold px-6 py-3 rounded-2xl transition-colors  text-sm"
+            className="bg-[#261F5B] hover:bg-[#1a1540] text-white font-semibold px-6 py-3 rounded-2xl transition-colors  text-sm"
           >
             <span className="flex items-center gap-1">{checkedCount > 0 ? "See what's next" : "Skip for now"} <MdChevronRight size={18} /></span>
           </button>

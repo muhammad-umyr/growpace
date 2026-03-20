@@ -57,13 +57,13 @@ function Report() {
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <button
             onClick={() => router.back()}
-            className="text-sm text-[#007AFF] font-semibold transition-colors flex items-center gap-1"
+            className="text-sm text-[#261F5B] font-semibold transition-colors flex items-center gap-1"
           >
             <MdArrowBack className="inline" size={16} /> Back
           </button>
           <button
             onClick={() => window.print()}
-            className="text-sm bg-[#007AFF] text-white font-semibold px-4 py-2 rounded-full hover:bg-[#111111] transition-colors"
+            className="text-sm bg-[#261F5B] text-white font-semibold px-4 py-2 rounded-full hover:bg-[#111111] transition-colors"
           >
             🖨️ Print / Save PDF
           </button>

@@ -130,7 +130,7 @@ function ActivityCard({
           className={`text-xs font-bold px-4 py-1.5 rounded-full transition-all
             ${isAdded
               ? "bg-[#E5E5E5] text-[#8E8E93] cursor-default"
-              : "bg-[#007AFF] text-white hover:bg-[#0071E3] shadow-sm"
+              : "bg-[#261F5B] text-white hover:bg-[#1a1540] shadow-sm"
             }`}
         >
           {isAdded ? <><MdCheckCircle className="inline mb-0.5" size={14} /> Added</> : <><MdAdd className="inline mb-0.5" size={14} /> Board</>}
@@ -250,7 +250,7 @@ function SavedCard({
         <div className="flex gap-2 mt-2">
           <button
             onClick={onActivate}
-            className="text-xs bg-[#007AFF] text-white font-semibold px-3 py-1 rounded-full hover:bg-[#111111] transition-colors flex items-center gap-1"
+            className="text-xs bg-[#261F5B] text-white font-semibold px-3 py-1 rounded-full hover:bg-[#111111] transition-colors flex items-center gap-1"
           >
             Start This Week <MdChevronRight size={14} />
           </button>
@@ -409,7 +409,7 @@ function Activities() {
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <button
             onClick={() => router.push(`/dashboard?id=${profile.id}`)}
-            className="text-sm text-[#007AFF] font-semibold transition-colors flex items-center gap-1"
+            className="text-sm text-[#261F5B] font-semibold transition-colors flex items-center gap-1"
           >
             <MdArrowBack className="inline" size={16} /> {profile.name}&apos;s Dashboard
           </button>
@@ -438,7 +438,7 @@ function Activities() {
               key={t.key}
               onClick={() => setTab(t.key as typeof tab)}
               className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all
-                ${tab === t.key ? "bg-[#007AFF] text-white shadow-sm" : "text-[#1F2937] hover:text-[#1F2937]"}`}
+                ${tab === t.key ? "bg-[#261F5B] text-white shadow-sm" : "text-[#1F2937] hover:text-[#1F2937]"}`}
             >
               {t.label}
             </button>
@@ -530,8 +530,8 @@ function Activities() {
                   onClick={() => setFilterTag(tag)}
                   className={`text-xs font-bold px-3 py-1.5 rounded-full transition-all
                     ${filterTag === tag
-                      ? "bg-[#007AFF] text-white"
-                      : "bg-white text-[#1F2937] border border-[#D9D9D9] hover:border-[#007AFF]"
+                      ? "bg-[#261F5B] text-white"
+                      : "bg-white text-[#1F2937] border border-[#D9D9D9] hover:border-[#261F5B]"
                     }`}
                 >
                   {tag}
@@ -570,7 +570,7 @@ function Activities() {
                 </p>
                 <button
                   onClick={() => setTab("suggested")}
-                  className="text-sm bg-[#007AFF] text-white font-semibold px-5 py-2.5 rounded-full hover:bg-[#111111] transition-colors flex items-center gap-1 mx-auto"
+                  className="text-sm bg-[#261F5B] text-white font-semibold px-5 py-2.5 rounded-full hover:bg-[#111111] transition-colors flex items-center gap-1 mx-auto"
                 >
                   Browse Suggestions <MdAutoAwesome size={16} />
                 </button>
