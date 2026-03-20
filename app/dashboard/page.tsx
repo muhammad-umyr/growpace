@@ -42,6 +42,7 @@ import {
   RecognitionMilestoneId,
   WeeklyCardData,
   MonthlyCardData,
+  ALL_ACTIVITIES,
 } from "@/lib/store";
 
 const TAG_COLORS: Record<string, string> = {
@@ -525,6 +526,7 @@ function Dashboard() {
               {boardActivities.map(a => {
                 const currentStage = PROGRESS_STAGES.find(s => s.value === a.progress);
                 const isSaved = a.status === "saved";
+                const activityDef = ALL_ACTIVITIES.find(d => d.title === a.title);
                 return (
                   <div
                     key={a.id}
@@ -532,9 +534,21 @@ function Dashboard() {
                   >
                     {/* Header row */}
                     <div className="flex items-start gap-3">
-                      <div className={`w-11 h-11 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 ${isSaved ? "bg-[#F5F5F5]" : "bg-[#F0F0F0]"}`}>
-                        {a.emoji}
-                      </div>
+                      {activityDef?.image ? (
+                        <div className="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0 bg-[#F5F5F5]">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={activityDef.image}
+                            alt={a.title}
+                            className="w-full h-full object-cover"
+                            onError={e => { (e.target as HTMLImageElement).style.display = "none"; }}
+                          />
+                        </div>
+                      ) : (
+                        <div className={`w-20 h-20 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0 ${isSaved ? "bg-[#F5F5F5]" : "bg-[#F0F0F0]"}`}>
+                          {a.emoji}
+                        </div>
+                      )}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
                           <p className="font-semibold text-[#1C1C1E] text-sm">{a.title}</p>
