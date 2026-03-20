@@ -7,7 +7,6 @@ import { ActivityBubbles } from "./ActivityBubbles";
 import {
   MdDescription,
   MdPersonAdd,
-  MdChildCare,
   MdEdit,
   MdAdd,
   MdChevronRight,
@@ -328,12 +327,6 @@ function Dashboard() {
               className="text-sm text-[#261F5B] font-semibold transition-colors flex items-center gap-1"
             >
               <MdPersonAdd size={16} /> Add Partner
-            </button>
-            <button
-              onClick={() => router.push("/")}
-              className="text-sm text-[#261F5B] font-semibold transition-colors flex items-center gap-1"
-            >
-              <MdChildCare size={16} /> Add Child
             </button>
           </div>
         </div>
