@@ -171,28 +171,27 @@ function ActiveCard({
   const activityDef = ALL_ACTIVITIES.find(a => a.title === activity.title);
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden space-y-3">
-      {activityDef?.image && (
-        <div className="w-full h-36 bg-[#F5F5F5] overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={activityDef.image} alt={activity.title} className="w-full h-full object-cover"
-            onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
-        </div>
-      )}
-      <div className="flex items-start gap-3 px-4 pt-1">
-        {!activityDef?.image && (
-          <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#F5F5F5] to-[#D9D9D9] flex items-center justify-center text-2xl flex-shrink-0">
+    <div className="bg-white rounded-2xl overflow-hidden">
+
+      {/* Header row — matches Library card layout */}
+      <div className="p-4 flex gap-4 items-start">
+        {activityDef?.image ? (
+          <div className="w-28 h-28 rounded-2xl overflow-hidden flex-shrink-0 shadow-sm bg-[#F5F5F5]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={activityDef.image} alt={activity.title} className="w-full h-full object-cover"
+              onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
+          </div>
+        ) : (
+          <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-[#F5F5F5] to-[#D9D9D9] flex items-center justify-center text-5xl flex-shrink-0 shadow-sm">
             {activity.emoji}
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <p className="font-bold text-[#1C1C1E] text-base">{activity.title}</p>
-            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[activity.tag] ?? "bg-gray-100 text-gray-500"}`}>
-              {activity.tag}
-            </span>
-          </div>
-          <p className="text-[#1F2937] text-sm mt-0.5">{activity.desc}</p>
+          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${TAG_COLORS[activity.tag] ?? "bg-gray-100 text-gray-500"}`}>
+            {activity.tag}
+          </span>
+          <p className="font-extrabold text-[#1C1C1E] text-base leading-tight mt-1">{activity.title}</p>
+          <p className="text-[#1F2937] text-sm mt-0.5 leading-relaxed">{activity.desc}</p>
         </div>
         <button onClick={onRemove} className="text-[#8E8E93] hover:text-red-400 transition-colors flex-shrink-0 leading-none">
           <MdClose size={20} />
@@ -253,42 +252,39 @@ function SavedCard({
   const activityDef = ALL_ACTIVITIES.find(a => a.title === activity.title);
   return (
     <div className="bg-white rounded-2xl overflow-hidden opacity-80">
-      {activityDef?.image && (
-        <div className="w-full h-28 bg-[#F5F5F5] overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={activityDef.image} alt={activity.title} className="w-full h-full object-cover"
-            onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
-        </div>
-      )}
-      <div className="p-4 flex items-start gap-3">
-      {!activityDef?.image && (
-        <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#F5F5F5] to-[#D9D9D9] flex items-center justify-center text-2xl flex-shrink-0">
-          {activity.emoji}
-        </div>
-      )}
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 flex-wrap">
-          <p className="font-bold text-[#1F2937] text-base">{activity.title}</p>
+      <div className="p-4 flex gap-4 items-start">
+        {activityDef?.image ? (
+          <div className="w-28 h-28 rounded-2xl overflow-hidden flex-shrink-0 shadow-sm bg-[#F5F5F5]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={activityDef.image} alt={activity.title} className="w-full h-full object-cover"
+              onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
+          </div>
+        ) : (
+          <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-[#F5F5F5] to-[#D9D9D9] flex items-center justify-center text-5xl flex-shrink-0 shadow-sm">
+            {activity.emoji}
+          </div>
+        )}
+        <div className="flex-1 min-w-0">
           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full opacity-60 ${TAG_COLORS[activity.tag] ?? "bg-gray-100 text-gray-500"}`}>
             {activity.tag}
           </span>
+          <p className="font-extrabold text-[#1C1C1E] text-base leading-tight mt-1">{activity.title}</p>
+          <p className="text-[#8E8E93] text-sm mt-0.5 leading-relaxed">{activity.desc}</p>
+          <div className="flex gap-2 mt-3">
+            <button
+              onClick={onActivate}
+              className="text-xs bg-[#261F5B] text-white font-semibold px-3 py-1.5 rounded-lg hover:bg-[#1a1540] transition-colors flex items-center gap-1"
+            >
+              Start This Week <MdChevronRight size={14} />
+            </button>
+            <button
+              onClick={onRemove}
+              className="text-xs text-[#8E8E93] hover:text-red-400 transition-colors font-semibold"
+            >
+              Remove
+            </button>
+          </div>
         </div>
-        <p className="text-[#8E8E93] text-sm mt-0.5">{activity.desc}</p>
-        <div className="flex gap-2 mt-2">
-          <button
-            onClick={onActivate}
-            className="text-xs bg-[#261F5B] text-white font-semibold px-3 py-1 rounded-full hover:bg-[#111111] transition-colors flex items-center gap-1"
-          >
-            Start This Week <MdChevronRight size={14} />
-          </button>
-          <button
-            onClick={onRemove}
-            className="text-xs text-[#8E8E93] hover:text-red-400 transition-colors font-semibold"
-          >
-            Remove
-          </button>
-        </div>
-      </div>
       </div>
     </div>
   );
