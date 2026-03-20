@@ -208,9 +208,15 @@ function ActiveCard({
       <div className="flex gap-2">
         <button
           onClick={() => router.push(`/activity?profileId=${profileId}&activityId=${activity.id}`)}
-          className="flex-1 h-12 flex items-center justify-center rounded-xl bg-[#F0F0F0] text-[#1F2937] font-bold text-xs hover:bg-[#E5E5E5] transition-colors "
+          className="flex-1 h-12 flex items-center justify-center rounded-xl bg-[#261F5B] text-white font-bold text-xs hover:bg-[#1a1540] transition-colors"
         >
-          Log a progress update
+          Log Progress
+        </button>
+        <button
+          onClick={() => router.push(`/activity?profileId=${profileId}&activityId=${activity.id}`)}
+          className="flex-1 h-12 flex items-center justify-center rounded-xl bg-[#F2F2F7] text-[#1C1C1E] font-bold text-xs hover:bg-[#E5E5EA] transition-colors"
+        >
+          Tips &amp; Tricks
         </button>
         <button
           onClick={onDone}
