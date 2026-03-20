@@ -444,9 +444,9 @@ function Activities() {
               />
               <div className="relative grid grid-cols-3">
                 {[
-                  { key: "suggested", label: <><MdAutoAwesome className="inline mb-0.5" size={14} /> Suggested</> },
-                  { key: "library",   label: <><MdLibraryBooks className="inline mb-0.5" size={14} /> Library</> },
-                  { key: "board",     label: <><MdDashboard className="inline mb-0.5" size={14} /> My Board{activeActivities.length > 0 ? ` (${activeActivities.length})` : ""}</> },
+                  { key: "suggested", label: <span className="flex items-center gap-0.5"><MdAutoAwesome size={14} /><span>Suggested</span></span> },
+                  { key: "library",   label: <span className="flex items-center gap-0.5"><MdLibraryBooks size={14} /><span>Library</span></span> },
+                  { key: "board",     label: <span className="flex items-center gap-0.5"><MdDashboard size={14} /><span>My Board{activeActivities.length > 0 ? ` (${activeActivities.length})` : ""}</span></span> },
                 ].map(t => (
                   <button
                     key={t.key}
